@@ -11,43 +11,25 @@ A Claude Code plugin for building AI-native products.
 
 ## Install
 
-Add the marketplace once (this is global):
-
 ```
 /plugin marketplace add Play-New/superskills
+/plugin menu
 ```
 
-Then install in the project where you need it:
-
-```
-/plugin install super@superskills --scope project
-```
-
-This activates the plugin only in that project. Hooks, commands, and skills stay contained — other projects are not affected.
+Select `super` from the menu. Restart Claude Code.
 
 ## Update
 
-Manual update (from inside Claude Code):
-
 ```
 /plugin marketplace update superskills
-/plugin install super@superskills --scope project
 ```
 
-Or from the terminal:
-
-```
-claude plugin update super@superskills --scope project
-```
-
-To receive updates automatically at startup, enable auto-update on the marketplace:
+To receive updates automatically, enable auto-update on the marketplace:
 
 1. Run `/plugin`
 2. Go to the **Marketplaces** tab
 3. Select `superskills`
 4. Select **Enable auto-update**
-
-From that point, Claude Code checks for new versions when it starts. If the plugin was updated, it shows a notification to restart.
 
 ### Team setup
 
