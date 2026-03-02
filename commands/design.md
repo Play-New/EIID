@@ -238,7 +238,17 @@ Compare across all component files:
 
 ### Craft (advisory)
 
-Read `reference/design-critique.md` for the full critique framework. Read `reference/design-craft.md` for execution guidance. Apply all six critique layers. Flag craft issues as suggestions, not violations.
+Read `reference/design-critique.md` for the full critique framework. Read `reference/design-craft.md` for execution guidance. Apply all six critique layers, evaluating craft execution across these dimensions:
+
+**Spatial composition:** density variation between zones (dense for scanning, generous for focus), intentional asymmetry, grid-breaking at focal points, negative space as grouping structure. Uniform spacing everywhere signals undesigned.
+
+**Typography character:** fonts chosen intentionally (not framework defaults), hierarchy works without color (size + weight alone produce three distinguishable tiers), monospace for aligned data.
+
+**Surfaces and depth:** lightness shifts between levels (2-5%, not color jumps), consistent depth strategy (borders-only or subtle-shadows or layered, not mixed), opacity-based borders, complete interactive states on every clickable element.
+
+**Identity:** signature element visible in the interface, committed direction (not half-measures), anti-convergence test (would another AI produce the same output?), atmosphere matches direction (or deliberate absence documented).
+
+Flag craft issues as suggestions, not violations.
 
 ### Output
 

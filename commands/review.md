@@ -181,6 +181,15 @@ WCAG 2.1 AA — 8 checks:
 7. Keyboard navigation: all interactive elements reachable via tab
 8. `cursor-pointer` on all clickable elements
 
+### Design System Compliance (blocking if widespread)
+
+If `.superskills/design-system.md` has Layout, Typography Scale, and Composition sections, check compliance:
+1. **Layout:** components use documented grid, breakpoints, container strategy, and page patterns. Flag undocumented breakpoints or layouts that bypass the grid.
+2. **Typography:** text elements use levels from the documented scale. Flag sizes or weights not in the scale.
+3. **Composition:** density zones match the documented density map. Section spacing matches the documented rhythm. Flag uniform spacing where the map says it should vary.
+
+If no design system with these sections exists, skip.
+
 ### Cross-File Consistency (blocking if widespread)
 
 Compare across all component files:
@@ -193,9 +202,11 @@ Compare across all component files:
 
 1. **Name test:** describe the UI to someone who cannot see it. Generic description = generic design.
 2. **Swap test:** swap typeface or layout for a default. Where it wouldn't matter = where you defaulted.
-3. **Composition:** intentional asymmetry, overlap, density variation?
-4. **Atmosphere:** backgrounds and surfaces create a sense of place?
-5. **Motion:** one orchestrated page load beats scattered micro-interactions.
+3. **Spatial composition:** density variation between zones, intentional asymmetry, grid-breaking at focal points, negative space as grouping structure. Uniform spacing everywhere signals undesigned.
+4. **Typography character:** fonts chosen intentionally (not framework defaults), hierarchy works without color (size + weight alone), three distinguishable tiers.
+5. **Surfaces and depth:** lightness shifts between levels (2-5%), consistent depth strategy (not mixed), opacity-based borders, complete interactive states.
+6. **Atmosphere:** backgrounds and surfaces create a sense of place matching the direction, or deliberate absence.
+7. **Identity:** signature element visible, committed direction, anti-convergence (would another AI produce this?).
 
 ---
 
