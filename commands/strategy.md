@@ -68,6 +68,18 @@ From the folder scan, stack detection, user context, and research, build the val
 - **Requires human judgment** (consequences, accountability, context-dependent) → **Differentiate.** Enhance with better information, keep humans in the loop.
 - **New connections** (cross-system data, multi-source inference, orchestration that was previously too expensive) → **Innovate.** Build it — this is where value is created.
 
+**For each component, determine the implementation level:**
+
+- **LLM call** — single prompt-response. No iteration, no tool use. Classification, extraction, summarization. Cheapest intelligence unit.
+- **Workflow** — fixed sequence of steps, some using LLM calls. Orchestration lives in code, intelligence lives in individual nodes. Parse receipt → match ingredients → score relevance.
+- **Agent** — autonomous loop with tool use. The path emerges from context. Memory between sessions, scheduling, channel access. Conversational recipe adaptation, multi-source research, complex triage.
+- **Code** — deterministic, high volume, low latency, auditable. Free to run at scale.
+- **Buy** — commodity service. Costs less than building or prompting.
+
+**Graduation pattern:** start from the simplest level that works. An LLM call that covers 90% of cases beats an agent that covers 100% at 10x the cost. Graduate up (LLM call → workflow → agent) when edge cases justify the complexity. Graduate down (agent → workflow → code) when patterns stabilize and volume demands it.
+
+Record the implementation level in each EIID layer's Approach field: `via [LLM call / workflow / agent / code / buy]`. Graduation trigger is optional: "Innovate via workflow. Graduate to code when recipe DB > 10k" or "Automate via buy, commodity auth service."
+
 **Map to four layers:**
 
 #### Enrichment (collect)
@@ -92,26 +104,42 @@ From the folder scan, stack detection, user context, and research, build the val
 
 **Platform dynamics** as closing observation: is value concentrated in execution or coordination? Could this become a platform? Are intermediaries being bypassed?
 
+### 5b. Agent Architecture
+
+Skip this step entirely if no EIID component uses agent, workflow, or LLM call.
+
+For components classified via agent, workflow, or LLM call:
+
+- **Orchestration pattern:** single agent with tools, pipeline of fixed steps, or router that dispatches to specialized agents? Start with the simplest. A single agent with 5 tools beats a multi-agent system for most products.
+- **Tool design:** each tool does one atomic thing. "process order" is too coarse. "look up product", "check inventory", "create order" compose into process order. Tools are primitives, not features.
+- **Parity check:** every action a user can take via UI should also be available as a tool for agents. List the gaps. Missing parity means the agent cannot do what the user can.
+- **Cost model:** tokens per invocation × invocations per day = monthly cost. Compare with the cost of coding the same behavior. If the agent costs more than a junior developer's time, graduate to code.
+- **State persistence:** where does agent state live? Database, filesystem, git. Never use conversation history as the primary store. Progress and decisions persist externally.
+
 ### 6. Stack Recommendation
 
 For existing projects, confirm detected stack and adapt recommendations.
 
-For new projects, suggest a stack that fills these roles. The user may choose differently.
+For new projects, identify the roles that need filling based on the EIID mapping. Not every project needs every role. Only suggest roles the project actually requires.
 
-| Role | Default | Description |
-|------|---------|-------------|
-| Full-stack framework with SSR | Next.js | Server-rendered pages, API routes, file-based routing |
-| Managed database with auth and realtime | Supabase | Database, authentication, storage, realtime subscriptions |
-| Workflow engine for scheduled jobs | Inngest | Background tasks, cron, retry logic, event-driven workflows |
-| Edge hosting with preview deployments | Vercel | Global CDN, serverless functions, branch previews |
-| Component library with token-driven styling | shadcn + Tailwind | Pre-built accessible components, design token integration |
+| Role | Description |
+|------|-------------|
+| Full-stack framework | Server-rendered pages, API routes, routing |
+| Database with auth | Data persistence, authentication, access control |
+| Background job runner | Scheduled tasks, retry logic, event-driven workflows |
+| Hosting with CI/CD | Deployment, CDN, preview environments |
+| Component library | Pre-built accessible components, design token integration |
 
-| Conditional Role | Default | When |
-|-------------------|---------|------|
-| Email/SMS delivery service | Brevo | Delivery layer uses email or SMS channels |
-| WhatsApp messaging library | Baileys | Delivery layer uses WhatsApp |
-| Chat platform SDK | Platform-specific SDK | Delivery layer uses Telegram, Slack, Discord, or similar |
-| Web scraping/automation tool | Firecrawl | Enrichment layer needs external data collection |
+| Conditional Role | When |
+|-------------------|------|
+| Email/SMS delivery | Delivery layer uses email or SMS channels |
+| Messaging library | Delivery layer uses WhatsApp, Telegram, or similar |
+| Web scraping tool | Enrichment layer needs external data collection |
+| Agent runtime | Components classified as "agent" in the EIID mapping need a runtime with memory, scheduling, and channel access |
+
+For each role, research and recommend the best fit for the project's context. Consider: team familiarity, ecosystem maturity, integration with other chosen tools, pricing at projected scale. If the EIID mapping classified components as "agent", recommend an agent runtime that supports the required channels and scheduling.
+
+> **Play New preferred stack** (for projects without existing constraints): Next.js, Supabase, Inngest, Vercel, shadcn + Tailwind. This combination is tested together and has strong AI coding support. Present it as a starting point, not a mandate. The user may prefer a different tool for any role.
 
 If the user prefers a different tool for any role, use it. Generate technology constraints from whatever stack is chosen.
 
@@ -137,31 +165,7 @@ Follow `reference/claude-md-template.md` for structure. Read `reference/examples
 
 Create `.superskills/` directory. Step 7 already created `.superskills/decisions.md` with the first architecture decision. Create the remaining file:
 
-**`.superskills/report.md`** — volatile findings, replaced on each audit:
-```
-# SuperSkills Report
-
-**Last review:** [date]
-**Blockers:** [count or "none"]
-**Warnings:** [count or "none"]
-
-## Security Findings
-[empty — populated by /super:review]
-
-## Design Findings
-[empty — populated by /super:review]
-
-## Test Report
-[empty — populated by /super:review]
-
-## Performance Budget
-[empty — populated by /super:review]
-
-## Project Profile
-**EIID Balance:** [which layers have the most code, which are underdeveloped]
-**Recurring Patterns:** none yet
-**Learned:** none yet
-```
+**`.superskills/report.md`** — volatile findings, replaced on each audit. Follow the structure in `reference/report-template.md`.
 
 Add `.superskills/` to the project's `.gitignore` suggestion list. The user decides whether to track it.
 
@@ -219,16 +223,7 @@ Follow the same structure as init mode step 8. **Show the full updated CLAUDE.md
 
 ### 7. Log Decision
 
-Append to `.superskills/decisions.md`:
-
-```
-### [date] - Strategy Refresh
-
-**Type:** decision
-**Summary:** [what changed and why]
-**Changes:** [list of EIID mapping changes, reclassifications, new/removed components]
-**Action:** [updated priorities]
-```
+Append to `.superskills/decisions.md`. Follow the format in `reference/examples/decisions-saas.md`.
 
 ---
 

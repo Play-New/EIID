@@ -109,6 +109,26 @@ Recipe photo + title + prep time + ingredient match percentage + "Reply SAVE to 
 **Weekly summary (email):**
 Header with week stats (recipes cooked, new ingredients logged), top 3 suggested recipes for the coming week, link to full meal plan on web archive.
 
+## Agent Interaction Patterns
+
+These patterns define how the RecipeBox agent communicates with users:
+
+**Transparency in processing:**
+"Reading your receipt... found 12 items. Matching against your saved preferences..."
+Not: "Processing..." or a generic spinner message.
+
+**Clarification with default:**
+"Thai or Japanese tonight? Based on your pantry, Thai works best."
+Not: "What cuisine would you like?" (open-ended stalls the conversation).
+
+**Handoff to web:**
+"Here are 3 recipes. For the full comparison with nutrition details, see your dashboard: [link]"
+The agent knows when a WhatsApp message is not enough.
+
+**Error with recovery:**
+"Photo too dark to read the receipt. Try with better lighting, or type the items: 'chicken, rice, coconut milk...'"
+Not: "Image processing failed."
+
 ## Decisions
 | Decision | Why | Date |
 |----------|-----|------|

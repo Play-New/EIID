@@ -109,6 +109,8 @@ Every color has a job. Document the job, not just the value. A color palette is 
 
 ## Conversational and Notification Craft
 
+Skip this section if all EIID layers use visual or automated modality.
+
 Non-visual channels deserve the same design attention as visual ones.
 
 **Message structure:** Lead with insight, not context. The recipient knows what happened in the first line, why it matters in the second. Context follows, never leads.
@@ -125,3 +127,16 @@ Non-visual channels deserve the same design attention as visual ones.
 **Timing as design:** When a message arrives is a design decision. Batching low-priority updates into a morning summary is good. A 3am alert for a non-urgent threshold crossing is bad. Delivery cadence communicates priority.
 
 **Cross-channel coherence:** Same numbers, same terms, same framing across dashboard and message. The dashboard shows more detail, but the core statement is identical. A user who reads the Slack message and then opens the dashboard should recognize the same insight immediately.
+
+## Agent Interaction Craft
+
+Skip this section if no EIID layer has a user-facing agent.
+
+When an agent is part of the user experience, how it communicates is a design decision. These patterns apply to any agent that generates output a user sees: chat agents, background processors that report results, automated assistants.
+
+- **Transparency:** show what the agent is doing. "Checking 3 sources..." is better than a spinner. "Scanning your pantry and matching recipes..." is better than "Processing...". Users tolerate latency when they understand the work.
+- **Progressive disclosure in output:** answer first, reasoning second. Lead with the result. Offer the chain of thought on request ("Why this recommendation?"), not by default. Most users want the answer, not the process.
+- **Clarification patterns:** ask specific questions with sensible defaults. "Thai or Japanese? default: Thai based on your pantry" beats "What cuisine would you like?" Open-ended questions stall the conversation.
+- **Handoff agent → UI:** when text is not enough, link to the visual surface. "Full comparison: [link]" or "See the detailed breakdown in your dashboard." The agent knows when a table, chart, or image would serve better than a paragraph.
+- **Tool use visibility:** describe actions semantically, not technically. "Checked your pantry" not "get_ingredients(user_123)". "Found 3 matching recipes" not "query_recipes(filter={available: true})". The user sees intent, not implementation.
+- **Error communication:** honest and actionable. "Photo too dark to read the receipt. Try with better lighting, or type the items instead." Not "Error: image processing failed" and not "Oops! Something went wrong."

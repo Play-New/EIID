@@ -1,11 +1,11 @@
 ---
-description: Full quality audit. Tests, security, strategy alignment, design consistency, performance. All at once.
+description: Full quality audit. Tests, security, strategy, design, performance, agent architecture. All at once.
 allowed-tools: Read, Glob, Grep, Write, Edit, Bash
 ---
 
 # Review
 
-Full audit of the project. Run tests first (broken code makes other audits unreliable), then the remaining four domains. If agent teams are available, run the remaining four in parallel. Otherwise, run everything sequentially.
+Full audit of the project. Run tests first (broken code makes other audits unreliable), then the remaining five domains. If agent teams are available, run the remaining five in parallel. Otherwise, run everything sequentially.
 
 ## Prerequisites
 
@@ -21,29 +21,15 @@ Check for vitest.config.ts OR a `test` script in package.json. If found, run **v
 
 ### Init
 
-1. **Install dependencies:**
-   ```bash
-   npm install -D vitest @playwright/test
-   npx playwright install
-   ```
+1. **Install test runner and E2E framework.** Detect if the project already uses a test runner (jest, vitest, mocha). If not, install vitest as dev dependency. Install @playwright/test for E2E and install Playwright browsers.
 
-2. **Configure vitest.** Create or update vitest.config.ts. Set up test directory structure: `tests/unit/`, `tests/e2e/`.
+2. **Configure test runner.** Create or update the config file. Set up test directory structure: `tests/unit/`, `tests/e2e/`.
 
-3. **Add scripts to package.json:**
-   ```json
-   {
-     "test": "vitest run",
-     "test:watch": "vitest",
-     "test:e2e": "npx playwright test"
-   }
-   ```
+3. **Add test scripts to package.json.** Three scripts: run tests once, run in watch mode, run E2E tests.
 
-4. **Configure Playwright.** Create playwright.config.ts with local dev server and base URL.
+4. **Configure Playwright.** Create the config file with local dev server and base URL.
 
-5. **Stack-adaptive setup:**
-   - **Supabase:** mock client for unit tests, test RLS with different roles
-   - **Inngest:** use `inngest/test` for step function testing
-   - **Next.js:** mock `NextRequest` for API route tests
+5. **Stack-adaptive setup.** Detect the project's stack from package.json. For each significant dependency, identify its test utilities and mocking patterns. Database clients need mocked clients for unit tests. Workflow engines often provide test harnesses. Frameworks need request mocking for API route tests.
 
 6. **Write smoke tests:** unit smoke test (core utilities work), E2E smoke test (home page loads and renders).
 
@@ -146,6 +132,15 @@ If `.superskills/design-system.md` has Layout, Typography Scale, and Composition
 
 If no design system with these sections exists, skip.
 
+### Conversational and Agent Pattern Compliance (blocking if widespread)
+
+If `.superskills/design-system.md` has Conversational Patterns or Agent Interaction Patterns sections:
+1. **Message structure:** do implemented messages match documented patterns? Lead with insight, correct information density per channel, native interaction patterns.
+2. **Agent interaction:** do agent responses follow documented transparency, clarification, handoff, and error patterns? Flag agents that show raw tool calls, ask open-ended questions without defaults, or return technical errors to users.
+3. **Cross-channel terms:** do message templates and visual surfaces use the same terminology, units, and framing?
+
+If no conversational or agent patterns are documented, skip.
+
 ### Cross-File Consistency (blocking if widespread)
 
 Compare across all component files:
@@ -162,15 +157,7 @@ Compare across all component files:
 
 ### Craft (advisory)
 
-Read `reference/design-critique.md` for the full critique framework. Read `reference/design-craft.md` for execution guidance. Apply all six critique layers, evaluating five craft dimensions:
-
-1. **Spatial composition:** density variation between zones, intentional asymmetry, grid-breaking at focal points, negative space as grouping. Uniform spacing everywhere signals undesigned.
-2. **Typography:** hierarchy works without color (size + weight alone produce three tiers), fonts chosen intentionally (not framework defaults), monospace for aligned data.
-3. **Surfaces and depth:** subtle lightness shifts between levels (not color jumps), consistent depth strategy (not mixed), opacity-based borders, complete interactive states.
-4. **Identity:** signature element visible, committed direction (not half-measures), anti-convergence test, atmosphere matches direction (or deliberate absence).
-5. **Conversational and notification craft:** Do messages lead with insight? Is information density appropriate for the channel? Are interaction patterns native to the platform? Is delivery timing designed? Read `reference/design-craft.md` Conversational and Notification Craft section.
-
-Flag craft issues as suggestions, not violations.
+Apply all six critique layers from `reference/design-critique.md`, evaluating craft dimensions from `reference/design-craft.md`. Include conversational and notification craft for non-visual layers. Include agent interaction craft for user-facing agents. Flag craft issues as suggestions, not violations.
 
 ---
 
@@ -179,6 +166,53 @@ Flag craft issues as suggestions, not violations.
 Severity: blocking on regressions beyond budget, advisory otherwise.
 
 Read `reference/review-performance-guide.md` for the full performance audit checklist. Init mode establishes baseline targets and tooling. Review mode measures against those targets. Block on: bundle size regression >20%, missing lazy loading for routes, unindexed queries on user-facing paths.
+
+---
+
+## 6. Agent Architecture
+
+Skip this section entirely if no EIID component uses agent, workflow, or LLM call.
+
+Severity: blocking on parity gaps in critical paths, advisory otherwise.
+
+### Parity Audit
+
+For each user action available in the UI, check: is there a corresponding tool an agent can call? List the gaps. Missing parity means agents cannot do what users can. Critical-path gaps (actions users perform daily) are blocking.
+
+### Implementation Level Check
+
+For each component classified via LLM call, workflow, or agent in the EIID mapping:
+- Does the implementation match the classified level?
+- An LLM call that uses tool loops or retries is under-classified (should be workflow or agent).
+- An agent that follows a fixed path every time is over-classified (should be workflow).
+- A workflow with a single step is over-classified (should be LLM call).
+
+### Graduation Readiness
+
+For each component with a graduation trigger documented in the Approach field:
+- Is volume approaching the threshold? Check logs or usage metrics.
+- Have patterns stabilized? If the last 20 invocations follow the same path, the agent is acting like code.
+- Are edge cases still the driver of value? If yes, graduation is premature.
+
+### Tool Quality
+
+For each tool exposed to agents:
+- **Atomicity:** does the tool do one thing? "process_order" should be split into primitives.
+- **Schema validation:** does the tool validate inputs and outputs against a schema?
+- **Descriptions:** are tool descriptions accurate enough for an agent to choose correctly?
+- **Error structure:** do errors include what went wrong and what to try next?
+
+### Agent Testing Strategy
+
+- Tests define the outcome, agent iterates until pass. Are tests written this way?
+- Integration test of the full agent loop (not just individual tools).
+- Cost tracking: is token usage logged per invocation? Can monthly cost be computed?
+
+### Feedback Loop
+
+- Are agent failures logged with enough context to diagnose?
+- Do captured failure patterns inform graduation decisions?
+- Is there a mechanism to review agent outputs periodically?
 
 ---
 
@@ -191,6 +225,7 @@ Write all findings to `.superskills/`:
 - Strategy findings → **append** to `.superskills/decisions.md`
 - Design findings → **replace** Design Findings section in `.superskills/report.md`
 - Performance findings → **replace** Performance Budget section in `.superskills/report.md`
+- Agent architecture findings → **replace** Agent Architecture section in `.superskills/report.md`
 
 **Update status counts** at the top of `.superskills/report.md`.
 
@@ -206,6 +241,7 @@ Security:     [blocking count] blocking, [high count] high
 Strategy:     [scope-creep count] scope creep, [opportunity count] opportunities
 Design:       [violation count] violations
 Performance:  [issue count] issues
+Agent:        [issue count] issues (or "skipped — no agent components")
 
 Blocking:     [yes/no]
 ```

@@ -58,70 +58,39 @@ Add the marketplace and pre-enable the plugin in `.claude/settings.json` so new 
 }
 ```
 
-Run `/super:strategy`. It scans the folder, detects the stack, asks six questions (who's it for, who uses it, how they work today, what they need, what's needed, what exists), then web research, EIID mapping, value chain, and strategic classification. It writes CLAUDE.md and `.superskills/`.
+---
 
-From that point: the secrets guard watches file writes, skills advise during planning (and nudge when files are stale), commands audit specific domains, and findings accumulate in `.superskills/`.
+## What it does
+
+Run `/super:strategy`. It scans the folder, detects the stack, asks six questions, researches the problem space, and produces an EIID mapping with strategic classification and implementation levels. If any component uses agent, workflow, or LLM call, it adds an agent architecture step. Output: CLAUDE.md (stable instructions) and `.superskills/` (volatile findings).
+
+From that point: the secrets guard watches file writes, two skills advise during planning, three commands audit specific domains, and findings accumulate in `.superskills/`.
 
 ## Commands
 
 | Command | Does |
 |---------|------|
-| `/super:strategy` | Assessment, EIID mapping, value chain, scaffolding, priorities. Strategy refresh when context has changed |
-| `/super:design` | Two modes: init (direction assessment with references, IA, tokens) or redesign (single-screen craft improvement with a target) |
-| `/super:review` | Full quality audit: tests, security, strategy alignment, design consistency, performance |
+| `/super:strategy` | Assessment, EIID mapping, implementation levels, agent architecture, scaffolding. Refresh mode when context changes |
+| `/super:design` | Init: modality assessment, direction, IA, tokens, interaction patterns. Redesign: single-screen craft improvement |
+| `/super:review` | Full audit: tests, security, strategy, design, performance, agent architecture |
 
-Each command detects whether setup has been done. First run configures. `/super:strategy` with context about what changed triggers refresh mode. `/super:design` with a specific target (file path, screenshot, URL) triggers redesign mode. Design audit and strategy alignment live in `/super:review`.
-
-## Hooks
-
-One hook fires automatically:
-
-```
-  You write or edit a file
-       │
-       ▼
-  ┌─────────────────┐
-  │ Secrets guard    │  After file write/edit: blocks hardcoded
-  │ (post-tool)      │  secrets in source code
-  └─────────────────┘
-```
-
-Two skills fire during planning:
-- **EIID awareness** reads CLAUDE.md for the EIID mapping and flags work that doesn't trace to any layer. Nudges toward `/super:strategy` when CLAUDE.md is stale (untracked deps, unmapped files, shifted approaches).
-- **Design awareness** reads `.superskills/design-system.md` and flags component builds when registry alternatives exist, aesthetic drift from the established direction, new variants when existing patterns fit, and changes that violate the documented information architecture. Nudges toward `/super:design` when the component patterns table falls behind the codebase.
-
-Design token enforcement and test running are on-demand: `/super:design` audits tokens, `/super:review` runs the full suite. They don't fire automatically because Stop hooks add latency and noise to every session.
-
-## What blocks
-
-**Secrets guard:** hardcoded secrets in source code. Ignores .env, config, migrations, SQL, lock files, markdown, JSON config.
-
-## Where things go
-
-Two concerns, two places.
-
-**CLAUDE.md** contains stable project instructions: context, stack, EIID mapping with strategic approach per layer, technology constraints, design system config. It changes rarely. Updated by `/super:strategy` (init or refresh) and `/super:design` (Design System section). Claude reads it at session start to understand the project. Target: under 100 lines.
-
-**`.superskills/`** contains volatile findings:
-- `report.md`: security, design, performance, test findings. Replaced on each audit. Status counts at the top. Project Profile tracks recurring patterns across reviews.
-- `decisions.md`: architecture decisions log. Append-only. Updated by `/super:strategy` refresh, `/super:review`, and `/super:design` redesign mode.
-- `design-system.md`: design direction, references, information architecture, layout, typography scale, composition, tokens, component patterns. Updated by `/super:design` as the system evolves.
-
-Commands **read** CLAUDE.md for context and **write** to `.superskills/`. This follows the same pattern as Anthropic's code-review plugin (reads CLAUDE.md, writes findings elsewhere) and Trail of Bits skills (standalone report files).
+Each command detects whether setup exists. `/super:strategy` with context about what changed triggers refresh mode. `/super:design` with a target (file path, screenshot, URL) triggers redesign mode.
 
 ---
 
-## What AI-native means
+## AI-native architecture
 
 Most software built with AI assistance is traditional software that happened to be written faster. The architecture stays the same: forms, CRUD, dashboards. AI helped type it, but the product could have been built in 2015.
 
-AI-native products are structured differently. The intelligence acts as an invisible layer that wraps around existing behavior. People feed data the way they already work: a photo of a handwritten note, a forwarded email, a voice message on WhatsApp, a Slack thread. They don't learn a new interface or change their habits. The system collects from all these entry points, normalizes the data, detects patterns, turns analysis into actionable statements, and delivers results back through the same channels people chose. A traditional CRM shows you a dashboard. An AI-native CRM accepts a voice note from your sales rep on WhatsApp and sends them back "Acme Corp's order volume dropped 30% this month, here are three possible reasons" at 9am the next day.
+AI-native products are structured differently. The intelligence is an invisible layer that wraps around existing behavior. People feed data the way they already work: a photo of a handwritten note, a forwarded email, a voice message on WhatsApp, a Slack thread. They don't learn a new interface. The system collects from these entry points, normalizes the data, detects patterns, turns analysis into actionable statements, and delivers results back through the same channels.
 
-The difference is architectural. You need to think about data collection, inference, interpretation, and delivery as separate layers from the start. And you need to accept that input and output often share the same channels.
+A traditional CRM shows a dashboard. An AI-native CRM accepts a voice note from a sales rep on WhatsApp and sends back "Acme Corp's order volume dropped 30% this month, here are three possible reasons" at 9am the next day.
+
+The difference is architectural. Data collection, inference, interpretation, and delivery are separate layers from the start. Input and output share the same channels. An agent, a workflow, or a single LLM call can sit at any point in the chain, alongside traditional code. The question for each component is not "should we use AI" but "what is the right implementation level for this behavior."
 
 ## EIID
 
-SuperSkills organizes this into four layers.
+SuperSkills organizes this architecture into four layers.
 
 ```
  ┌─────────────────────────────────────────┐
@@ -147,88 +116,126 @@ The web interface serves two roles: visualizations that don't fit in a message (
 
 ## The value chain
 
-`/super:strategy` scans the folder, detects the stack, and asks six questions: who's it for, who uses it, how they work today, what they need, what's needed to deliver it, what exists already. Then it researches the problem space and deduces the rest: dependencies, evolution, strategic classification.
+`/super:strategy` produces a chain of dependencies from user need down to infrastructure. Every component in the system exists because something above it requires it. If you can't trace a component back to the user need, it shouldn't be there.
 
-This produces a chain of dependencies from user need down to infrastructure. Every component in the system exists because something above it requires it. If you can't trace a component back to the user need, it shouldn't be there.
+Components evolve. What was novel becomes custom, then product, then commodity. A churn prediction model that took a data science team six months is now an API call. Each EIID component carries two classifications: strategic and operational.
 
-## Where value sits
+### Strategic classification
 
-Components evolve. What was novel becomes custom, then product, then commodity. A churn prediction model that took a data science team six months is now an API call. The compute is cheap. The hard part is knowing what questions to ask.
+Where does this component sit on the evolution axis?
 
-Each EIID layer carries a strategic approach:
-
-**Automate.** Commodity components with multiple interchangeable providers. Authentication, storage, email delivery, basic analytics. Don't build what you can buy.
+**Automate.** Commodity components with multiple interchangeable providers. Authentication, storage, email delivery, basic analytics. Don't build what you can buy. AI has accelerated this: what was custom six months ago may be commodity today.
 
 **Differentiate.** Components requiring human judgment with real consequences. A system can flag that a customer is likely to churn, but deciding whether to offer a 20% discount or call the CEO requires someone who understands the relationship. These components need better information flowing to the human, not automation replacing them.
 
-**Innovate.** New connections between systems, teams, or data sources that were previously too expensive. A CRM, an ERP, and a supplier portal in a single inference pipeline used to require a year-long integration project. Now it's a configuration problem. New value emerges where these connections create insights nobody had before.
+**Innovate.** New connections between systems, teams, or data sources that were previously too expensive to link. A CRM, an ERP, and a supplier portal in a single inference pipeline used to require a year-long integration project. Now it's a configuration problem. New value emerges where these connections create insights nobody had before.
 
-The approach lives inside each EIID layer, not in a separate section, because the same layer can contain components at different evolution stages. A fleet app's enrichment layer might automate telematics polling (commodity) while differentiating OBD-II integration (hardware-dependent, needs fleet manager input).
+The classification lives inside each EIID layer, not in a separate section, because the same layer can contain components at different evolution stages. A fleet app's enrichment layer might automate telematics polling (commodity) while differentiating OBD-II integration (hardware-dependent, needs fleet manager input on which vehicles).
+
+### Implementation level
+
+Strategic classification determines what to build. Implementation level determines how to build it.
+
+| Level | When | Cost |
+|-------|------|------|
+| **LLM call** | Single prompt-response. No iteration, no tools. Classification, extraction, summarization. | Lowest |
+| **Workflow** | Fixed sequence of steps, some using LLM calls. Orchestration in code, intelligence in nodes. | Low |
+| **Agent** | Autonomous loop with tool use. Path emerges from context. Memory, scheduling, channels. | Medium |
+| **Code** | Deterministic, high volume, low latency, auditable. | Free at scale |
+| **Buy** | Commodity service. | Variable |
+
+These are not permanent assignments. The **graduation pattern** connects them: start from the simplest level that works. An LLM call that covers 90% of cases beats an agent that covers 100% at 10x the cost. Graduate up (LLM call → workflow → agent) when edge cases justify the complexity. Graduate down (agent → workflow → code) when patterns stabilize and volume demands it.
+
+Each EIID layer's Approach field records both dimensions: `Innovate via workflow. Graduate to code when recipe DB > 10k.` The graduation trigger documents when the decision should be revisited. `/super:review` checks graduation readiness: is volume approaching the threshold, have patterns stabilized, are edge cases still the driver of value.
+
+The three example projects demonstrate the spectrum: FleetPulse uses code and buy exclusively (visual-heavy SaaS, high volume, deterministic). RecipeBox mixes agents and workflows with graduation triggers (conversational consumer product, flexibility is the feature). DepWatch uses a single LLM call for interpretation with a graduation trigger to template (CLI devtool, minimal intelligence surface).
+
+### Agent architecture
+
+Step 5b in `/super:strategy`. Runs only when EIID components use agent, workflow, or LLM call.
+
+- **Orchestration:** single agent with tools, step pipeline, or router that dispatches to specialized agents. Start with the simplest. A single agent with 5 tools beats a multi-agent system for most products.
+- **Tool design:** each tool does one atomic thing. "look up product", "check inventory", "create order" compose into process order. "process order" is too coarse for an agent to use flexibly.
+- **Parity:** every action a user can take via UI should also be available as a tool for agents. List the gaps. Missing parity means agents cannot do what users can.
+- **Cost model:** tokens per invocation × invocations per day = monthly cost. Compare with the cost of coding the same behavior. If the agent costs more than coding, graduate to code.
+- **State persistence:** where does agent state live? Database, filesystem, git. Never conversation history as the primary store. Progress and decisions persist externally so any session can resume.
+
+Code Architecture in CLAUDE.md gains five EIID-gated principles: parity, tool granularity, tests as reward signal (tests define the outcome, agent iterates until pass), external state, and graduation markers as code comments (`// via workflow, graduate to code when >500/day`).
+
+---
 
 ## Design
 
-`/super:design` has two modes:
+`/super:design` is not only about craft. It is the full design system, from the first architectural question (does this layer need a visual surface at all?) through information architecture, direction, tokens, and interaction patterns for every channel.
 
-**Init mode** starts by determining which EIID layers need a visual interface and which are conversational, notification-based, or embedded. For visual layers: explore the product's world, collect references, define information architecture, generate tokens and component patterns. For non-visual layers: define message structure and channel formatting. If no layers need a graphical interface, the design system documents conversational patterns only.
+**Init mode** runs 12 steps:
 
-**Redesign mode** activates when a specific target is provided (file path, screenshot, URL). It loads whatever design context exists (SuperSkills-managed or extracted from code), runs a strategic critique (six layers: strategic alignment, composition, craft, content, structure, identity), collects screen-specific references, then applies four craft dimensions (spatial composition, typography, surfaces and depth, identity) to generate improvements grounded in the design system. Works on any project with a design system, not just SuperSkills projects.
+1. **Interface Modality Assessment** — for each EIID layer, determine: visual, conversational, notification, embedded, or none. Produce the EIID Interface Map. If no layers need a visual surface, write message structure, channel formatting, and agent interaction patterns only. Done.
+2. **Detect UI Framework** — only if visual layers exist.
+3. **Explore the Product's World** — domain concepts, color world, signature, defaults to reject.
+4. **Direction Assessment** — references, anti-references, existing assets, constraints.
+5. **Information Architecture** — core objects, navigation budget, screen map, focal points, content depth tiers. Before any visual decisions.
+6. **Style Direction** — density, shape, weight.
+7. **Typography Scale** — display through mono, with size, weight, line height, tracking.
+8. **Layout Architecture** — grid, breakpoints, container strategy, page patterns.
+9. **Composition Rules** — hierarchy, density map, section rhythm, proportion, whitespace.
+10. **Token Layer** — extract before propose (scan code for repeated values, formalize).
+11. **Interaction Patterns for Non-Visual Layers** — conversational craft (message structure, density per channel, timing) and agent interaction craft (transparency, clarification with defaults, handoff to visual, error communication).
+12. **Write Design Configuration** — to CLAUDE.md and `.superskills/design-system.md`.
 
-Design audit (accessibility, IA, compliance, consistency, framework rules, craft) lives in `/super:review`.
+**Redesign mode** takes a target (file, screenshot, URL), runs a 6-layer strategic critique (alignment, composition, craft, content, structure, identity), applies craft dimensions grounded in the design system.
 
-The first design decision is not visual. It is whether each EIID layer needs a visual surface at all. A delivery layer that sends WhatsApp messages needs message templates and channel formatting, not screens. An enrichment layer that accepts forwarded emails needs parsing rules, not a form. Only layers that require visualization or configuration get a graphical interface.
-
-The design critique starts from strategy. The interface is not the primary input surface: people feed data through their existing channels (chat, email, voice, photos). The interface shows visualizations that don't fit in a message and configuration that controls the system. Interpretation outputs (charts, trends, comparisons) get the most screen space. Enrichment and delivery configuration stays buried. A beautiful interface that misaligns with the value chain is a failure.
-
-**Information architecture** (init mode, before any visual decisions):
-- Core objects: 3-6 things users care about, each mapping to a nav destination
-- Navigation budget: 5-8 items for sidebar, 3-5 for top bar, everything else nests or goes to settings
-- Screen map with one focal point per screen and 2-4 elements above the fold
-- Content depth tiers: surface (daily), one click (weekly), deep (monthly). Every feature belongs to exactly one tier
-
-**Direction assessment** (init mode, after product exploration):
-- References: URLs, screenshots, Figma files, brand names, designers, design studios, analyzed for applicable patterns
-- Anti-references: things to explicitly avoid
-- Existing assets: brand materials that constrain choices
-- User confirmation of the proposed direction
-
-**Universal rules** (always enforced, any framework):
-- WCAG 2.1 AA: 4.5:1 contrast, focus states, alt text, form labels, 44x44px touch targets
-- `cursor-pointer` on all clickable elements
-- Responsive: works at 320px, consistent breakpoints
-
-**Framework-specific rules** (adapted to detected stack):
-- Component-library projects: search existing registries before building custom, use semantic tokens, follow the framework's conventions
-- CSS-utility projects: utility classes only, no arbitrary values, no custom CSS classes
-- Component frameworks: use the framework's API, theme overrides in the theme file
-
-If no framework is detected, only universal rules apply.
+**Craft** covers 10 dimensions: direction spectrum, spatial composition, typography character, visual identity, subtle layering, atmosphere, motion, color intent, conversational/notification craft, agent interaction craft.
 
 ## Review
 
-`/super:review` runs all audits on the full project: tests, security, strategy alignment, design consistency, performance. Tests run first. Auditing broken code wastes time. If tests fail, it asks whether to continue with the remaining audits or stop. If agent teams are available, the remaining four audits run in parallel. Otherwise, they run in order.
+Six audits. Tests run first (broken code makes other audits unreliable). The remaining five run in parallel when agent teams are available.
 
-The review covers:
-- **Tests:** vitest + Playwright setup (if missing) and full suite run
-- **Security:** OWASP Top 10, GDPR (6 checks), secrets scan, stack-adaptive checks (Supabase RLS, Vercel env vars, Inngest signing keys, Next.js Server Actions)
-- **Strategy:** EIID alignment per file, scope creep detection, 11-question opportunity scan
-- **Design:** accessibility (WCAG 2.1 AA, 8 checks), information architecture (navigation budget, focal points, content depth, screen coverage), design system compliance (layout, typography, composition against documented values), cross-file consistency, framework rules, craft advisory (spatial composition, typography, surfaces and depth, identity)
-- **Performance:** bundle analysis, Core Web Vitals, N+1 queries, API costs, stack-adaptive checks
+| Audit | Severity | Scope |
+|-------|----------|-------|
+| **Tests** | Blocking | vitest + Playwright setup and full suite |
+| **Security** | Blocking on critical | OWASP Top 10, GDPR, secrets, stack-adaptive checks |
+| **Strategy** | Advisory | EIID alignment per file, scope creep, 11-question opportunity scan |
+| **Design** | Blocking if widespread | Accessibility, IA, design system compliance, conversational/agent pattern compliance, consistency, framework rules, craft |
+| **Performance** | Blocking on regression | Bundle, Core Web Vitals, N+1 queries, API costs |
+| **Agent architecture** | Blocking on parity gaps | Implementation level, graduation readiness, tool quality, testing, feedback loop |
+
+Agent architecture is skipped entirely if no EIID component uses agent, workflow, or LLM call.
+
+## Skills and hooks
+
+**Secrets guard** (hook, automatic): blocks hardcoded secrets on file write/edit. Ignores .env, config, migrations, lock files.
+
+**EIID awareness** (skill, during planning): flags work that doesn't trace to an EIID layer. Checks implementation level mismatches (an LLM call using tool loops is under-classified, an agent that never iterates is over-classified). Checks parity: new UI actions need a corresponding agent tool. Nudges toward `/super:strategy` when CLAUDE.md is stale (untracked deps, unmapped files, shifted approaches, shifted implementation levels).
+
+**Design awareness** (skill, during planning): flags registry alternatives, aesthetic drift, pattern reuse, IA violations, agent interaction consistency. Nudges toward `/super:design` when component patterns fall behind.
+
+## Where things go
+
+**CLAUDE.md** contains stable project instructions: context, stack, EIID mapping with strategic approach and implementation level per layer, technology constraints, design system config. It changes rarely. Updated by `/super:strategy` (init or refresh) and `/super:design` (Design System section). Claude reads it at session start. Target: under 100 lines.
+
+**`.superskills/`** contains volatile findings:
+- `report.md`: security, design, performance, agent architecture, test findings. Replaced on each audit. Status counts at the top. Project Profile tracks recurring patterns.
+- `decisions.md`: architecture decisions log. Append-only. Updated by `/super:strategy` refresh, `/super:review`, and `/super:design` redesign.
+- `design-system.md`: EIID Interface Map, direction, references, IA, layout, typography scale, composition, tokens, component patterns, conversational patterns, agent interaction patterns. Updated by `/super:design` as the system evolves.
+
+Commands **read** CLAUDE.md for context and **write** to `.superskills/`.
 
 ## Stack
 
-`/super:strategy` recommends a stack for new projects based on what the EIID mapping needs. For existing projects, it detects what's installed and adapts.
+`/super:strategy` recommends a stack for new projects based on the EIID mapping. For existing projects, it detects what's installed and adapts.
 
-Five infrastructure roles to fill:
+Five infrastructure roles:
 
 | Role | Default | Criteria |
 |------|---------|----------|
-| Database + auth | Supabase | Managed, with row-level security and realtime |
-| Hosting | Vercel | Edge-capable, preview deployments |
-| Workflows | Inngest | Scheduled jobs, retry, event-driven |
-| Frontend | Next.js | Server-side rendering, streaming |
-| UI components | shadcn + Tailwind | Registry-based, token-driven styling |
+| Database + auth | Supabase | Managed, RLS, realtime |
+| Hosting | Vercel | Edge, preview deployments |
+| Workflows | Inngest | Scheduled jobs, retry, events |
+| Frontend | Next.js | SSR, streaming |
+| UI components | shadcn + Tailwind | Registry-based, token-driven |
 
-Delivery channels (email, messaging, SMS) and enrichment tools (scraping, APIs) are added when the EIID mapping calls for them. Defaults are suggestions. If a different tool is preferred for any role, the plugin adapts and enforces consistency with that choice.
+Delivery channels (email, messaging, SMS) and enrichment tools (scraping, APIs) are added when the EIID mapping calls for them. Defaults are suggestions. The plugin adapts to any stack.
 
 ## Structure
 
@@ -240,33 +247,33 @@ superskills/                             the plugin
 ├── .githooks/
 │   └── pre-commit                      auto-version on commit
 ├── commands/
-│   ├── strategy.md                     entry point: assessment, EIID, priorities
-│   ├── design.md                       design system: init, redesign
-│   └── review.md                       full quality audit
+│   ├── strategy.md                     assessment, EIID, implementation levels, agent architecture
+│   ├── design.md                       12-step design system + redesign
+│   └── review.md                       six-domain audit
 ├── skills/
-│   ├── eiid-awareness/SKILL.md          auto-invoked during planning
-│   └── design-awareness/SKILL.md        auto-invoked during planning
+│   ├── eiid-awareness/SKILL.md          strategic alignment during planning
+│   └── design-awareness/SKILL.md        design compliance during planning
 ├── agents/
-│   └── stop-tests.md                    test runner agent (on-demand, not auto-invoked)
-├── hooks/hooks.json                     secrets guard only
+│   └── stop-tests.md                    test runner (on-demand)
+├── hooks/hooks.json                     secrets guard
 ├── reference/
-│   ├── claude-md-template.md            CLAUDE.md blank structure
-│   ├── design-system-template.md        design-system.md blank structure
-│   ├── decisions-template.md            decisions.md blank structure
-│   ├── design-critique.md              6-layer critique (strategic alignment through identity)
-│   ├── design-craft.md                 direction, spatial composition, typography, identity, layering, atmosphere, motion, color
-│   ├── design-init-guide.md            detailed init process (modality assessment through tokens)
-│   ├── review-security-guide.md        full security audit checklist
-│   ├── review-performance-guide.md     full performance audit checklist
+│   ├── claude-md-template.md            CLAUDE.md structure
+│   ├── design-system-template.md        design-system.md structure
+│   ├── decisions-template.md            decisions.md structure
+│   ├── design-critique.md              6-layer critique
+│   ├── design-craft.md                 10 craft dimensions
+│   ├── design-init-guide.md            modality assessment through tokens
+│   ├── review-security-guide.md        security checklist
+│   ├── review-performance-guide.md     performance checklist
 │   └── examples/
-│       ├── claude-md-saas.md            SaaS example (fleet management, visual-heavy)
-│       ├── design-system-saas.md        SaaS design system (Nova style, dense data)
-│       ├── decisions-saas.md            SaaS decisions (2 weeks)
-│       ├── claude-md-consumer.md        consumer example (recipe assistant, mixed modality)
-│       ├── design-system-consumer.md    consumer design system (warm editorial, WhatsApp-first)
+│       ├── claude-md-saas.md            FleetPulse: visual-heavy, all code/buy
+│       ├── design-system-saas.md        dense data, Nova style
+│       ├── decisions-saas.md            SaaS decisions
+│       ├── claude-md-consumer.md        RecipeBox: mixed modality, agents + workflows
+│       ├── design-system-consumer.md    warm editorial, WhatsApp-first, agent interaction patterns
 │       ├── decisions-consumer.md        consumer decisions
-│       ├── claude-md-devtool.md         devtool example (dependency monitor, no visual UI)
-│       ├── design-system-devtool.md     devtool design system (message structure only)
+│       ├── claude-md-devtool.md         DepWatch: no visual UI, single LLM call
+│       ├── design-system-devtool.md     message structure only
 │       └── decisions-devtool.md         devtool decisions
 └── README.md
 
@@ -275,14 +282,14 @@ your-project/                            what gets generated
 └── .superskills/
     ├── report.md                        volatile findings (replaced each audit)
     ├── decisions.md                     architecture log (append-only)
-    └── design-system.md                 design direction + references + tokens + patterns
+    └── design-system.md                 design direction + tokens + patterns
 ```
 
-3 commands, 2 skills, 1 agent, 1 hook. 24 markdown files, 3 JSON in the plugin. Reference files show what the output looks like and how to execute craft. Three example sets demonstrate different EIID patterns: visual-heavy SaaS (FleetPulse), mixed modality consumer (RecipeBox), and no-visual devtool (DepWatch).
+3 commands, 2 skills, 1 agent, 1 hook. 24 markdown files, 3 JSON. Three examples demonstrate the spectrum: FleetPulse (visual-heavy SaaS, all code/buy), RecipeBox (mixed modality consumer, agents and workflows with graduation), DepWatch (no-visual devtool, single LLM call with graduation to template).
 
 ## References
 
-The strategic thinking behind SuperSkills draws from Simon Wardley's value chain mapping and evolution axis, and Sangeet Paul Choudary's work on platform dynamics and AI-driven value chain restructuring.
+Strategic thinking draws from Wardley's value chain mapping and evolution axis, Choudary's platform dynamics and AI-driven value restructuring, Steinberger's intelligence-where-the-user-works principle, and the SaaSpocalypse pattern (commodity layers collapse, value moves to orchestration and delivery).
 
 ## License
 

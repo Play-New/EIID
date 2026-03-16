@@ -1,5 +1,5 @@
 ---
-description: Design system with craft. First run explores the product, chooses a direction, generates tokens. With a target screen, redesigns it.
+description: Design system from modality assessment through tokens. First run determines what needs a visual surface, defines IA, direction, typography, layout, composition, tokens, and interaction patterns for all channels. With a target, redesigns it.
 allowed-tools: Read, Glob, Grep, Write, Edit, Bash, WebFetch, WebSearch
 ---
 
@@ -31,7 +31,7 @@ Read `reference/design-init-guide.md` for detailed execution of each step. Read 
 
 Follow the Interface Modality Assessment section in `reference/design-init-guide.md`. Read CLAUDE.md for the EIID mapping. For each EIID layer, determine whether it needs a visual surface, conversational delivery, notification, or embedded interface. Produce the EIID Interface Map table.
 
-- If no layers need a visual surface: write the design system with EIID Interface Map, message structure patterns, and channel formatting only. Write to `.superskills/design-system.md`. Done. Skip all remaining steps.
+- If no layers need a visual surface: write the design system with EIID Interface Map, message structure patterns, channel formatting, and agent interaction patterns (if any EIID component has a user-facing agent). Apply `reference/design-craft.md` Conversational and Notification Craft and Agent Interaction Craft sections. Write to `.superskills/design-system.md`. Done. Skip all remaining steps.
 - If some or all layers need a visual surface: proceed with the remaining steps, scoped to visual layers only.
 
 ### 2. Detect UI Framework
@@ -49,7 +49,7 @@ Read package.json. Identify the UI framework:
 | Tailwind only | `tailwindcss` without component library |
 | None detected | no UI deps |
 
-If none detected, ask the user. Suggest shadcn + Tailwind for new projects.
+If none detected, ask the user what UI framework they prefer. For projects without constraints, shadcn + Tailwind is a strong option with broad AI coding support and accessible defaults.
 
 ### 3. Explore the Product's World
 
@@ -96,7 +96,17 @@ Follow `reference/design-init-guide.md` — Composition Rules section. Hierarchy
 
 Follow `reference/design-init-guide.md` — Token Generation section. Extract before propose: scan existing code for repeated values, formalize the most common ones. Framework-specific instructions in the guide.
 
-### 11. Write Design Configuration
+### 11. Define Interaction Patterns for Non-Visual Layers
+
+For EIID layers mapped to conversational, notification, or embedded modality in the Interface Map:
+
+Apply `reference/design-craft.md` — Conversational and Notification Craft section. Define message structure, information density per channel, interaction patterns, formatting hierarchy, timing, cross-channel coherence.
+
+If any EIID component has a user-facing agent, apply `reference/design-craft.md` — Agent Interaction Craft section. Define patterns for: transparency, progressive disclosure, clarification with defaults, handoff to visual surface, tool use visibility, error communication. These are design decisions, not implementation details.
+
+Read `reference/examples/design-system-consumer.md` for tone: the Conversational Patterns and Agent Interaction Patterns sections show the level of specificity.
+
+### 12. Write Design Configuration
 
 Follow `reference/design-system-template.md` for structure. Read `reference/examples/design-system-saas.md` for tone.
 
@@ -104,7 +114,7 @@ Write to two places:
 
 **CLAUDE.md** — Design System section (framework, style, token source, direction, navigation, typography, color character, signature).
 
-**`.superskills/design-system.md`** — full design decisions: EIID Interface Map, direction, references, information architecture, layout, typography scale, composition, tokens, component patterns, decisions log. Include the EIID Interface Map section from step 1. For non-visual layers, write message structure and channel formatting patterns instead of visual tokens.
+**`.superskills/design-system.md`** — full design decisions: EIID Interface Map, direction, references, information architecture, layout, typography scale, composition, tokens, component patterns, conversational patterns, agent interaction patterns, decisions log. Include the EIID Interface Map section from step 1.
 
 ---
 
@@ -160,17 +170,7 @@ Score each layer: **strong**, **adequate**, **weak**. Prioritize based on the us
 
 ### 5. Propose
 
-The critique identified what's weak. Now apply `reference/design-craft.md` to generate improvements. Work through four craft dimensions for each weak or adequate layer.
-
-**Spatial composition:** density variation between zones (dense for scanning, generous for focus), hierarchy through size + weight + space + position (three distinguishable tiers), section rhythm (three-number cadence: major sections / groups / items), proportion (focal element larger than supporting content), asymmetry and grid-breaking at focal points, negative space as grouping structure.
-
-**Typography:** hierarchy works without color (size + weight alone produce three tiers), each level distinct in size + weight + color, fonts chosen intentionally (not framework defaults), monospace for aligned data.
-
-**Surfaces and depth:** lightness shifts between levels (2-5%, not color jumps), consistent depth strategy (borders-only or subtle-shadows or layered, not mixed), opacity-based borders, complete interactive states on every clickable element.
-
-**Identity:** direction spectrum pushed intentionally (density, temperature, energy, complexity), signature element visible, committed direction (not half-measures), anti-convergence test, atmosphere matching direction (or deliberate absence), every color with a documented job.
-
-If the design system documents layout, typography scale, or composition rules, proposals use those values. Documented section rhythm of 48/24/12 means proposals use 48/24/12. Documented density map with a generous metrics zone means proposals give it space.
+The critique identified what's weak. Now apply `reference/design-craft.md` to generate improvements. Apply all four craft dimensions from `reference/design-craft.md` for each weak or adequate layer. If the design system documents layout, typography scale, or composition rules, proposals use those values.
 
 For each proposed change:
 

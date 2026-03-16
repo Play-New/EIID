@@ -18,24 +18,24 @@ Node.js CLI tool. GitHub API (repo scanning), npm/yarn registry APIs (version da
 **Human input:** None during operation. User configures watched repos and severity thresholds once via CLI.
 **Missing:** Private registry support, monorepo workspace detection
 **Connect:** GitHub API for package.json and lockfile reading, npm registry for version metadata and changelogs
-**Approach:** Automate — standard API consumption. No competitive advantage in how data is fetched.
+**Approach:** Automate via code — standard API consumption. High frequency (scanning multiple repos), deterministic, needs rate limit management. Code, not agent.
 
 ### Inference (patterns)
 **Detect:** Breaking changes via semver analysis, changelog keyword parsing, TypeScript type signature comparison
 **Predict:** Migration complexity based on number of affected imports, depth of API surface change, availability of codemods
 **Flag:** Production dependency updates with major version bumps or known breaking changes
-**Approach:** Differentiate — the quality of breaking change detection is the product value. Semver alone misses breaking changes in minor versions. Changelog parsing and type comparison catch what semver does not.
+**Approach:** Differentiate via code — the quality of breaking change detection is the product value. Semver alone misses breaking changes in minor versions. Changelog parsing and type comparison catch what semver does not. Deterministic analysis at scale requires code.
 
 ### Interpretation (insights)
 **Surface:** "lodash 4.17 to 5.0: type signature changes in _.merge. 3 repos affected. Migration: moderate."
 **Frame as:** Risk level, affected repo count, migration complexity estimate, specific breaking changes listed
-**Approach:** Differentiate — framing risk clearly saves developer time. A version bump number alone does not communicate effort.
+**Approach:** Differentiate via LLM call — single prompt on structured diff: changelog + type signature delta + affected import count. Produces a natural language risk summary. Graduation: move to template when risk framing patterns stabilize across 50+ summaries.
 
 ### Delivery (reach)
 **Channels:** Slack DM (urgent: breaking changes in production deps), CLI table output (full scan results), GitHub issue comment (repo-specific updates)
 **Triggers:** Breaking change detected in production dependency, weekly scan completed, PR touches affected dependency
 **Timing:** Slack DM immediately on detection. CLI report on demand or weekly cron. GitHub comment when PR is opened.
-**Approach:** Automate — Slack, CLI, and GitHub APIs are commodity delivery channels.
+**Approach:** Automate via code — Slack, CLI, and GitHub APIs are commodity delivery channels. High frequency, deterministic formatting, no flexibility needed.
 
 ## Technology Constraints
 Use npm registry API, NOT scraping npmjs.com.
@@ -49,6 +49,8 @@ CLI output must work in 80-character terminals.
 - Channel adapters: Slack, CLI table formatter, GitHub issue commenter
 - Configuration stored in .depwatch.json in user home directory
 - No daemon process. Runs on demand or via external cron (CI, crontab).
+- **Tool design:** LLM call receives schema-validated input (structured diff JSON), returns schema-validated output (risk assessment JSON). No free-form prompting.
+- **Graduation marker:** `// via LLM call, graduate to template when patterns stabilize`
 
 ## Design System
 **Framework:** None. No visual interface.

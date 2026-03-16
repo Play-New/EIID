@@ -75,6 +75,17 @@ Detect from package.json. Apply checks for each detected tool. For tools not lis
 - Price/amount validated server-side (not trusted from client)?
 - Subscription status checked before granting access?
 
+## Agent Security
+
+For projects that use AI agents (messaging bots, coding agents, scheduled agent tasks):
+
+- **Isolation:** each agent should run in its own container or sandboxed environment. Application-level access controls are not sufficient. OS-level isolation prevents cross-agent data leakage.
+- **No secrets in agent environment.** API keys, tokens, and credentials stay on the host side. The agent gets access to specific tools and data through controlled interfaces, not direct access to secrets.
+- **Selective data mounting.** Mount only the directories and files the agent needs for its job. Not the whole filesystem, not other agents' data.
+- **Treat agents as untrusted.** An agent that can run bash, write files, and access the network should be assumed capable of doing anything within its sandbox. Design the sandbox accordingly.
+- **Audit agent actions.** Log what agents do, especially file writes, network calls, and tool invocations. If an agent operates on user data, the audit trail should show what it accessed and why.
+- **Agent-to-agent isolation.** If multiple agents run on the same machine (one for family WhatsApp, one for work repos), they must not share environment, filesystem, or database access. A compromised or misbehaving agent in one context must not affect another.
+
 ## Blocking Rules
 
 **BLOCK** (must fix before proceeding):

@@ -18,7 +18,12 @@
 **Visual scope:** None. No EIID layer requires a graphical interface. All information fits in text.
 **Non-visual scope:** All layers are automated, conversational, or notification-based. Design covers message structure, formatting conventions, and channel-specific adaptation only.
 
-## Message Structure
+## References
+**Borrowed:** Slack message density from Sentry alerts (severity + key fact + one action). CLI table compactness from `npm outdated` (aligned columns, no decoration). GitHub comment structure from Dependabot (collapsible details, migration command).
+**Avoided:** Verbose changelogs pasted into Slack (information overload). Color-coded terminal output as primary information carrier (inaccessible). Interactive CLI prompts during scan (breaks CI/cron usage).
+**Assets:** None.
+
+## Conversational Patterns
 
 No layout, typography scale, color tokens, or composition rules. The design system for DepWatch is entirely about how information is structured in text.
 
@@ -58,14 +63,14 @@ RISK  PACKAGE        UPDATE     REPOS  MIGRATION
 Run `depwatch migrate lodash` for automated fixes.
 ```
 
-## Channel Formatting Rules
+### Channel Formatting Rules
 - Bold for severity keywords and package names
 - Monospace for versions, commands, file paths, and function signatures
 - Plain text for descriptions and rationale
 - Links only for drill-down actions (never decorative)
 - No color in CLI output (risk squares work in monochrome). Color is optional enhancement, not information carrier.
 
-## Timing Rules
+### Timing Rules
 - Breaking changes in production dependencies: immediate Slack DM
 - Non-breaking updates: batched into weekly CLI report
 - GitHub issue comments: created when a PR touches an affected dependency

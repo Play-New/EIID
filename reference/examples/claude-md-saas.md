@@ -18,24 +18,24 @@ Next.js 15 (App Router), Supabase (database + auth + realtime), Inngest (schedul
 **Human input:** Fleet managers forward maintenance receipts via email, drivers report issues via WhatsApp voice notes or photos of dashboard warnings
 **Missing:** Weather data for route conditions, tire pressure from OBD-II
 **Connect:** Telematics API polling every 5 min via Inngest cron, email parsing for receipts, WhatsApp media processing for driver reports
-**Approach:** Automate — telematics polling is commodity (Inngest cron). Weather API is commodity (public APIs). OBD-II integration is differentiate (hardware-dependent, needs fleet manager input on which vehicles).
+**Approach:** Automate via buy — telematics polling is commodity (cron job runner). Weather API is commodity (public APIs). OBD-II integration is differentiate via code (hardware-dependent, needs fleet manager input on which vehicles).
 
 ### Inference (patterns)
 **Detect:** Vehicles deviating >15% from fuel efficiency baseline
 **Predict:** Maintenance window based on mileage + last service + vehicle age
 **Flag:** Idle time anomalies (vehicle stationary during work hours)
-**Approach:** Innovate — cross-source correlation (telematics + maintenance + weather = predictive insight). No off-the-shelf product does this for mid-market fleets.
+**Approach:** Innovate via code — cross-source correlation (telematics + maintenance + weather = predictive insight). Volume and latency require deterministic processing. No off-the-shelf product does this for mid-market fleets.
 
 ### Interpretation (insights)
 **Surface:** "Vehicle DE-4521 is 800km from next service and fuel efficiency dropped 18% this week"
 **Frame as:** Comparison to fleet average + trend over 4 weeks + recommended action
-**Approach:** Differentiate — maintenance scheduling needs fleet manager judgment on priority. System provides data, human decides.
+**Approach:** Differentiate via code — maintenance scheduling needs fleet manager judgment on priority. System provides data, human decides. High-frequency alerts justify coded logic over agent.
 
 ### Delivery (reach)
 **Channels:** WhatsApp (same channel drivers use for input), email (same channel managers use for receipts), web interface (fleet visualizations + configuration: alert rules, polling frequency, user roles, cron schedules)
 **Triggers:** Efficiency drop > 10%, maintenance window < 500km, idle > 2h
 **Timing:** WhatsApp alerts during business hours only (7-19 CET)
-**Approach:** Automate — auth (Supabase Auth), hosting (Vercel), email delivery (Brevo), WhatsApp delivery (Baileys). All commodity.
+**Approach:** Automate via buy — auth, hosting, email delivery, WhatsApp delivery. All commodity services.
 
 ## Technology Constraints
 Use Supabase, NOT Firebase, AWS Amplify.

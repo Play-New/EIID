@@ -64,6 +64,7 @@ All visible text should form one coherent story.
 - Do error messages explain what happened AND what to do next?
 - Does the content voice match the user described in CLAUDE.md? A developer tool can be terse. A consumer app should be friendly. A medical tool should be precise. The voice is not separate from the design.
 - Cross-channel consistency: if the same insight is delivered both visually and conversationally, language must be consistent. Same terms, same framing, same units across dashboard and chat message. For conversational delivery, content critique applies to message structure: headline, context, action.
+- Agent persona consistency: if an agent generates user-facing text, its voice should be coherent across sessions and across UI surfaces. An agent that's casual in chat and formal on the dashboard has no persona.
 
 ## 4. Structure
 
@@ -90,3 +91,4 @@ The capstone. Run these tests after all other layers are addressed.
 **The screenshot test:** show a screenshot without the logo or product name. Can someone guess what kind of product this is? What domain it serves? If the screenshot could be anything, the visual identity is not doing its job.
 
 - Channel identity: product identity persists across channels. A WhatsApp message, an email alert, and a dashboard screen should feel like the same product. If they don't, identity is incomplete.
+- Agent identity: if an agent interacts with users, its tone and pacing should match the design direction. A warm editorial product should not have a terse robotic agent. A dense operational tool should not have a chatty agent.
