@@ -169,9 +169,13 @@ Each example includes: CLAUDE.md, design-system.md, decisions.md, and build-plan
 
 ## Stack
 
-`/super:strategy` identifies which roles the project needs (framework, database, hosting, background jobs, component library) and recommends tools for each based on the EIID mapping, the team's context, and current ecosystem. For existing projects, it detects what's installed and adapts.
+The EIID mapping determines what the project needs. Strategy reads it and identifies which roles to fill — then researches the best tool for each role given the project's context, team familiarity, ecosystem maturity, and scale.
 
-Not every project needs every role. A CLI tool needs none of these. A WhatsApp bot needs a messaging library and a database but no frontend framework. Strategy derives the roles from the EIID mapping, then researches what fits.
+Not every project needs every role. A CLI tool needs no framework, no hosting, no component library. A WhatsApp bot needs a messaging library and a database but no frontend. A visual SaaS needs most roles. The mapping tells you.
+
+**How it works:** strategy scans the EIID layers and asks — does this product have visual surfaces? It needs a framework and a component library. Does it persist user data? It needs a database with auth. Does it have scheduled tasks or event-driven workflows? It needs a background job runner. Does delivery use WhatsApp or Telegram? It needs a messaging library. Does it have agent components? It needs a runtime with memory and scheduling.
+
+For each role, strategy researches and recommends a specific tool with reasoning. For existing projects, it detects what's installed from package.json and adapts. Recommendations are starting points — the user picks what they prefer, and strategy generates technology constraints from whatever stack is chosen.
 
 ---
 
