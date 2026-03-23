@@ -51,11 +51,17 @@ If documents from the folder scan add information the user didn't mention, incor
 
 ### 4. Research
 
-Search the web close to the user's problem, not just the industry. One focused search:
+Search the web close to the user's problem, not just the industry. Three focused searches, each building on the previous:
 
-**How this problem gets solved today.** "[user role] [problem] tools" or "[user need] software" — what products, workflows, and solutions exist? What's good, what's broken, what's missing? This grounds the EIID mapping in reality.
+**Search 1 — How this problem gets solved today.** "[user role] [problem] tools" or "[user need] software" — what products, workflows, and solutions exist? What's good, what's broken, what's missing? This grounds the EIID mapping in reality.
+
+**Search 2 — Who does it well.** From search 1, identify the 2-3 best existing solutions. Search for them specifically: their architecture, pricing, limitations, user complaints. What do they get right? Where do users say they fall short? This reveals where commodity ends and differentiation begins.
+
+**Search 3 — What changed recently.** "[problem domain] AI tools [current year]" or "[industry] automation [current year]" — what's new in this space? What was custom six months ago and is now a service? What services shut down or pivoted? This prevents building something that's already commodity or betting on a dying tool.
 
 Use the research and your own knowledge to classify each component's evolution stage in step 5. What's commodity (multiple providers, standardized)? What requires human judgment? Where are new connections possible that were previously too expensive? The classification comes from informed judgment, not from separate searches.
+
+**Reference seeds for design.** From the research, note 2-3 products with interfaces worth studying — not necessarily competitors, but products whose users have similar contexts (same urgency, same density needs, same device usage). Pass these to `/super:design` step 4 as suggested references. Record them in the research summary so they're available when the user runs design later.
 
 ### 5. EIID Mapping
 
@@ -173,9 +179,11 @@ Add `.superskills/` to the project's `.gitignore` suggestion list. The user deci
 
 Tell the user:
 
-**Next step:** run `/super:design` for design system setup, or `/super:review` for a full quality audit (tests, security, strategy alignment, design consistency, performance).
+**Next step:** run `/super:design` for design system setup, or `/super:build` to start constructing from the strategy. Run `/super:review` for a full quality audit.
 
-Then start building. The plugin watches what you do. When you want a check, run `/super:review` for a full audit — all at once.
+If the research (step 4) identified reference products worth studying for design, mention them: "During research, [Product A] and [Product B] stood out as good design references for [reason]. Consider them when running `/super:design`."
+
+The plugin watches what you do. When you want a check, run `/super:review` for a full audit — all at once.
 
 ---
 

@@ -64,7 +64,7 @@ Add the marketplace and pre-enable the plugin in `.claude/settings.json` so new 
 
 Run `/super:strategy`. It scans the folder, detects the stack, asks six questions, researches the problem space, and produces an EIID mapping with strategic classification and implementation levels. If any component uses agent, workflow, or LLM call, it adds an agent architecture step. Output: CLAUDE.md (stable instructions) and `.superskills/` (volatile findings).
 
-From that point: the secrets guard watches file writes, two skills advise during planning, three commands audit specific domains, and findings accumulate in `.superskills/`.
+From that point: the secrets guard watches file writes, two skills advise during planning, four commands handle specific domains, and findings accumulate in `.superskills/`.
 
 ## Commands
 
@@ -72,9 +72,10 @@ From that point: the secrets guard watches file writes, two skills advise during
 |---------|------|
 | `/super:strategy` | Assessment, EIID mapping, implementation levels, agent architecture, scaffolding. Refresh mode when context changes |
 | `/super:design` | Init: modality assessment, direction, IA, tokens, interaction patterns. Redesign: single-screen craft improvement |
+| `/super:build` | Autonomous construction from strategy and design. Readiness check, decomposition, build loop with quality gates. Extend mode for adding features |
 | `/super:review` | Full audit: tests, security, strategy, design, performance, agent architecture |
 
-Each command detects whether setup exists. `/super:strategy` with context about what changed triggers refresh mode. `/super:design` with a target (file path, screenshot, URL) triggers redesign mode.
+Each command detects whether setup exists. `/super:strategy` with context about what changed triggers refresh mode. `/super:design` with a target (file path, screenshot, URL) triggers redesign mode. `/super:build` with a target (feature, EIID layer, component) triggers extend mode.
 
 ---
 
@@ -187,6 +188,23 @@ Code Architecture in CLAUDE.md gains five EIID-gated principles: parity, tool gr
 
 **Craft** covers 10 dimensions: direction spectrum, spatial composition, typography character, visual identity, subtle layering, atmosphere, motion, color intent, conversational/notification craft, agent interaction craft.
 
+## Build
+
+`/super:build` closes the loop from strategy to working code. It reads the EIID mapping, checks readiness (strategy, stack, design), decomposes the project into buildable pieces, and constructs each with a test-first loop.
+
+Two types of pieces:
+
+- **Shared standards** (auth, settings, logging, error handling, schema) follow patterns from `reference/shared-standards.md`. These are deterministic — consistency matters more than creativity. Every project needs them, and they should work identically every time.
+- **Unique pieces** (interpretation visualizations, inference pipelines, agent flows, enrichment connectors) are generative. The LLM implements them, tests verify the outcome.
+
+The build loop per piece: write acceptance tests → implement → verify (tests + types + design compliance) → log decision. Maximum 3 iterations. If still failing, stop and report.
+
+**Init mode** builds from scratch: scaffold → schema → auth → layout → settings → EIID layers by priority → visual surfaces → agent runtime → background jobs.
+
+**Extend mode** takes a target (feature, EIID layer, component) and adds it to the existing codebase through the same loop.
+
+If the project uses LLM calls, workflows, or agents, shared standards include prompt visibility: every prompt is visible and editable by the user through settings. The intelligence layer is not a black box.
+
 ## Review
 
 Six audits. Tests run first (broken code makes other audits unreliable). The remaining five run in parallel when agent teams are available.
@@ -249,6 +267,7 @@ superskills/                             the plugin
 ├── commands/
 │   ├── strategy.md                     assessment, EIID, implementation levels, agent architecture
 │   ├── design.md                       12-step design system + redesign
+│   ├── build.md                        autonomous build loop + extend mode
 │   └── review.md                       six-domain audit
 ├── skills/
 │   ├── eiid-awareness/SKILL.md          strategic alignment during planning
@@ -263,6 +282,8 @@ superskills/                             the plugin
 │   ├── design-critique.md              6-layer critique
 │   ├── design-craft.md                 10 craft dimensions
 │   ├── design-init-guide.md            modality assessment through tokens
+│   ├── shared-standards.md             building block patterns (auth, settings, logging)
+│   ├── build-readiness-guide.md        readiness gates for /super:build
 │   ├── review-security-guide.md        security checklist
 │   ├── review-performance-guide.md     performance checklist
 │   └── examples/
@@ -281,11 +302,11 @@ your-project/                            what gets generated
 ├── CLAUDE.md                            stable instructions (~100 lines)
 └── .superskills/
     ├── report.md                        volatile findings (replaced each audit)
-    ├── decisions.md                     architecture log (append-only)
+    ├── decisions.md                     architecture log (active + archived)
     └── design-system.md                 design direction + tokens + patterns
 ```
 
-3 commands, 2 skills, 1 agent, 1 hook. 24 markdown files, 3 JSON. Three examples demonstrate the spectrum: FleetPulse (visual-heavy SaaS, all code/buy), RecipeBox (mixed modality consumer, agents and workflows with graduation), DepWatch (no-visual devtool, single LLM call with graduation to template).
+4 commands, 2 skills, 1 agent, 1 hook. 27 markdown files, 3 JSON. Three examples demonstrate the spectrum: FleetPulse (visual-heavy SaaS, all code/buy), RecipeBox (mixed modality consumer, agents and workflows with graduation), DepWatch (no-visual devtool, single LLM call with graduation to template).
 
 ## References
 
