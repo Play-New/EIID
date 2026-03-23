@@ -2,7 +2,7 @@
 
 Detailed process for each step of `/super:design` init mode. The command file defines the flow. This file defines the execution.
 
-Steps 1-5 are problem-solving. They apply to ALL products. Steps 7-12 are visual execution and apply only to visual layers.
+Steps 1-5 are problem-solving. They apply to ALL products. Step 6 detects the UI framework (non-visual products skip it and jump to step 13). Steps 7-12 are visual execution and apply only to visual layers.
 
 ## Interface Modality Assessment
 

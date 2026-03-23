@@ -27,9 +27,11 @@ Framework config files alone (`components.json`, `tailwind.config.ts`, `globals.
 
 Read `reference/design-init-guide.md` for detailed execution of each step. Read `reference/design-craft.md` for craft principles. Read `reference/examples/design-system-saas.md` for tone and level of specificity.
 
-**Steps 1-6 are problem-solving. They apply to ALL products — visual, conversational, CLI, agent, workflow. Every product gets steps 1-6.**
+**Steps 1-5 are problem-solving. They apply to ALL products — visual, conversational, CLI, agent, workflow. Every product gets steps 1-5.**
 
-**Steps 7-12 are visual execution. They apply ONLY to products with layers mapped to a visual modality. Skip all of them for non-visual products.**
+**Step 6 detects the UI framework. Non-visual products skip it and jump to step 13.**
+
+**Steps 7-12 are visual execution. They apply ONLY to products with layers mapped to a visual modality.**
 
 ### 1. Interface Modality Assessment
 

@@ -64,7 +64,7 @@ Add the marketplace and pre-enable the plugin in `.claude/settings.json` so new 
 
 Run `/super:strategy`. It scans the folder, detects the stack, asks seven questions (including "how should they feel?" — the emotional benchmark for all design and build decisions), researches the problem space, and produces an EIID mapping with strategic classification, implementation levels, and a target feeling. If any component uses agent, workflow, or LLM call, it adds an agent architecture step. Output: CLAUDE.md (stable instructions) and `.superskills/` (volatile findings).
 
-From that point: the secrets guard watches file writes, two skills advise during planning, four commands handle specific domains, and findings accumulate in `.superskills/`.
+From that point: the secrets guard watches file writes, three skills advise during planning, four commands handle specific domains, and findings accumulate in `.superskills/`.
 
 ## Commands
 
@@ -171,7 +171,7 @@ Code Architecture in CLAUDE.md gains five EIID-gated principles: parity, tool gr
 
 **Init mode** runs 13 steps in two phases:
 
-**Problem-solving (steps 1-6, ALL products):**
+**Problem-solving (steps 1-5, ALL products) + visual gate (step 6):**
 1. **Interface Modality Assessment** — for each EIID layer, determine: visual, conversational, notification, embedded, or none. Produce the EIID Interface Map.
 2. **Explore the Product's World** — domain concepts, signature, defaults to reject. ALL products, not just visual.
 3. **Direction Assessment** — references (visual and non-visual), anti-references, existing assets, constraints.
@@ -310,7 +310,7 @@ your-project/                            what gets generated
     └── design-system.md                 design direction + tokens + patterns
 ```
 
-4 commands, 3 skills, 1 agent, 1 hook. 30 markdown files, 3 JSON. Three examples demonstrate the spectrum: FleetPulse (visual-heavy SaaS, all code/buy), RecipeBox (mixed modality consumer, agents and workflows with graduation), DepWatch (no-visual devtool, single LLM call with graduation to template).
+4 commands, 3 skills, 1 agent, 1 hook. 31 markdown files, 3 JSON. Three examples demonstrate the spectrum: FleetPulse (visual-heavy SaaS, all code/buy), RecipeBox (mixed modality consumer, agents and workflows with graduation), DepWatch (no-visual devtool, single LLM call with graduation to template).
 
 ## References
 

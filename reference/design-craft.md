@@ -20,7 +20,7 @@ Experience craft is the WHY behind every behavior pattern. A prompt that leads w
 
 **Feedback principles:**
 - Every user action gets acknowledgment. The modality determines the form: visual surfaces use animation (100-200ms). Conversational channels use typing indicators and status messages. CLI uses progress bars. Notifications use delivery confirmation. The principle is universal — the implementation varies.
-- Loading and processing states communicate WHAT the system is doing, not just THAT it is doing something. "Checking 3 sources..." not a spinner. "Matching against your pantry..." not "Processing...". This applies equally to a web UI loading state and an agent's first message before delivering a result.
+- Loading and processing states communicate WHAT the system is doing, not just THAT it is doing something. "Checking 3 sources..." not a spinner. "Matching against your pantry..." not "Processing...". This applies equally to a visual loading state, an agent's first message before delivering a result, and a CLI's progress output.
 - Success feedback is proportional to achievement. A routine save is subtle. Completing a meaningful goal is a moment. This proportion applies in every modality: a WhatsApp agent's response to "I made the recipe!" should feel warmer than its response to "ok."
 
 **Pacing principles:**
