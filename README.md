@@ -17,6 +17,10 @@ claude plugin marketplace add Play-New/superskills
 claude plugin install super
 ```
 
+Update: `claude plugin marketplace update superskills`
+
+Auto-update: run `/plugin` in Claude Code, select `superskills` under Marketplaces, enable auto-update.
+
 ---
 
 ## What this does
