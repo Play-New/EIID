@@ -57,55 +57,35 @@ Read `reference/review-security-guide.md` for the full security audit checklist.
 
 ---
 
-## 3. Build Standards
+## 3. Build Quality
 
-Severity: blocking if auth or schema standards are violated, advisory otherwise.
+Severity: blocking on security posture, advisory on design.
 
-Read `reference/shared-standards.md`. For each standard that applies to the project (skip standards for features the project doesn't have), check compliance:
+Read `reference/build-principles.md`. Apply to the existing codebase:
 
-### Auth
-- Is there a single middleware file protecting all routes? Or scattered per-route checks?
-- Does every protected API route validate session before processing?
-- Does the auth flow use the stack's auth service (as specified in CLAUDE.md), not custom?
+### Minimal Surface
+- Are there screens, endpoints, tables, or components that don't trace to the EIID mapping? Flag each.
+- Are there screens doing two things that should be one? Settings split across multiple pages? Redundant views?
+- Are there tables that aren't queried, endpoints that aren't called, components that aren't rendered?
+- Count: how many screens, tables, API routes. Compare against the EIID mapping. If the ratio feels heavy, flag it.
 
-### Database Schema
-- RLS enabled on every table with user data? Policies for select/insert/update/delete?
-- Indexes on columns used in WHERE, ORDER BY, JOIN?
-- `created_at` and `updated_at` on every table?
-- Types generated from schema, not hand-written?
+### Design Through the Stack
+- Does the schema reflect the IA's core objects, or is it over-modeled?
+- Do visual surfaces carry the design direction's character, or do they feel generic?
+- Is the signature element present and visible?
+- Do user-facing messages (errors, notifications, agent responses) match the design direction's tone?
 
-### Settings
-- Settings page with grouped concerns?
-- If the project uses LLM calls/workflows/agents: are prompts visible and editable?
-- Is there a reset-to-default for user prompt overrides?
+### Security Posture
+- If the product has users: single auth middleware, not scattered checks. Blocking.
+- If the product has a database with user data: RLS enabled. Blocking.
+- Secrets in env, validated at startup, never in code. Blocking.
+- Input validation at boundaries (user input, webhooks, API responses). Blocking on critical paths.
 
-### Error Handling
-- Structured API error format (`{ error, code? }`) used consistently?
-- Error boundaries on route segments?
-- No stack traces or technical details in user-facing errors?
-- Agent errors follow design system patterns (actionable, not raw)?
-
-### Logging
-- Structured JSON format, not console.log?
-- No PII in logs (email, names, passwords)?
-- Request logging middleware with method, path, status, duration?
-
-### Layout Shell (if visual layers exist)
-- Navigation matches IA from design system exactly? No extra items?
-- Active state on current route?
-- Responsive at documented breakpoints?
-- All values from design tokens, no arbitrary values?
-
-Output table:
-
-| Standard | Status | Issues |
-|----------|--------|--------|
-| Auth | PASS/FAIL/SKIP | [details] |
-| Schema | PASS/FAIL/SKIP | [details] |
-| Settings | PASS/FAIL/SKIP | [details] |
-| Error handling | PASS/FAIL/SKIP | [details] |
-| Logging | PASS/FAIL/SKIP | [details] |
-| Layout shell | PASS/FAIL/SKIP | [details] |
+### Intelligence Transparency (if LLM/agent components exist)
+- Are prompts in discoverable locations, not inline in business logic?
+- Do LLM calls have schema-validated output?
+- If user-facing: can the user see what the system is prompted to do?
+- Are graduation markers present in code comments?
 
 ---
 
@@ -274,7 +254,7 @@ Write all findings to `.superskills/`:
 
 - Test results → **replace** Test Report section in `.superskills/report.md` (keep last 3 runs)
 - Security findings → **replace** Security Findings section in `.superskills/report.md`
-- Build standards findings → **replace** Build Standards section in `.superskills/report.md`
+- Build quality findings → **replace** Build Quality section in `.superskills/report.md`
 - Strategy findings → **append** to `.superskills/decisions.md`
 - Design findings → **replace** Design Findings section in `.superskills/report.md`
 - Performance findings → **replace** Performance Budget section in `.superskills/report.md`
@@ -291,7 +271,7 @@ Print a summary at the end:
 
 Tests:        [passed/failed/skipped]
 Security:     [blocking count] blocking, [high count] high
-Build:        [pass count]/[total count] standards passing
+Build:        [surface count] excess, [security count] security issues
 Strategy:     [scope-creep count] scope creep, [opportunity count] opportunities
 Design:       [violation count] violations
 Performance:  [issue count] issues

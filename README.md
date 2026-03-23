@@ -192,18 +192,15 @@ Code Architecture in CLAUDE.md gains five EIID-gated principles: parity, tool gr
 
 `/super:build` closes the loop from strategy to working code. It reads the EIID mapping, checks readiness (strategy, stack, design), decomposes the project into buildable pieces, and constructs each with a test-first loop.
 
-Two types of pieces:
+**Rule zero:** before adding anything — a screen, a component, an endpoint, a table — ask: does this trace to the EIID mapping? Is there a simpler way? Does it earn its place? Every element justifies its existence against the user need. A product with 3 screens that each do one thing perfectly beats a product with 12.
 
-- **Shared standards** (auth, settings, logging, error handling, schema) follow patterns from `reference/shared-standards.md`. These are deterministic — consistency matters more than creativity. Every project needs them, and they should work identically every time.
-- **Unique pieces** (interpretation visualizations, inference pipelines, agent flows, enrichment connectors) are generative. The LLM implements them, tests verify the outcome.
+The build derives what each project needs from its strategy. A CLI tool doesn't need auth. A WhatsApp-only product doesn't need a layout shell. No fixed checklist — the EIID mapping determines what gets built.
 
-The build loop per piece: write acceptance tests → implement → verify (tests + types + design compliance) → log decision. Maximum 3 iterations. If still failing, stop and report.
+The loop per piece: test → build → verify → next. Fully autonomous after plan approval. Stops only on hard failure. Design direction is embedded from line one, not applied at the end.
 
-**Init mode** builds from scratch: scaffold → schema → auth → layout → settings → EIID layers by priority → visual surfaces → agent runtime → background jobs.
+**Init mode** reads the strategy, derives what this project needs, presents a plan, gets approval, then builds autonomously.
 
-**Extend mode** takes a target (feature, EIID layer, component) and adds it to the existing codebase through the same loop.
-
-If the project uses LLM calls, workflows, or agents, shared standards include prompt visibility: every prompt is visible and editable by the user through settings. The intelligence layer is not a black box.
+**Extend mode** takes a target, maps it to EIID, challenges its scope with rule zero, then builds through the same loop.
 
 ## Review
 
@@ -213,13 +210,13 @@ Seven audits. Tests run first (broken code makes other audits unreliable). The r
 |-------|----------|-------|
 | **Tests** | Blocking | vitest + Playwright setup and full suite |
 | **Security** | Blocking on critical | OWASP Top 10, GDPR, secrets, stack-adaptive checks |
-| **Build standards** | Blocking on auth/schema | Shared standards compliance (auth, schema, settings, error handling, logging, layout) |
+| **Build quality** | Blocking on security | Minimal surface, design through the stack, security posture, intelligence transparency |
 | **Strategy** | Advisory | EIID alignment per file, scope creep, 11-question opportunity scan |
 | **Design** | Blocking if widespread | Accessibility, IA, design system compliance, conversational/agent pattern compliance, consistency, framework rules, craft |
 | **Performance** | Blocking on regression | Bundle, Core Web Vitals, N+1 queries, API costs |
 | **Agent architecture** | Blocking on parity gaps | Implementation level, graduation readiness, tool quality, testing, feedback loop |
 
-Agent architecture is skipped entirely if no EIID component uses agent, workflow, or LLM call. Build standards skips checks for features the project doesn't have.
+Agent architecture is skipped entirely if no EIID component uses agent, workflow, or LLM call.
 
 ## Skills and hooks
 
@@ -229,14 +226,14 @@ Agent architecture is skipped entirely if no EIID component uses agent, workflow
 
 **Design awareness** (skill, during planning): flags registry alternatives, aesthetic drift, pattern reuse, IA violations, agent interaction consistency. Nudges toward `/super:design` when component patterns fall behind.
 
-**Build awareness** (skill, during implementation): checks shared standards compliance when writing source code. Flags auth middleware gaps, unstructured errors, console.log logging, untested behavior, EIID traceability gaps, implementation level mismatches, and inline prompts that should be in config.
+**Build awareness** (skill, during implementation): challenges every addition against rule zero. Flags code that doesn't trace to EIID, simpler alternatives, generic output that doesn't carry the design direction, implementation level mismatches, and buried prompts.
 
 ## Where things go
 
 **CLAUDE.md** contains stable project instructions: context, stack, EIID mapping with strategic approach and implementation level per layer, technology constraints, design system config. It changes rarely. Updated by `/super:strategy` (init or refresh) and `/super:design` (Design System section). Claude reads it at session start. Target: under 100 lines.
 
 **`.superskills/`** contains volatile findings:
-- `report.md`: test results, security, build standards, design, performance, agent architecture findings. Build progress tracking. Replaced on each audit. Status counts at the top. Project Profile tracks recurring patterns.
+- `report.md`: test results, security, build quality, design, performance, agent architecture findings. Build progress tracking. Replaced on each audit. Status counts at the top. Project Profile tracks recurring patterns.
 - `decisions.md`: architecture decisions log. Append-only. Updated by `/super:strategy` refresh, `/super:review`, and `/super:design` redesign.
 - `design-system.md`: EIID Interface Map, direction, references, IA, layout, typography scale, composition, tokens, component patterns, conversational patterns, agent interaction patterns. Updated by `/super:design` as the system evolves.
 
@@ -286,7 +283,7 @@ superskills/                             the plugin
 │   ├── design-critique.md              6-layer critique
 │   ├── design-craft.md                 10 craft dimensions
 │   ├── design-init-guide.md            modality assessment through tokens
-│   ├── shared-standards.md             building block patterns (auth, settings, logging)
+│   ├── build-principles.md             design principles for construction
 │   ├── build-readiness-guide.md        readiness gates for /super:build
 │   ├── review-security-guide.md        security checklist
 │   ├── review-performance-guide.md     performance checklist

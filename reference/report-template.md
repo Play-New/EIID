@@ -16,21 +16,10 @@ Structure for `.superskills/report.md`. This file is volatile — replaced on ea
 ## Security Findings
 [empty — populated by /super:review]
 
-## Build Standards
+## Build Quality
 [empty — populated by /super:review]
 
-Shared standards compliance check. For each standard (auth, settings, schema, logging, error handling, layout shell), verify the pattern from `reference/shared-standards.md` is followed:
-
-| Standard | Status | Issues |
-|----------|--------|--------|
-| Auth | PASS/FAIL/SKIP | [details] |
-| Schema (RLS, indexes, timestamps) | PASS/FAIL/SKIP | [details] |
-| Settings (+ prompt management if applicable) | PASS/FAIL/SKIP | [details] |
-| Error handling | PASS/FAIL/SKIP | [details] |
-| Logging | PASS/FAIL/SKIP | [details] |
-| Layout shell | PASS/FAIL/SKIP | [details] |
-
-SKIP when the standard doesn't apply (e.g., no layout shell for a CLI tool).
+Minimal surface, design through the stack, security posture, intelligence transparency.
 
 ## Design Findings
 [empty — populated by /super:review]

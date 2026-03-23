@@ -1,33 +1,26 @@
 ---
 name: build-awareness
-description: Build quality awareness during implementation. Fires when Claude writes or edits source code. Checks shared standards compliance, test coverage, EIID traceability, and strategy alignment.
+description: Design-first quality awareness during implementation. Fires when Claude writes or edits source code. Challenges every addition against rule zero, design direction, and EIID traceability.
 user-invocable: false
 ---
 
 When writing or editing application source code (not config, not tests, not markdown):
 
-1. Read CLAUDE.md for the EIID mapping. Read `reference/shared-standards.md` for building block patterns. Read `.superskills/decisions.md` for build history (if it exists).
+1. Read CLAUDE.md for the EIID mapping and user need. Read `.superskills/design-system.md` for direction and signature (if it exists). Read `reference/build-principles.md`.
 
-2. **Shared standard check:** if the change touches auth, settings, logging, error handling, database schema, or layout shell, check against the corresponding section in `reference/shared-standards.md`. Flag deviations:
-   - Auth middleware missing on a new protected route
-   - Error response not using the structured format (`{ error, code? }`)
-   - Logging with console.log instead of the structured logger
-   - Settings change that doesn't persist or validate
-   - Database table missing RLS, timestamps, or indexes on filtered columns
-   - Layout component using arbitrary values instead of design tokens
+2. **Rule zero.** Is this addition necessary? Does it trace to the EIID mapping and the user need? Is there a simpler way? Flag anything that doesn't earn its place:
+   - A new screen for something that could be a section on an existing screen
+   - A new table for data that could be derived or stored in an existing table
+   - A new endpoint for an operation that could be part of an existing one
+   - A new component that duplicates what an existing component does
+   - A new dependency for something achievable with what's already installed
 
-3. **Test coverage check:** does the code being written or edited have corresponding tests? Not line coverage — behavior coverage. If a new API route is added, is there a test that calls it with valid input and gets expected output? If a new component renders data, is there a test that verifies it renders? Flag untested new behavior.
+3. **Design direction.** If the code produces anything a user sees (UI, messages, errors, agent responses): does it feel like this product? Not "are the tokens correct" — does it carry the direction's character? A fleet dashboard component should feel dense and operational. A recipe component should feel warm and generous. Flag output that feels generic, templated, or disconnected from the direction.
 
-4. **EIID traceability:** which EIID layer does this code serve? If it doesn't trace to any layer AND it's not supporting infrastructure (tests, types, config, utilities used by EIID code), flag: "This code doesn't trace to the EIID mapping. Is it supporting infrastructure or scope creep?"
+4. **EIID traceability.** Which layer does this code serve? If none, and it's not supporting infrastructure (tests, types, config, shared utilities), flag: "This doesn't trace to the EIID mapping."
 
-5. **Implementation level match:** if CLAUDE.md says a component is "via code" and the implementation uses an LLM call, flag the mismatch. If it says "via buy" and the code is building it custom, flag. If it says "via agent" and the code is a fixed pipeline with no iteration, flag.
+5. **Implementation level match.** Does the implementation match the classified level in CLAUDE.md? Flag mismatches: "via code" but uses an LLM call. "Via buy" but builds custom. "Via agent" but never iterates.
 
-6. **Prompt hygiene:** if the code contains LLM prompts (system messages, user templates, tool descriptions):
-   - Is the prompt stored in a discoverable location (not buried in a function)?
-   - Does the prompt have schema validation on its output?
-   - Is the prompt accessible to the settings/prompt management UI?
-   - Flag inline prompts in business logic: "Move this prompt to a dedicated prompt file or config."
+6. **Prompt hygiene.** If the code contains LLM prompts: are they in a discoverable location, not buried in a function? Do they have schema validation on output? Flag inline prompts in business logic.
 
-7. **Regression awareness:** if the change modifies existing behavior (not adding new), check: are existing tests still relevant? Will they catch a regression from this change? If the change is a refactor, the tests should pass without modification. If a test needs updating to match the new behavior, that's a signal the behavior changed — make sure it was intentional.
-
-One line per observation. Only when relevant. Not blocking. Brief.
+One line per observation. Only when relevant. Not blocking. Challenge, don't lecture.
