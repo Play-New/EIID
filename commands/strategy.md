@@ -5,7 +5,7 @@ allowed-tools: Read, Glob, Grep, Write, Edit, WebSearch, WebFetch
 
 # Strategy
 
-Read `reference/concepts.md` for EIID layer definitions, implementation levels, and graduation pattern. Those are canonical — don't redefine them here.
+Read `reference/concepts.md` for EIID layer definitions, implementation levels, and graduation. Those are canonical — don't redefine them here.
 
 ## Detect Mode
 
@@ -68,7 +68,7 @@ Search the web close to the user's problem, not just the industry. Three focused
 
 Use the research and your own knowledge to classify each component's evolution stage in step 6. What's commodity (multiple providers, standardized)? What requires human judgment? Where are new connections possible that were previously too expensive? The classification comes from informed judgment, not from separate searches.
 
-**Reference seeds for design.** From the research, note 2-3 products with interfaces worth studying — not necessarily competitors, but products whose users have similar contexts (same urgency, same density needs, same device usage). Write these to `.superskills/decisions.md` as a decision entry (type: `research`, EIID Layer: `Interpretation`) so they persist and `/super:design` step 3 can read them.
+**Reference seeds for design.** From the research, note 2-3 products with interfaces worth studying — not necessarily competitors, but products whose users have similar contexts (same urgency, same density needs, same device usage). Write these to `.superskills/decisions.md` as a decision entry (type: `research`, EIID Layer: whichever layer the reference is most relevant to) so they persist and `/super:design` step 3 can read them.
 
 ### 6. EIID Mapping
 

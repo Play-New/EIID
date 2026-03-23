@@ -52,14 +52,20 @@ The emotional state when the product works perfectly. Not "satisfied" or "happy"
 
 Six concrete behaviors that produce the target feeling. These apply to every modality — visual, conversational, CLI, agent, workflow, notification. Experience is not UI.
 
-**Feedback** — every user action gets acknowledgment. The modality determines the form: visual surfaces use animation, conversational channels use status messages, CLI uses progress indicators, notifications use delivery confirmation. The principle is universal; the implementation varies.
+**Feedback** — every user action gets acknowledgment. The modality determines the form: visual surfaces use animation, conversational channels use status messages, CLI uses progress indicators, notifications use delivery confirmation. The principle is universal; the implementation varies. A fleet manager submitting a maintenance request sees a status badge change on the dashboard, gets a WhatsApp confirmation with the work order number, and receives an email thread she can forward to the mechanic.
 
-**Pacing** — the product's rhythm matches the target feeling. A precise tool is fast — answer first, detail on demand. A warm product is gentle — context then decision. In agents: lead with insight, offer reasoning on request. In workflows: status at meaningful steps, not just at completion.
+**Pacing** — the product's rhythm matches the target feeling. A precise tool is fast — answer first, detail on demand. A warm product is gentle — context then decision. In agents: lead with insight, offer reasoning on request. In workflows: status at meaningful steps, not just at completion. A dependency scanner targeting "precise confidence" prints the risk verdict in the first CLI line, then lists affected packages below. The same product's Slack notification leads with "2 breaking changes in next update" — detail lives behind the link.
 
-**Voice** — one personality across all text surfaces. Prompts, error messages, agent responses, notifications, empty states, CLI output, email subjects. A warm product is warm in its error messages. A precise product is precise in its WhatsApp replies.
+**Voice** — one personality across all text surfaces. Prompts, error messages, agent responses, notifications, empty states, CLI output, email subjects. A warm product is warm in its error messages. A precise product is precise in its WhatsApp replies. A recipe app targeting "warm relief" says "No matches with what you have today — want to try with fewer ingredients?" on the web, in WhatsApp, and in the agent response. Same warmth, same phrasing conventions, regardless of channel.
 
-**Gratification** — proportional to achievement. Routine saves are subtle. Meaningful milestones are moments. Per-modality: visual celebration, conversational warmth, CLI summary with delta, notification subject line that IS the win.
+**Gratification** — proportional to achievement. Routine saves are subtle. Meaningful milestones are moments. Per-modality: visual celebration, conversational warmth, CLI summary with delta, notification subject line that IS the win. A fleet manager who resolves all overdue maintenance items sees a dashboard state change from amber to green. The same event triggers a WhatsApp message: "All vehicles cleared — zero overdue." The weight of the moment matches the weight of the accomplishment.
 
-**Restraint** — what is deliberately absent. No confirmation dialogs for reversible actions. No "Is there anything else?" after every answer. No notification for routine completions. No explanation unless asked. No prompt clause that doesn't change the output. Silence is a feature.
+**Restraint** — what is deliberately absent. No confirmation dialogs for reversible actions. No "Is there anything else?" after every answer. No notification for routine completions. No explanation unless asked. No prompt clause that doesn't change the output. Silence is a feature. A recipe agent that successfully substitutes an ingredient says "Swapped butter for coconut oil — adjusted quantities in step 3." It does not say "Great choice! I've updated your recipe. Is there anything else you'd like to change?" The dashboard does not animate a success toast for a routine save.
 
 **Absence test** — for every element the user perceives across any modality — a screen element, a message, a prompt clause, a workflow notification, a CLI line, an agent response — remove it. If the target feeling survives without it, the element should not exist.
+
+Example: target feeling is "calm control." Remove the fleet health score widget. Does calm control survive? Yes — the attention count already tells the manager what needs action. Remove it. Remove the "last updated" timestamp. Does calm control survive? No — the manager needs to trust the data is current. Keep it.
+
+## Prompt Visibility
+
+Every LLM prompt lives in a discoverable location, not inline in business logic. Each prompt has a clear purpose documented alongside it. If the prompt affects user experience, the user can see and understand it. Schema-validated input and output on every LLM call.

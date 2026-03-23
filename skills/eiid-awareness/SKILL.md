@@ -6,6 +6,8 @@ user-invocable: false
 
 When planning changes to the codebase:
 
+If CLAUDE.md doesn't exist, stop. No context to check against.
+
 1. Read CLAUDE.md for the EIID mapping and user need. Read `.superskills/report.md` for the Project Profile (if it exists).
 2. **User need check:** does this change trace back to the user need defined in CLAUDE.md? If not, why are we building it?
 2b. **Feeling check:** if CLAUDE.md defines a target feeling, does this change serve or undermine it? A new feature that adds visual noise to a product targeting "calm control" is scope creep even if it traces to a valid EIID layer.

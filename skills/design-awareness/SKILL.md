@@ -6,10 +6,11 @@ user-invocable: false
 
 When planning changes to any code that produces something a user perceives — UI, agent responses, prompts, notifications, CLI output, workflow messages, error handling:
 
-1. If `.superskills/design-system.md` does not exist, stop. No design system configured.
+1. If CLAUDE.md doesn't exist, stop. No context to check against.
+1b. If `.superskills/design-system.md` does not exist, stop. No design system configured.
 2. Read `.superskills/design-system.md` for direction, tokens, and component patterns. Read CLAUDE.md for the Design System section.
 
-3. **Should this exist?** Before checking how it looks — should this screen, component, or element exist at all? Does it serve the EIID mapping? Is there a simpler way to deliver this value? Can the information be part of an existing screen instead of a new one? Can the interaction be conversational instead of visual? Apply the absence test: would the target feeling (from CLAUDE.md) survive without this element? Flag additions that don't earn their place.
+3. **Should this exist?** Before checking how it looks — should this screen, component, or element exist at all? Does it serve the EIID mapping? Is there a simpler way to deliver this value? Can the information be part of an existing screen instead of a new one? Can the interaction be conversational instead of visual? Apply the absence test (see `reference/concepts.md`): would the target feeling survive without this element? Does this change contribute to the target feeling or deliver EIID value, or is it decoration? Decoration earns its place only when it reinforces the target feeling. Flag additions that don't earn their place.
 
 3b. **Feeling alignment.** Read the target feeling from CLAUDE.md. Does this change contribute to or undermine the target feeling — in any modality? Check experience patterns from `.superskills/design-system.md`: feedback, pacing, voice, restraint. Flag additions that create noise against the feeling — not just visual noise, but conversational noise (agent over-explaining), workflow noise (unnecessary notifications), prompt noise (clauses that don't change output).
 

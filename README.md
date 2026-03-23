@@ -7,7 +7,7 @@
              |_|
 ```
 
-A Claude Code plugin that changes the shape of software.
+**Existing frameworks help you build faster. SuperSkills changes what you build.**
 
 ```bash
 claude plugin marketplace add Play-New/superskills
@@ -17,203 +17,85 @@ claude plugin marketplace add Play-New/superskills
 claude plugin install super
 ```
 
-Update:
-
-```bash
-claude plugin marketplace update superskills
-```
-
-Auto-update: run `/plugin` in Claude Code, select `superskills` under Marketplaces, enable auto-update.
+4 commands. 3 advisory skills. 2 hooks. One architectural model that restructures every product around how intelligence flows from raw data to user value. If a component doesn't trace to that model, it doesn't get built.
 
 ---
 
-## The problem
+## What this does
 
-Most software built with AI assistance is traditional software that happened to be written faster. The architecture stays the same: forms, CRUD, dashboards. AI helped type it, but the product could have been built in 2015.
+A sales rep sends a voice note on WhatsApp. At 9am the next day, they get back: "Acme Corp's order volume dropped 30% this month, likely due to their Q3 budget freeze. Renewal in 45 days. Here are three things to try."
 
-This is a waste of the most important shift in software history. The opportunity is not faster typing. It is a different kind of product — one where intelligence is structural, not decorative.
+No dashboard. No new interface to learn. The system meets people where they already work.
 
-## What makes this different
-
-SuperSkills is not a scaffolder, a boilerplate generator, or a prompt library. It is a framework for building **AI-native products**: services, applications, and tools where the intelligence is an invisible layer that wraps around existing behavior.
-
-The difference is architectural. In a traditional CRM, you open a dashboard and type data into forms. In an AI-native CRM, a sales rep sends a voice note on WhatsApp and gets back "Acme Corp's order volume dropped 30% this month, here are three possible reasons" at 9am the next day. No new interface to learn. The system meets people where they already work.
-
-SuperSkills enforces this architecture through EIID — a four-layer model that restructures every product around how intelligence flows from raw data to user value. Every component, every screen, every agent, every line of code traces back to this structure. If it doesn't trace, it doesn't get built.
-
-No other tool does this. Existing frameworks help you build faster. SuperSkills changes **what** you build.
-
----
+Most AI-assisted software is traditional software typed faster. Same forms, same CRUD, same dashboards. SuperSkills builds a different kind of product: one where intelligence is structural, delivered through existing channels, invisible to the user.
 
 ## EIID
 
-Four layers. Every AI-native product maps onto them.
+Every AI-native product maps onto four layers:
 
 ```
- ┌─────────────────────────────────────────┐
- │  ENRICHMENT      collect + normalize      │
- ├─────────────────────────────────────────┤
- │  INFERENCE       detect, predict, flag   │
- ├─────────────────────────────────────────┤
- │  INTERPRETATION  insights + framing      │
- ├─────────────────────────────────────────┤
- │  DELIVERY        channels + triggers     │
- └─────────────────────────────────────────┘
+ ENRICHMENT       collect + normalize
+ INFERENCE        detect, predict, flag
+ INTERPRETATION   insights + framing
+ DELIVERY         channels + triggers
 ```
 
-**Enrichment** is where data enters the system. Not just databases and APIs: a photo of a handwritten inventory sheet, a forwarded email from a supplier, a voice note on WhatsApp, a Slack message, an ERP export, a spreadsheet attachment. People should not have to change how they work. Enrichment means accepting data from every channel they already use, normalizing it into something inference can work with.
+**Enrichment** accepts data from every channel people already use: photos, voice notes, emails, spreadsheets, chat messages. People should not change how they work.
 
-**Inference** detects patterns, makes predictions, flags anomalies. What used to require a data science team and months of work is now an API call: "which orders deviate more than 20% from historical average?" The compute is cheap. The hard part is knowing what questions to ask.
+**Inference** detects patterns, predicts, flags anomalies. The compute is cheap. The hard part is knowing what questions to ask.
 
-**Interpretation** turns raw inference into something a person can act on. "Customer #4521 anomaly score: 0.87" means nothing. "Acme Corp's orders dropped 30% vs. last quarter, likely due to their Q3 budget freeze, and they have a renewal in 45 days" is an insight. Interpretation adds context, comparison, explanation, and a recommended action.
+**Interpretation** turns "anomaly score 0.87" into "orders dropped 30%, likely budget freeze, renewal in 45 days." Context, comparison, recommended action.
 
-**Delivery** returns results through the same channels people already use. The person who sent a voice note on WhatsApp gets the answer on WhatsApp. The one who forwarded an email gets a reply in their inbox. Delivery is triggered by conditions: a threshold crossed, a schedule, an event, a user request. The critical design choice is timing — an insight about a churning customer is worth nothing if it arrives after the renewal date.
+**Delivery** returns results through the same channels. Voice note in, WhatsApp answer out. The critical design choice is timing.
 
-The web interface, when one exists, serves two roles: visualizations that don't fit in a message (charts, maps, timelines) and configuration of the invisible layer. It is not the primary input surface. If users need to type data into a dashboard to get value, the enrichment layer has a gap.
+The web interface, when one exists, handles what messages cannot: charts, maps, timelines, and configuration of the invisible layer.
 
-### How EIID changes decisions
+Every component carries a strategic classification (automate / differentiate / innovate) and an implementation level (LLM call / workflow / agent / code / buy). These are not permanent. Start simple, graduate up when edge cases justify complexity, graduate down when patterns stabilize.
 
-Every component carries two classifications:
-
-**Strategic classification** — where does it sit on the evolution axis?
-- **Automate**: commodity, multiple interchangeable providers. Don't build what you can buy.
-- **Differentiate**: requires human judgment with real consequences. Better information to the human, not automation replacing them.
-- **Innovate**: new connections between systems that were previously too expensive to link. New value emerges from these connections.
-
-**Implementation level** — how to build it?
-
-| Level | When | Cost |
-|-------|------|------|
-| **LLM call** | Single prompt-response. Classification, extraction, summarization. | Lowest |
-| **Workflow** | Fixed sequence of steps, some using LLM calls. | Low |
-| **Agent** | Autonomous loop with tool use. Path emerges from context. | Medium |
-| **Code** | Deterministic, high volume, low latency, auditable. | Free at scale |
-| **Buy** | Commodity service. | Variable |
-
-These are not permanent. The **graduation pattern** connects them: start from the simplest level that works. Graduate up when edge cases justify complexity. Graduate down when patterns stabilize and volume demands it. Each component records its graduation trigger: `Innovate via workflow. Graduate to code when recipe DB > 10k.`
-
-### Agent architecture
-
-When EIID components use agent, workflow, or LLM call, strategy adds an agent architecture step: orchestration pattern, tool design (one atomic thing per tool), UI-agent parity (every user action available as a tool), cost model (tokens × invocations = monthly cost), and state persistence (external, never conversation history).
-
----
-
-## How it works
-
-Four commands, three advisory skills, two hooks. The commands run the lifecycle. The skills watch while you work. The hooks guard boundaries.
-
-### Commands
+## Commands
 
 | Command | What it does |
 |---------|------|
-| `/super:strategy` | Scans the folder, asks seven questions, researches the problem space, produces the EIID mapping with strategic classification and implementation levels. If any component needs an agent, adds agent architecture. Outputs CLAUDE.md and `.superskills/`. With context about what changed: refresh mode. |
-| `/super:design` | For each EIID layer: determines if it needs a visual surface, conversational interface, notification channel, or none. Defines experience patterns across all modalities. For visual layers: direction, IA, typography, tokens, component patterns. With a target: redesign mode. |
-| `/super:build` | Asks what the product should do and when it's perfect. Challenges the vision, proposes the experience, writes tests that encode it, then builds autonomously until every test passes. With a target: extend mode. |
-| `/super:review` | Eight-domain audit: tests (blocking), security, build quality, strategy alignment, experience, design, performance, agent architecture. |
+| `/super:strategy` | Understands the business context, researches the problem space, produces the EIID mapping with strategic classification and implementation levels. Outputs CLAUDE.md. |
+| `/super:design` | Determines what needs a visual surface, conversational interface, or notification channel. Defines experience patterns across all modalities. For visual layers: direction, IA, typography, tokens. |
+| `/super:build` | Asks what the product should do and when it's perfect. Challenges the vision, proposes the experience, writes tests that encode it, then builds autonomously until every test passes. |
+| `/super:review` | Eight-domain audit: tests, security, build quality, strategy, experience, design, performance, agent architecture. |
 
-Each command detects whether setup exists and routes accordingly. Strategy must exist before design. Design must exist before build. Review can run anytime.
+Strategy before design. Design before build. Review anytime.
 
-### Skills (advisory, fire automatically)
+Three skills fire automatically during your work: **EIID awareness** (flags scope creep and stale mappings), **design awareness** (challenges whether changes earn their place), **build awareness** (checks every addition against rule zero).
 
-**EIID awareness** — during planning, flags work that doesn't trace to an EIID layer. Catches implementation level mismatches, parity gaps, stale mappings.
-
-**Design awareness** — during planning, challenges whether changes earn their place. Checks experience alignment, registry alternatives, pattern consistency.
-
-**Build awareness** — during implementation, challenges every addition against rule zero. Flags code that doesn't trace to EIID, simpler alternatives, generic output, buried prompts.
-
-### Hooks
-
-**Secrets guard** (PostToolUse) — blocks hardcoded secrets on file write/edit. Ignores .env, config, lock files, markdown.
-
-**Session integrity** (SessionStart) — warns when CLAUDE.md has an EIID mapping but `.superskills/` is missing.
-
-### Rule zero
-
-Before adding anything — a screen, a component, an endpoint, a table — the system asks: does this trace to the EIID mapping? Is there a simpler way? Does it earn its place? A product with 3 screens that each do one thing perfectly beats a product with 12.
-
----
+Two hooks guard boundaries: **secrets guard** blocks hardcoded credentials on file write. **Session integrity** warns when strategy exists but supporting files are missing.
 
 ## What gets generated
 
-**In your project:**
-
 ```
 your-project/
-├── CLAUDE.md                stable instructions (~100 lines)
-└── .superskills/
-    ├── report.md            volatile findings (replaced each audit)
-    ├── decisions.md         architecture log (append-only)
-    ├── design-system.md     direction + tokens + patterns
-    └── build-plan.md        test suite from the vision (replaced each build)
+  CLAUDE.md                 stable instructions (~100 lines)
+  .superskills/
+    report.md               audit findings (replaced each review)
+    decisions.md            architecture log (append-only)
+    design-system.md        direction + tokens + patterns
+    build-plan.md           test suite from the vision
 ```
-
-**CLAUDE.md** contains the EIID mapping with strategic approach and implementation level per layer, technology constraints, design system config. Claude reads it at session start. It changes rarely.
-
-**`.superskills/`** contains volatile findings that accumulate across sessions. Commands read CLAUDE.md for context and write to `.superskills/`. The build plan contains the test suite derived from the vision conversation — tests are the spec, the progress tracker, and the quality gate.
-
----
 
 ## Three example products
 
-The `reference/examples/` directory contains complete outputs for three products that demonstrate the spectrum:
+`reference/examples/` contains complete outputs for three products across the spectrum:
 
-**FleetPulse** (SaaS) — vehicle fleet management. Visual-heavy, dense operational data. Every component is code or buy. No agents, no LLM calls. Demonstrates that AI-native architecture applies even when the intelligence surface is minimal: the structure still follows EIID, the strategic classification still drives decisions.
+**FleetPulse** (SaaS) — visual-heavy fleet management. All code/buy. Demonstrates EIID applies even without intelligence surfaces.
 
-**RecipeBox** (Consumer) — recipe management from pantry photos. Mixed modality: WhatsApp for input and delivery, web archive for visualization, agent for conversation. Demonstrates graduation triggers: the recipe parser starts as a workflow, graduates to code when the recipe database exceeds 10k entries.
+**RecipeBox** (Consumer) — WhatsApp-first recipe matching with agent conversation and web archive. Demonstrates graduation triggers and mixed modality.
 
-**DepWatch** (DevTool) — dependency update risk analysis. No visual UI at all. CLI only. A single LLM call for interpretation, with a graduation trigger to template when patterns stabilize. Demonstrates that EIID applies to non-visual products: enrichment from package registries, inference via semver analysis, interpretation via LLM, delivery via terminal output.
-
-Each example includes: CLAUDE.md, design-system.md, decisions.md, and build-plan.md.
-
----
+**DepWatch** (DevTool) — CLI dependency risk analysis with a single LLM call. Demonstrates EIID applies to non-visual products.
 
 ## Stack
 
-The EIID mapping determines what the project needs. Strategy reads it and identifies which roles to fill — then researches the best tool for each role given the project's context, team familiarity, ecosystem maturity, and scale.
-
-Not every project needs every role. A CLI tool needs no framework, no hosting, no component library. A WhatsApp bot needs a messaging library and a database but no frontend. A visual SaaS needs most roles. The mapping tells you.
-
-**How it works:** strategy scans the EIID layers and asks — does this product have visual surfaces? It needs a framework and a component library. Does it persist user data? It needs a database with auth. Does it have scheduled tasks or event-driven workflows? It needs a background job runner. Does delivery use WhatsApp or Telegram? It needs a messaging library. Does it have agent components? It needs a runtime with memory and scheduling.
-
-For each role, strategy researches and recommends a specific tool with reasoning. For existing projects, it detects what's installed from package.json and adapts. Recommendations are starting points — the user picks what they prefer, and strategy generates technology constraints from whatever stack is chosen.
-
----
-
-## Structure
-
-```
-superskills/                             the plugin
-├── .claude-plugin/
-│   ├── plugin.json                     plugin definition
-│   └── marketplace.json                marketplace registry
-├── commands/
-│   ├── strategy.md                     EIID mapping, classification, implementation levels
-│   ├── design.md                       modality assessment, experience, visual execution
-│   ├── build.md                        vision, tests, autonomous construction
-│   └── review.md                       eight-domain audit
-├── skills/
-│   ├── eiid-awareness/SKILL.md          strategic alignment (advisory, during planning)
-│   ├── design-awareness/SKILL.md        experience alignment (advisory, during planning)
-│   └── build-awareness/SKILL.md         construction quality (advisory, during implementation)
-├── agents/
-│   └── stop-tests.md                    test runner (on-demand)
-├── hooks/hooks.json                     secrets guard + session integrity
-├── reference/
-│   ├── concepts.md                     canonical definitions (EIID, rule zero, experience patterns)
-│   ├── design-critique.md              6-layer strategic critique
-│   ├── claude-md-template.md            CLAUDE.md output format
-│   ├── design-system-template.md        design-system.md output format
-│   ├── decisions-template.md            decisions.md output format
-│   ├── report-template.md              report.md output format
-│   └── examples/                       FleetPulse, RecipeBox, DepWatch
-└── README.md
-```
-
-4 commands, 3 skills, 1 agent, 2 hooks. 24 markdown files, 3 JSON.
+Strategy identifies which roles the project needs and recommends tools based on the EIID mapping, team context, and ecosystem. A CLI tool needs no framework. A WhatsApp bot needs a messaging library but no frontend. The mapping determines the roles.
 
 ## References
 
-Strategic thinking draws from Wardley's value chain mapping and evolution axis, Choudary's platform dynamics and AI-driven value restructuring, Steinberger's intelligence-where-the-user-works principle, and the SaaSpocalypse pattern (commodity layers collapse, value moves to orchestration and delivery).
+Strategic thinking draws from Wardley (value chain evolution), Choudary (platform dynamics, AI-driven restructuring), Steinberger (intelligence where the user works), and the SaaSpocalypse pattern (commodity layers collapse, value moves to orchestration and delivery).
 
 ## License
 
