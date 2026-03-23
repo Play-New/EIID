@@ -152,24 +152,25 @@ Each example includes: CLAUDE.md, design-system.md, decisions.md, and build-plan
 
 ## Setup
 
-Add this repository as a Claude Code plugin marketplace, then install the plugin.
+Install as a Claude Code plugin from the GitHub repository.
+
+### Install
+
+```bash
+claude plugin add --from github:Play-New/superskills
+```
 
 ### Team setup
 
-Add to your project's `.claude/settings.json` so every team member gets the plugin when they trust the project folder:
+Add to your project's `.claude/settings.json` so every team member gets the plugin:
 
 ```json
 {
-  "enabledPlugins": {
-    "super@superskills": true
+  "permissions": {
+    "allow": []
   },
-  "extraKnownMarketplaces": {
-    "superskills": {
-      "source": {
-        "source": "github",
-        "repo": "Play-New/superskills"
-      }
-    }
+  "enabledPlugins": {
+    "super": "github:Play-New/superskills"
   }
 }
 ```
@@ -199,8 +200,7 @@ Delivery channels and enrichment tools are added when the EIID mapping calls for
 ```
 superskills/                             the plugin
 ├── .claude-plugin/
-│   ├── plugin.json                     plugin definition
-│   └── marketplace.json                marketplace definition
+│   └── plugin.json                     plugin definition
 ├── commands/
 │   ├── strategy.md                     EIID mapping, classification, implementation levels
 │   ├── design.md                       modality assessment, experience, visual execution
@@ -228,7 +228,7 @@ superskills/                             the plugin
 └── README.md
 ```
 
-4 commands, 3 skills, 1 agent, 2 hooks. 31 markdown files, 3 JSON.
+4 commands, 3 skills, 1 agent, 2 hooks. 31 markdown files, 2 JSON.
 
 ## References
 
