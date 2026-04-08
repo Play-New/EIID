@@ -1,71 +1,71 @@
 # Concepts
 
-Canonical definitions. Every concept defined once. Commands and skills reference this file instead of re-explaining.
+Canonical definitions. Every concept defined once. Commands and skills reference this file.
 
 ---
 
 ## EIID
 
-Four layers that restructure every product around how intelligence flows from raw data to user value. Every component traces to exactly one layer.
+Four layers that structure every intelligence-era product. Value flows from raw data to user outcome. Every component (node) traces to exactly one layer.
 
-**Enrichment** — where data enters. Not just databases and APIs: photos, voice notes, chat messages, forwarded emails, spreadsheets. People should not change how they work. Enrichment accepts data from every channel they already use and normalizes it for inference.
+**Enrichment** — where data enters. Photos, voice notes, chat messages, forwarded emails, spreadsheets, APIs, scraped sources. People should not change how they work. Enrichment accepts data from every channel they already use and normalizes it for inference.
 
 **Inference** — pattern detection, prediction, anomaly flagging. The compute is cheap. The hard part is knowing what questions to ask.
 
 **Interpretation** — turns raw inference into something a person can act on. "Anomaly score 0.87" means nothing. "Orders dropped 30%, likely due to budget freeze, renewal in 45 days" is an insight. Context, comparison, explanation, recommended action.
 
-**Delivery** — returns results through the same channels people already use. The person who sent a voice note gets the answer on WhatsApp. Triggered by conditions: threshold crossed, schedule, event, user request. The critical design choice is timing.
+**Delivery** — returns results through the channels people already use. Triggered by conditions: threshold crossed, schedule, event, user request. The critical design choice is timing. The web interface, when one exists, serves what messages cannot: visualizations that need space and configuration of the invisible layer. It is not the primary input surface.
 
-The web interface, when one exists, serves two roles: visualizations that don't fit in a message and configuration of the invisible layer. It is not the primary input surface.
+## Node
 
-## Implementation Levels
+A component of the product that belongs to exactly one EIID layer. The unit of decomposition, analysis, and measurement. Each node carries five fields:
 
-Five levels, ordered by complexity and cost:
+- **Layer** — which EIID layer it serves
+- **Evolution** — where it sits on the Wardley axis (genesis, custom, product, commodity)
+- **Metric / signal** — what you measure and the target value
+- **Graduation** — when to change approach (trigger condition)
+- **Loop** — whether the node is optimizable automatically or requires human judgment
 
-- **LLM call** — single prompt-response. Classification, extraction, summarization. Cheapest intelligence unit.
-- **Workflow** — fixed sequence of steps, some using LLM calls. Orchestration in code, intelligence in individual nodes.
-- **Agent** — autonomous loop with tool use. The path emerges from context.
-- **Code** — deterministic, high volume, low latency, auditable. Free at scale.
-- **Buy** — commodity service. Costs less than building or prompting.
+## Evolution
 
-Each component records its level in the Approach field: `[Automate / Differentiate / Innovate] via [level]. Graduation: [trigger]`.
+Four stages on the Wardley axis. Each carries strategic meaning for the node.
+
+- **Genesis** — new, uncertain, no established approach. This is where you create value. Invest here.
+- **Custom** — understood in your domain but not standardized. Build it, but expect it to evolve.
+- **Product** — well-understood, multiple approaches exist. Use existing solutions, adapt to your context.
+- **Commodity** — standardized, many providers. Buy it. Building commodity is waste.
+
+## Metric vs Signal
+
+**Metric** — measurable automatically with fast feedback. Accuracy, precision, recall, latency, coverage, cost per unit. Enables autoresearch: change the implementation, measure, keep or discard. Typical of Enrichment and Inference nodes.
+
+**Signal** — observable by humans with slow feedback. Acceptance rate, time to action, satisfaction, fatigue rate. Requires manual review. Typical of Interpretation and Delivery nodes.
+
+Every node has one or the other. A node with neither metric nor signal is flying blind.
+
+## Autoresearch
+
+For nodes with a clear metric and fast feedback: the automated optimization loop. Change the implementation (prompt, parameters, logic), measure the metric, keep if improved, discard if not. Repeat.
+
+Works well on Enrichment and Inference nodes. Partially applicable to Interpretation (prompt clarity optimization). Not applicable to Delivery (feedback too slow, quality multi-dimensional).
+
+The strategy identifies which nodes are autoresearch candidates. Build sets up the loop. Review evaluates convergence.
 
 ## Graduation
 
-Implementation levels are not permanent. Start from the simplest level that works. An LLM call that covers 90% of cases beats an agent that covers 100% at 10x the cost. Graduate up (LLM call to workflow to agent) when edge cases justify complexity. Graduate down (agent to workflow to code) when patterns stabilize and volume demands it. Each component documents its graduation trigger.
+Nodes evolve. When a metric consistently exceeds its target, simplify the implementation. When volume exceeds a threshold, make it more robust. Graduation goes both directions:
 
-## Rule Zero
+- **Up** — simple approach hits limits, edge cases justify complexity
+- **Down** — patterns stabilize, what was experimental becomes routine
 
-Before adding anything — a screen, a component, an endpoint, a table, a setting, a dependency, a prompt clause, a workflow step — ask:
-
-1. Does this trace to the EIID mapping? If not, don't build it.
-2. Is there a simpler way? Fewer screens. Fewer components. Fewer abstractions.
-3. Does this earn its place? If removing it wouldn't hurt the outcome, remove it.
-
-This applies to everything: data models, API routes, agent tools, prompt clauses, workflow steps, notification channels, visual surfaces. A product with 3 screens that each do one thing perfectly beats a product with 12. A prompt with 5 clauses that produce the right output beats one with 30.
+Each node documents its graduation trigger. When the trigger fires, revisit the approach.
 
 ## Target Feeling
 
-The emotional state when the product works perfectly. Not "satisfied" or "happy" — specific: calm control, warm relief, precise confidence. Defined during strategy, it becomes the quality benchmark for every decision in design, build, and review. Every touchpoint the user perceives — a screen, a message, an agent response, a CLI output — either contributes to the target feeling or undermines it.
+The emotional state when the product works perfectly. Not "satisfied" or "happy" — specific: calm control, warm relief, precise confidence. Defined during strategy, it guides decisions on Interpretation and Delivery nodes. Every touchpoint the user perceives — a screen, a message, an agent response, a CLI output — either contributes to the target feeling or undermines it.
 
-## Experience Patterns
+## Context Engineering
 
-Six concrete behaviors that produce the target feeling. These apply to every modality — visual, conversational, CLI, agent, workflow, notification. Experience is not UI.
+Every output of this plugin is structured context for AI agents. CLAUDE.md is the strategic context document of the product. If an agent reads it, it knows: where the value is, what to build, what to measure, when to change approach.
 
-**Feedback** — every user action gets acknowledgment. The modality determines the form: visual surfaces use animation, conversational channels use status messages, CLI uses progress indicators, notifications use delivery confirmation. The principle is universal; the implementation varies. A fleet manager submitting a maintenance request sees a status badge change on the dashboard, gets a WhatsApp confirmation with the work order number, and receives an email thread she can forward to the mechanic.
-
-**Pacing** — the product's rhythm matches the target feeling. A precise tool is fast — answer first, detail on demand. A warm product is gentle — context then decision. In agents: lead with insight, offer reasoning on request. In workflows: status at meaningful steps, not just at completion. A dependency scanner targeting "precise confidence" prints the risk verdict in the first CLI line, then lists affected packages below. The same product's Slack notification leads with "2 breaking changes in next update" — detail lives behind the link.
-
-**Voice** — one personality across all text surfaces. Prompts, error messages, agent responses, notifications, empty states, CLI output, email subjects. A warm product is warm in its error messages. A precise product is precise in its WhatsApp replies. A recipe app targeting "warm relief" says "No matches with what you have today — want to try with fewer ingredients?" on the web, in WhatsApp, and in the agent response. Same warmth, same phrasing conventions, regardless of channel.
-
-**Gratification** — proportional to achievement. Routine saves are subtle. Meaningful milestones are moments. Per-modality: visual celebration, conversational warmth, CLI summary with delta, notification subject line that IS the win. A fleet manager who resolves all overdue maintenance items sees a dashboard state change from amber to green. The same event triggers a WhatsApp message: "All vehicles cleared — zero overdue." The weight of the moment matches the weight of the accomplishment.
-
-**Restraint** — what is deliberately absent. No confirmation dialogs for reversible actions. No "Is there anything else?" after every answer. No notification for routine completions. No explanation unless asked. No prompt clause that doesn't change the output. Silence is a feature. A recipe agent that successfully substitutes an ingredient says "Swapped butter for coconut oil — adjusted quantities in step 3." It does not say "Great choice! I've updated your recipe. Is there anything else you'd like to change?" The dashboard does not animate a success toast for a routine save.
-
-**Absence test** — for every element the user perceives across any modality — a screen element, a message, a prompt clause, a workflow notification, a CLI line, an agent response — remove it. If the target feeling survives without it, the element should not exist.
-
-Example: target feeling is "calm control." Remove the fleet health score widget. Does calm control survive? Yes — the attention count already tells the manager what needs action. Remove it. Remove the "last updated" timestamp. Does calm control survive? No — the manager needs to trust the data is current. Keep it.
-
-## Prompt Visibility
-
-Every LLM prompt lives in a discoverable location, not inline in business logic. Each prompt has a clear purpose documented alongside it. If the prompt affects user experience, the user can see and understand it. Schema-validated input and output on every LLM call.
+Context must stay faithful to reality (context fidelity). When the product evolves, the context updates. Stale context is worse than no context — it leads agents to optimize the wrong things.

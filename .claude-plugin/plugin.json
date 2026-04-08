@@ -1,13 +1,13 @@
 {
-  "name": "super",
-  "version": "2026.3.23.2256",
-  "description": "AI-native product development. EIID framework for strategy, design, build, and quality audits. Claude Code plugin.",
+  "name": "eiid",
+  "version": "2026.4.8.1151",
+  "description": "EIID value chain decomposition for intelligence-era products. Context engineering, autoresearch, graduation. Claude Code plugin.",
   "author": {
     "name": "Play New",
     "url": "https://github.com/Play-New"
   },
-  "repository": "https://github.com/Play-New/superskills",
-  "homepage": "https://github.com/Play-New/superskills#readme",
+  "repository": "https://github.com/Play-New/EIID",
+  "homepage": "https://github.com/Play-New/EIID#readme",
   "license": "MIT",
-  "keywords": ["ai-native", "eiid", "strategy", "architecture", "design-system", "security", "testing", "performance", "audit"]
+  "keywords": ["eiid", "strategy", "context-engineering", "autoresearch", "value-chain", "wardley"]
 }

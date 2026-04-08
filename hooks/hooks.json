@@ -5,20 +5,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -f CLAUDE.md ] && grep -q EIID CLAUDE.md 2>/dev/null && [ ! -d .superskills ]; then echo 'Project has EIID mapping in CLAUDE.md but .superskills/ directory is missing. Run /super:strategy to complete setup.'; fi",
+            "command": "if [ -f CLAUDE.md ] && grep -q EIID CLAUDE.md 2>/dev/null && [ ! -d .eiid ]; then echo 'Project has EIID mapping in CLAUDE.md but .eiid/ directory is missing. Run /eiid:strategy to complete setup.'; fi",
             "timeout": 5
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "prompt",
-            "prompt": "Security gate. Respond immediately. Check this file change for hardcoded secrets (API keys, passwords, tokens) in source code files (.ts, .tsx, .js, .jsx, .py, .go, .rs). Respond {\"ok\": true} if safe. Respond {\"ok\": false, \"reason\": \"...\"} ONLY if you find a real secret value hardcoded in source code. Ignore: .env files, config files, migration files, SQL files, lock files, markdown files, JSON config. No explanation. $ARGUMENTS",
-            "timeout": 15
           }
         ]
       }

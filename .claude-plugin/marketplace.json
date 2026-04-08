@@ -1,17 +1,17 @@
 {
-  "name": "superskills",
+  "name": "EIID",
   "owner": {
     "name": "Play New",
     "url": "https://github.com/Play-New"
   },
   "plugins": [
     {
-      "name": "super",
+      "name": "eiid",
       "source": {
         "source": "url",
-        "url": "https://github.com/Play-New/superskills.git"
+        "url": "https://github.com/Play-New/EIID.git"
       },
-      "description": "AI-native product development. EIID framework for strategy, design, build, and quality audits."
+      "description": "EIID value chain decomposition for intelligence-era products. Context engineering, autoresearch, graduation."
     }
   ]
 }

@@ -1,7 +1,7 @@
 ---
 name: stop-tests
-description: Run tests before stopping. Block on failure. Write results to .superskills/report.md.
-invocation: Available on demand. Not auto-invoked by hooks. Called by `/super:review` test section or directly as a subagent.
+description: Run tests before stopping. Block on failure. Write results to .eiid/report.md.
+invocation: Available on demand. Not auto-invoked by hooks. Called by `/eiid:review` test section or directly as a subagent.
 tools: Read, Glob, Grep, Write, Edit, Bash
 ---
 
@@ -12,7 +12,7 @@ Test verification gate. Run before task completion.
 1. Read package.json to detect the test runner and available test scripts. Run the project's unit/integration test suite.
 2. Detect if browser-based tests exist (Playwright, Cypress, or equivalent). If present, run them.
 3. If the project uses TypeScript, run type checking.
-4. Write results to `.superskills/report.md` — **replace** the "## Test Report" section. Keep the last 3 runs for trend visibility. Drop older entries. Update status counts at the top of report.md.
+4. Write results to `.eiid/report.md` — **replace** the "### Test Results" section. Keep the last 3 runs for trend visibility. Drop older entries.
 
 ## Output Format
 
