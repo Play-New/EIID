@@ -92,13 +92,13 @@ Two files. CLAUDE.md is the strategy. Report is the current state. No duplicatio
 
 A pricing intelligence tool for e-commerce sellers (full example in `reference/example.md`):
 
-| Node | Layer | Evolution | Metric | Loop |
-|------|-------|-----------|--------|------|
-| Price scraper | Enrichment | commodity | coverage 80%+ | N/A (buy) |
-| Product matcher | Enrichment | custom | accuracy on test set | autoresearch |
-| Anomaly detector | Inference | custom | precision + recall | autoresearch |
-| Price recommendation | Interpretation | genesis | acceptance rate | manual review |
-| Alert dispatcher | Delivery | product | fatigue rate < 40% | manual review |
+| Node | Layer | Evolution | Metric | Graduation | Loop |
+|------|-------|-----------|--------|------------|------|
+| Price scraper | Enrichment | commodity | coverage 80%+ | if coverage drops, build custom | N/A (buy) |
+| Product matcher | Enrichment | custom | accuracy on test set | >95% stable: switch to rules | autoresearch |
+| Anomaly detector | Inference | custom | precision + recall | >10K SKUs: rules for known patterns | autoresearch |
+| Price recommendation | Interpretation | genesis | acceptance rate | patterns repeat: auto-rules per category | manual review |
+| Alert dispatcher | Delivery | product | fatigue rate <40% | fatigue >40%: reduce frequency | manual review |
 
 The genesis node (price recommendation) is where the value is. Two nodes run automated optimization loops. One node is commodity: buy it, don't build it.
 

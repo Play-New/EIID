@@ -29,14 +29,16 @@ If no test infrastructure exists, flag: "No tests found. Run `/eiid:build` to se
 
 Read the EIID mapping table from CLAUDE.md. For each node:
 
-### Nodes with Metrics (Enrichment, Inference)
+### Nodes with Metrics
+Nodes where the mapping defines a quantifiable metric (accuracy, coverage, latency, precision, recall — regardless of EIID layer):
 - **Can you measure it now?** Look for test sets, evaluation scripts, monitoring. If the infrastructure exists, run the measurement.
 - **Compare against target.** Is the metric above, at, or below the target defined in the mapping?
-- **Graduation check.** Has the graduation trigger fired? If the metric has consistently exceeded the target, flag: "Node [X] has exceeded its graduation target. Consider simplifying the implementation."
+- **Graduation check.** Has the graduation trigger fired? If the metric has consistently exceeded the target, flag: "Node [X] has exceeded its graduation target. Consider the next step documented in the trigger."
 
-### Nodes with Signals (Interpretation, Delivery)
+### Nodes with Signals
+Nodes where the mapping defines a human-observable signal (acceptance rate, fatigue, time to action — regardless of EIID layer):
 - **Ask the user.** "The mapping defines [signal] for [node]. What's the current state?"
-- **Compare against expectation.** Flag if the signal suggests problems (high fatigue rate, low acceptance rate, long time-to-action).
+- **Compare against expectation.** Flag if the signal suggests problems.
 
 ### Missing Nodes
 - Nodes in the mapping with no corresponding code: "Node [X] is in the mapping but not implemented."

@@ -76,10 +76,11 @@ For Interpretation/Delivery nodes with visual surfaces: make design decisions he
 
 For nodes marked "autoresearch" in the EIID mapping:
 
-1. **Define what changes** — the prompt, embedding approach, parameters, detection logic. Scope it to one variable at a time.
-2. **Define what you measure** — the node's metric from the mapping. Must be computable automatically.
-3. **Define keep/discard** — commit if the metric improves, revert if not.
-4. **Run the loop** — change, measure, keep or discard. Log experiments to `.eiid/report.md`.
+1. **Evaluation data first.** The loop needs something to measure against. A product matcher needs labeled correct matches. An anomaly detector needs labeled anomalies. If no evaluation set exists, creating it is the first step. Start small (50-100 labeled examples), expand as the loop runs.
+2. **Define what changes** — the prompt, embedding approach, parameters, detection logic. One variable at a time.
+3. **Define what you measure** — the node's metric from the mapping, computed against the evaluation set.
+4. **Define keep/discard** — commit if the metric improves, revert if not.
+5. **Run the loop** — change, measure, keep or discard. Log experiments to `.eiid/report.md`.
 
 This is the bridge between strategy and continuous optimization. The strategy identified the node as autoresearch-eligible. Build makes it real.
 

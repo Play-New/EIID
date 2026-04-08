@@ -64,7 +64,7 @@ For each node, determine five fields (see `reference/concepts.md`):
 - **Layer** — which EIID layer it serves (enrichment / inference / interpretation / delivery)
 - **Evolution** — genesis, custom, product, or commodity. Use the research: how many providers exist? How standardized is the approach?
 - **Metric or signal** — what you measure to know if this node works. Metric for quantifiable things with fast feedback. Signal for things that require human observation.
-- **Graduation trigger** — when to change the approach. Quantitative where possible: "when accuracy exceeds 95% for 2 weeks", "when volume exceeds 10K/day."
+- **Graduation trigger** — when to change approach AND what to change to. "When accuracy exceeds 95% for 2 weeks, replace with deterministic rules." Both the condition and the direction.
 - **Loop** — autoresearch (metric is clean, feedback is fast, automated optimization is possible), manual review (signal requires human judgment), or N/A (commodity node, just monitor).
 
 Every node must trace to the user need. A node that exists because "products like this usually have it" does not belong.
@@ -113,11 +113,11 @@ The mapping exists but something changed: business pivot, new users, new data so
 
 ### 1. Load Context
 
-Read CLAUDE.md and `.eiid/report.md` (if they exist).
+Read CLAUDE.md and `.eiid/report.md` (if they exist). If report.md has context fidelity findings from a previous review, use those as input — the user may not know what drifted, but review does.
 
 ### 2. Change Assessment
 
-Show the user the current strategy (key elements: client, value expected, EIID mapping). Collect what changed. Skip questions already answered in their request.
+Show the user the current strategy (key elements: client, value expected, EIID mapping). If review flagged drift, show it: "Review found these mismatches: [list]. Let's update the mapping." If the user provided context about what changed, use that instead. Skip questions already answered.
 
 ### 3. Research
 

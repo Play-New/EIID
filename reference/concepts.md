@@ -58,7 +58,7 @@ Nodes evolve. When a metric consistently exceeds its target, simplify the implem
 - **Up** — simple approach hits limits, edge cases justify complexity
 - **Down** — patterns stabilize, what was experimental becomes routine
 
-Each node documents its graduation trigger. When the trigger fires, revisit the approach.
+Each node documents its graduation trigger: both the condition (when) and the direction (what changes). "When accuracy exceeds 95% for 2 weeks, replace with deterministic rules" is a complete trigger. "When accuracy exceeds 95%" is not — it says when but not where to go.
 
 ## Context Engineering
 
