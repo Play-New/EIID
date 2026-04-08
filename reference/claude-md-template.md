@@ -11,7 +11,7 @@ Strategy generates this file. It is the strategic context document of the produc
 **Client:** [who is paying]
 **Value expected:** [the outcome, in one sentence — not features]
 
-## EIID Mapping
+## Playbook
 
 | Node | Layer | Evolution | Metric / Signal | Graduation | Loop |
 |------|-------|-----------|-----------------|------------|------|

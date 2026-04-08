@@ -1,17 +1,17 @@
 {
-  "name": "EIID",
+  "name": "playbook",
   "owner": {
     "name": "Play New",
     "url": "https://github.com/Play-New"
   },
   "plugins": [
     {
-      "name": "eiid",
+      "name": "playbook",
       "source": {
         "source": "url",
         "url": "https://github.com/Play-New/EIID.git"
       },
-      "description": "EIID value chain decomposition for intelligence-era products. Context engineering, autoresearch, graduation."
+      "description": "The real game is to change the game. Value chain decomposition for intelligence-era products. Context engineering, autoresearch, graduation."
     }
   ]
 }

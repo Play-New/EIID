@@ -1,5 +1,5 @@
 ---
-description: Measures the product against the EIID mapping. Metrics per node, autoresearch convergence, context fidelity, security basics.
+description: Measures the product against the playbook mapping. Metrics per node, autoresearch convergence, context fidelity, security basics.
 allowed-tools: Read, Glob, Grep, Write, Edit, Bash
 ---
 
@@ -9,7 +9,7 @@ Review measures and reports. The user decides what to fix and when. One exceptio
 
 ## Prerequisites
 
-Read CLAUDE.md. If no EIID mapping exists, stop and suggest `/eiid:strategy` first.
+Read CLAUDE.md. If no playbook mapping exists, stop and suggest `/playbook:strategy` first.
 
 Read `reference/concepts.md` for canonical definitions.
 
@@ -21,28 +21,28 @@ Check for test infrastructure. If found, run all configured test suites.
 
 **Block while tests fail.** Ask whether to continue with remaining checks or stop to fix failures first.
 
-If no test infrastructure exists, flag: "No tests found. Run `/eiid:build` to set up testing from the vision."
+If no test infrastructure exists, flag: "No tests found. Run `/playbook:build` to set up testing from the vision."
 
 ---
 
 ## 2. Metrics Per Node
 
-Read the EIID mapping table from CLAUDE.md. For each node:
+Read the playbook mapping table from CLAUDE.md. For each node:
 
 ### Nodes with Metrics
-Nodes where the mapping defines a quantifiable metric (accuracy, coverage, latency, precision, recall — regardless of EIID layer):
+Nodes where the mapping defines a quantifiable metric (accuracy, coverage, latency, precision, recall — regardless of layer):
 - **Can you measure it now?** Look for test sets, evaluation scripts, monitoring. If the infrastructure exists, run the measurement.
 - **Compare against target.** Is the metric above, at, or below the target defined in the mapping?
 - **Graduation check.** Has the graduation trigger fired? If the metric has consistently exceeded the target, flag: "Node [X] has exceeded its graduation target. Consider the next step documented in the trigger."
 
 ### Nodes with Signals
-Nodes where the mapping defines a human-observable signal (acceptance rate, fatigue, time to action — regardless of EIID layer):
+Nodes where the mapping defines a human-observable signal (acceptance rate, fatigue, time to action — regardless of layer):
 - **Ask the user.** "The mapping defines [signal] for [node]. What's the current state?"
 - **Compare against expectation.** Flag if the signal suggests problems.
 
 ### Missing Nodes
 - Nodes in the mapping with no corresponding code: "Node [X] is in the mapping but not implemented."
-- Code that doesn't trace to any node: "Files [X, Y, Z] don't map to any node in the EIID mapping."
+- Code that doesn't trace to any node: "Files [X, Y, Z] don't map to any node in the playbook mapping."
 
 ---
 
@@ -50,8 +50,8 @@ Nodes where the mapping defines a human-observable signal (acceptance rate, fati
 
 For nodes marked "autoresearch" in the mapping:
 
-- **Is the loop set up?** Check: is there a designated mutable file, an evaluation set, and a metric? If any is missing: "Node [X] is autoresearch-eligible but the loop is incomplete. Run `/eiid:build` to set it up."
-- **Convergence.** Read experiment logs in `.eiid/report.md`. Are improvements getting smaller? If the last 10 experiments produced less than 1% improvement, the loop is converging. Suggest graduation.
+- **Is the loop set up?** Check: is there a designated mutable file, an evaluation set, and a metric? If any is missing: "Node [X] is autoresearch-eligible but the loop is incomplete. Run `/playbook:build` to set it up."
+- **Convergence.** Read experiment logs in `.playbook/report.md`. Are improvements getting smaller? If the last 10 experiments produced less than 1% improvement, the loop is converging. Suggest graduation.
 - **Divergence.** Are results getting worse or unstable? Flag and suggest reviewing the mutable file scope or evaluation set quality.
 - **Below target.** If the loop exists and the metric is below target, run an autoresearch cycle: read the mutable file, form a hypothesis based on previous experiments, make one change, evaluate, `git commit` or `git reset --hard`. Log the experiment. The system improves itself, not just reports.
 
@@ -70,7 +70,7 @@ The CLAUDE.md must reflect the actual product. Check:
   - Nodes documented but empty in the codebase
   - Graduation triggers that have fired but the approach hasn't changed
 
-If context has drifted, suggest: "CLAUDE.md is stale. Run `/eiid:strategy` with context about what changed."
+If context has drifted, suggest: "CLAUDE.md is stale. Run `/playbook:strategy` with context about what changed."
 
 ---
 
@@ -98,7 +98,7 @@ Scan source files for the most common vulnerabilities:
 
 ## Output
 
-Write findings to `.eiid/report.md`:
+Write findings to `.playbook/report.md`:
 
 ```
 ## Review — [date]

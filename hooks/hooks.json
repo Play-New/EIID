@@ -5,7 +5,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -f CLAUDE.md ] && grep -q EIID CLAUDE.md 2>/dev/null && [ ! -d .eiid ]; then echo 'Project has EIID mapping in CLAUDE.md but .eiid/ directory is missing. Run /eiid:strategy to complete setup.'; fi",
+            "command": "if [ -f CLAUDE.md ] && grep -q "## Playbook" CLAUDE.md 2>/dev/null && [ ! -d .playbook ]; then echo 'Project has playbook mapping in CLAUDE.md but .playbook/ directory is missing. Run /playbook:strategy to complete setup.'; fi",
             "timeout": 5
           }
         ]

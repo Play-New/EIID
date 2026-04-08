@@ -1,7 +1,7 @@
 {
-  "name": "eiid",
-  "version": "2026.4.8.1332",
-  "description": "EIID value chain decomposition for intelligence-era products. Context engineering, autoresearch, graduation. Claude Code plugin.",
+  "name": "playbook",
+  "version": "2026.4.8.2043",
+  "description": "The real game is to change the game. Value chain decomposition for intelligence-era products. Context engineering, autoresearch, graduation.",
   "author": {
     "name": "Play New",
     "url": "https://github.com/Play-New"
@@ -9,5 +9,5 @@
   "repository": "https://github.com/Play-New/EIID",
   "homepage": "https://github.com/Play-New/EIID#readme",
   "license": "MIT",
-  "keywords": ["eiid", "strategy", "context-engineering", "autoresearch", "value-chain", "wardley"]
+  "keywords": ["playbook", "eiid", "strategy", "context-engineering", "autoresearch", "value-chain", "wardley"]
 }

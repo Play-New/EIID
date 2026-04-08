@@ -1,5 +1,5 @@
 #!/bin/bash
-# EIID plugin self-test. Run with: bash test.sh
+# Playbook plugin self-test. Run with: bash test.sh
 # Every check that was caught manually during review is now automated.
 
 PASS=0
@@ -21,7 +21,7 @@ check() {
 }
 
 echo ""
-echo "EIID plugin self-test"
+echo "Playbook plugin self-test"
 echo "====================="
 echo ""
 
@@ -60,6 +60,15 @@ check "no '/super:' command references" "$count"
 count=$(grep -r "\.superskills" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
 check "no '.superskills' directory references" "$count"
 
+count=$(grep -rE "/eiid:" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
+check "no '/eiid:' command references" "$count"
+
+count=$(grep -r "\.eiid/" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
+check "no '.eiid/' directory references" "$count"
+
+count=$(grep -r "eiid-awareness" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
+check "no 'eiid-awareness' references" "$count"
+
 echo ""
 
 # --- Deleted files must not be referenced ---
@@ -75,7 +84,7 @@ echo ""
 # --- Required files must exist ---
 echo "Required files:"
 
-for f in "reference/concepts.md" "reference/example.md" "reference/claude-md-template.md" "commands/strategy.md" "commands/build.md" "commands/review.md" "skills/eiid-awareness/SKILL.md" "skills/build-awareness/SKILL.md" "README.md" "hooks/hooks.json" ".claude-plugin/plugin.json" ".claude-plugin/marketplace.json"; do
+for f in "reference/concepts.md" "reference/example.md" "reference/claude-md-template.md" "commands/strategy.md" "commands/build.md" "commands/review.md" "skills/playbook-awareness/SKILL.md" "skills/build-awareness/SKILL.md" "README.md" "hooks/hooks.json" ".claude-plugin/plugin.json" ".claude-plugin/marketplace.json"; do
   if [ -f "$f" ]; then
     check "$f exists" 0
   else
@@ -138,11 +147,11 @@ fi
 
 echo ""
 
-# --- EIID mapping table format ---
-echo "EIID mapping table format:"
+# --- Playbook mapping table format ---
+echo "Playbook mapping table format:"
 
 count=$(grep -c "| Node | Layer | Evolution | Metric" reference/claude-md-template.md 2>/dev/null)
-check "template has EIID mapping table header" "$( [ "$count" -gt 0 ] && echo 0 || echo 1 )"
+check "template has playbook mapping table header" "$( [ "$count" -gt 0 ] && echo 0 || echo 1 )"
 
 count=$(grep -c "Graduation" reference/claude-md-template.md 2>/dev/null)
 check "template table includes Graduation column" "$( [ "$count" -gt 0 ] && echo 0 || echo 1 )"
@@ -156,13 +165,16 @@ echo ""
 echo "Plugin naming:"
 
 name=$(grep '"name"' .claude-plugin/plugin.json 2>/dev/null | head -1)
-check "plugin.json name is 'eiid'" "$( echo "$name" | grep -q '"eiid"' && echo 0 || echo 1 )"
+check "plugin.json name is 'playbook'" "$( echo "$name" | grep -q '"playbook"' && echo 0 || echo 1 )"
 
 repo=$(grep '"repository"' .claude-plugin/plugin.json 2>/dev/null)
 check "plugin.json repo points to Play-New/EIID" "$( echo "$repo" | grep -q 'Play-New/EIID' && echo 0 || echo 1 )"
 
 url=$(grep '"url"' .claude-plugin/marketplace.json 2>/dev/null | grep -v "github.com/Play-New\"")
-check "marketplace.json source URL points to EIID" "$( echo "$url" | grep -q 'Play-New/EIID' && echo 0 || echo 1 )"
+check "marketplace.json source URL points to Play-New/EIID" "$( echo "$url" | grep -q 'Play-New/EIID' && echo 0 || echo 1 )"
+
+mkt_name=$(grep '"name"' .claude-plugin/marketplace.json 2>/dev/null | head -1)
+check "marketplace.json name is 'playbook'" "$( echo "$mkt_name" | grep -q '"playbook"' && echo 0 || echo 1 )"
 
 echo ""
 

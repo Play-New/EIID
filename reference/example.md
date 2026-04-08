@@ -1,6 +1,6 @@
 # Example: PriceScope
 
-A complete EIID decomposition showing the model in action.
+A complete playbook decomposition showing the model in action.
 
 ---
 
@@ -103,7 +103,7 @@ Overview of the price landscape, active recommendations, history, past decision 
 ## Context engineering check
 
 If an AI agent reads the CLAUDE.md generated from this decomposition tomorrow with no other context, it knows:
-- The product has 6 nodes across all 4 EIID layers
+- The product has 6 nodes across all 4 layers
 - The genesis node (price recommendation) is where the real value is — invest here
 - Two nodes (product matcher, anomaly detector) can be optimized with autoresearch loops
 - One node (price scraper) is commodity — buy, don't build

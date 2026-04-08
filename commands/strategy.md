@@ -1,5 +1,5 @@
 ---
-description: Entry point. Takes any input — raw brief, pitch, idea, existing codebase — and produces an EIID decomposition with strategic challenge. The core of the plugin.
+description: Entry point. Takes any input — raw brief, pitch, idea, existing codebase — and produces a playbook decomposition with strategic challenge. The core of the plugin.
 allowed-tools: Read, Glob, Grep, Write, Edit, WebSearch, WebFetch
 ---
 
@@ -9,12 +9,12 @@ Read `reference/concepts.md` for canonical definitions. Read `reference/example.
 
 ## Detect Mode
 
-**1. Does a strategy exist?** Check for CLAUDE.md with an EIID mapping table.
+**1. Does a strategy exist?** Check for CLAUDE.md with an playbook mapping table.
 
 **2. Route:**
-- **No EIID mapping** -> run **init mode**
-- **EIID mapping exists + user provided context about what changed** -> run **refresh mode**
-- **EIID mapping exists + no context** -> "Strategy exists. Provide context about what changed to refresh it, or run `/eiid:review` to measure."
+- **No playbook mapping** -> run **init mode**
+- **playbook mapping exists + user provided context about what changed** -> run **refresh mode**
+- **playbook mapping exists + no context** -> "Strategy exists. Provide context about what changed to refresh it, or run `/playbook:review` to measure."
 
 ---
 
@@ -26,7 +26,7 @@ Scan the current directory for documents: md, txt, csv, json, pdf, images, docx,
 
 This is not a fixed questionnaire. Adapt to what exists:
 - **Raw brief or pitch deck?** Read it. Extract the value proposition, the client, the market. Note what it claims vs what it assumes.
-- **Existing codebase?** Read package.json, scan source files, understand what's built. Map existing code to EIID layers. Note the stack: framework, database, auth, test runner, package manager. Generate technology constraints for detected tools ("Use pnpm, NOT npm/yarn").
+- **Existing codebase?** Read package.json, scan source files, understand what's built. Map existing code to layers. Note the stack: framework, database, auth, test runner, package manager. Generate technology constraints for detected tools ("Use pnpm, NOT npm/yarn").
 - **Just an idea in conversation?** Ask focused questions until you understand the value.
 - **A mix?** Combine what you find. Documents fill gaps the code doesn't explain.
 
@@ -61,7 +61,7 @@ From the folder scan, user context, and research, identify the components of the
 
 For each node, determine five fields (see `reference/concepts.md`):
 
-- **Layer** — which EIID layer it serves (enrichment / inference / interpretation / delivery)
+- **Layer** — which layer it serves (enrichment / inference / interpretation / delivery)
 - **Evolution** — genesis, custom, product, or commodity. Use the research: how many providers exist? How standardized is the approach?
 - **Metric or signal** — what you measure to know if this node works. Metric for quantifiable things with fast feedback. Signal for things that require human observation.
 - **Graduation trigger** — when to change approach AND what to change to. "When accuracy exceeds 95% for 2 weeks, replace with deterministic rules." Both the condition and the direction.
@@ -75,7 +75,7 @@ This is the most important step. For each node and for the decomposition as a wh
 
 - **Genesis treated as obvious.** "This is your riskiest node. How do you validate it before building everything else?"
 - **Commodity built custom.** "This exists as a service. Buy it."
-- **Missing EIID layer.** "There's no delivery. How does the value reach the user?" or "There's no inference. What patterns are you detecting?"
+- **Missing layer.** "There's no delivery. How does the value reach the user?" or "There's no inference. What patterns are you detecting?"
 - **Value node without metric.** "This is your most valuable node and it has no way to know if it's working."
 - **Implementation confused with strategy.** "RAG is how. What is the what?" or "You described a dashboard. What insight does it deliver that a notification couldn't?"
 - **Enrichment/Inference node without autoresearch.** "This node has a clean metric. Why not optimize it automatically?"
@@ -103,11 +103,11 @@ This is the challenge translated into action. The user reads this and knows what
 
 **For the agents: CLAUDE.md.** Use `reference/claude-md-template.md` for structure. Before showing the user, verify: if an AI agent reads this CLAUDE.md tomorrow with zero context, does it know where the value is (which nodes are genesis), what to build first, what to measure (every node has a metric or signal), when to change approach (graduation triggers), and which nodes can be optimized automatically (loop field)? If any of these are unclear, rewrite until they are. Then show the user. Ask for confirmation. Only write after approval.
 
-If there are non-obvious choices worth logging, append them to `.eiid/report.md` under a Decisions section with date, reasoning, and which node they affect.
+If there are non-obvious choices worth logging, append them to `.playbook/report.md` under a Decisions section with date, reasoning, and which node they affect.
 
 ### 7. What's Next
 
-Tell the user: run `/eiid:build` to start constructing from the strategy, or `/eiid:review` to measure an existing product against the mapping.
+Tell the user: run `/playbook:build` to start constructing from the strategy, or `/playbook:review` to measure an existing product against the mapping.
 
 ---
 
@@ -117,11 +117,11 @@ The mapping exists but something changed: business pivot, new users, new data so
 
 ### 1. Load Context
 
-Read CLAUDE.md and `.eiid/report.md` (if they exist). If report.md has context fidelity findings from a previous review, use those as input — the user may not know what drifted, but review does.
+Read CLAUDE.md and `.playbook/report.md` (if they exist). If report.md has context fidelity findings from a previous review, use those as input — the user may not know what drifted, but review does.
 
 ### 2. Change Assessment
 
-Show the user the current strategy (key elements: client, value expected, EIID mapping). If review flagged drift, show it: "Review found these mismatches: [list]. Let's update the mapping." If the user provided context about what changed, use that instead. Skip questions already answered.
+Show the user the current strategy (key elements: client, value expected, playbook mapping). If review flagged drift, show it: "Review found these mismatches: [list]. Let's update the mapping." If the user provided context about what changed, use that instead. Skip questions already answered.
 
 ### 3. Research
 
@@ -143,7 +143,7 @@ Check autoresearch results: have optimized nodes converged? Should they graduate
 
 Show updated strategic assessment. Highlight what changed. Then show updated CLAUDE.md. Ask for confirmation. Write.
 
-Log the refresh in `.eiid/report.md`.
+Log the refresh in `.playbook/report.md`.
 
 ---
 
@@ -155,5 +155,5 @@ Log the refresh in `.eiid/report.md`.
 - Mark inferences as inferences.
 - Research tests the brief, it does not confirm it. Search for what would make the strategy wrong.
 - Two outputs: strategic assessment (for people) and CLAUDE.md (for agents). Both serve the same decomposition, different audiences.
-- CLAUDE.md is strategic context (stable). `.eiid/report.md` is operational state (volatile). Don't duplicate between them.
+- CLAUDE.md is strategic context (stable). `.playbook/report.md` is operational state (volatile). Don't duplicate between them.
 - The user answers questions or confirms inferences. The decomposition, evolution classification, and challenge — you bring those from research and analysis.

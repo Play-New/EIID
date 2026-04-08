@@ -4,7 +4,7 @@ Canonical definitions. Every concept defined once. Commands and skills reference
 
 ---
 
-## EIID
+## The Four Layers (EIID)
 
 Four layers that structure every intelligence-era product. Value flows from raw data to user outcome. Every component (node) traces to exactly one layer.
 
@@ -18,9 +18,9 @@ Four layers that structure every intelligence-era product. Value flows from raw 
 
 ## Node
 
-A component of the product that belongs to exactly one EIID layer. The unit of decomposition, analysis, and measurement. Each node carries five fields:
+A component of the product that belongs to exactly one layer. The unit of decomposition, analysis, and measurement. Each node carries five fields:
 
-- **Layer** — which EIID layer it serves
+- **Layer** — which layer it serves
 - **Evolution** — where it sits on the Wardley axis (genesis, custom, product, commodity)
 - **Metric / signal** — what you measure and the target value
 - **Graduation** — when to change approach and what to change to (condition + direction)
@@ -50,7 +50,7 @@ Automated optimization loop for nodes with a clear metric and fast feedback. Bas
 The mechanism has five fixed parts:
 
 1. **One mutable file.** The agent can only change one file per node: the prompt, the config, or the logic file. Everything else is frozen. This prevents the agent from changing the evaluation to make the metric look better.
-2. **One metric.** The node's metric from the EIID mapping, computed automatically against an evaluation set. One number, no ambiguity.
+2. **One metric.** The node's metric from the playbook mapping, computed automatically against an evaluation set. One number, no ambiguity.
 3. **Fixed time budget.** Each experiment must complete within a fixed time (evaluation included). This makes experiments comparable regardless of what the agent changed.
 4. **Git as keep/discard.** `git commit` when the metric improves (new baseline). `git reset --hard` when it doesn't (clean revert). Improvements accumulate. Failures vanish.
 5. **Autonomous loop.** The agent reads the code, forms a hypothesis, makes one change, measures, keeps or discards. No human in the loop. Runs until convergence or budget exhausted.

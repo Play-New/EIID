@@ -1,20 +1,29 @@
 ```
-    ┌─────────────────────────────────────────┐
-    │                                         │
-    │   ██████╗  ██╗ ██╗ ██████╗              │
-    │   ██╔═══╝  ██║ ██║ ██╔══██╗             │
-    │   █████╗   ██║ ██║ ██║  ██║             │
-    │   ██╔══╝   ██║ ██║ ██║  ██║             │
-    │   ██████╗  ██║ ██║ ██████╔╝             │
-    │   ╚═════╝  ╚═╝ ╚═╝ ╚═════╝             │
-    │                                         │
-    │   enrichment ── inference ──┐            │
-    │                             │            │
-    │              interpretation ─── delivery │
-    │                                         │
-    │   data in ·········· value out          │
-    │                                         │
-    └─────────────────────────────────────────┘
+    ┌───────────────────────────────────────────────┐
+    │                                               │
+    │   ██████╗  ██╗      █████╗ ██╗   ██╗         │
+    │   ██╔══██╗ ██║     ██╔══██╗╚██╗ ██╔╝         │
+    │   ██████╔╝ ██║     ███████║ ╚████╔╝          │
+    │   ██╔═══╝  ██║     ██╔══██║  ╚██╔╝           │
+    │   ██║      ███████╗██║  ██║   ██║            │
+    │   ╚═╝      ╚══════╝╚═╝  ╚═╝   ╚═╝            │
+    │                                               │
+    │   ██████╗  ██████╗  ██████╗ ██╗  ██╗         │
+    │   ██╔══██╗██╔═══██╗██╔═══██╗██║ ██╔╝         │
+    │   ██████╔╝██║   ██║██║   ██║█████╔╝          │
+    │   ██╔══██╗██║   ██║██║   ██║██╔═██╗          │
+    │   ██████╔╝╚██████╔╝╚██████╔╝██║  ██╗         │
+    │   ╚═════╝  ╚═════╝  ╚═════╝ ╚═╝  ╚═╝         │
+    │                                               │
+    │   the real game is to change the game         │
+    │                                               │
+    │   enrichment ── inference ──┐                  │
+    │                             │                  │
+    │              interpretation ─── delivery       │
+    │                                               │
+    │   data in ·········· value out                │
+    │                                               │
+    └───────────────────────────────────────────────┘
 ```
 
 A Claude Code plugin that answers one question: **where is the value in your product?**
@@ -33,7 +42,7 @@ Most AI-assisted products are the same software we built in 2015, typed faster. 
 
 The hard question is not "how do I build this?" It is "where does the intelligence go, and what is it worth?"
 
-## What EIID does
+## What playbook does
 
 Every intelligence-era product moves data from raw input to user value through four layers:
 
@@ -44,7 +53,7 @@ INTERPRETATION     raw signals become actionable insight
 DELIVERY           the right insight, right channel, right moment
 ```
 
-EIID decomposes your product into **nodes** across these layers. For each node, five fields:
+Playbook decomposes your product into **nodes** across these layers. For each node, five fields:
 
 ```
 Value expected
@@ -73,11 +82,11 @@ Give it anything: a raw brief, a pitch deck, an idea in conversation, an existin
 
 | Command | What it does |
 |---------|------|
-| `/eiid:strategy` | Decomposes the product into nodes. Challenges assumptions. Two outputs: strategic assessment (for people deciding) and CLAUDE.md (for agents building). |
-| `/eiid:build` | Vision conversation, tests that encode it, autonomous construction. Sets up optimization loops for eligible nodes. |
-| `/eiid:review` | Measures each node against its metric. Checks whether the CLAUDE.md still reflects reality. |
+| `/playbook:strategy` | Decomposes the product into nodes. Challenges assumptions. Two outputs: strategic assessment (for people deciding) and CLAUDE.md (for agents building). |
+| `/playbook:build` | Vision conversation, tests that encode it, autonomous construction. Sets up optimization loops for eligible nodes. |
+| `/playbook:review` | Measures each node against its metric. Checks whether the CLAUDE.md still reflects reality. |
 
-Two skills fire automatically during work. **EIID awareness** catches misalignment during planning. **Build awareness** checks traceability during implementation.
+Two skills fire automatically during work. **Playbook awareness** catches misalignment during planning. **Build awareness** checks traceability during implementation.
 
 ## Three ideas that matter
 
@@ -92,7 +101,7 @@ Two skills fire automatically during work. **EIID awareness** catches misalignme
 ```
 your-project/
   CLAUDE.md         strategic context — where the value is (stable)
-  .eiid/
+  .playbook/
     report.md       operational state — metrics, decisions, test results (volatile)
 ```
 
@@ -122,7 +131,7 @@ Wardley (value chain evolution), Choudary (platform dynamics, AI-driven restruct
 claude plugin marketplace add Play-New/EIID
 ```
 
-Update: `claude plugin marketplace update EIID`
+Update: `claude plugin marketplace update playbook`
 
 ## License
 
