@@ -5,7 +5,7 @@ allowed-tools: Read, Glob, Grep, Write, Edit, Bash
 
 # Review
 
-Review measures. Review does not fix. Every finding is a report entry with location, severity, and suggested fix. The user decides what to fix and when.
+Review measures and reports. The user decides what to fix and when. One exception: for autoresearch-eligible nodes below target, review runs an optimization cycle directly. The system improves itself where it can.
 
 ## Prerequisites
 

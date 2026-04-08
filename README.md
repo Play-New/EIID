@@ -1,10 +1,10 @@
 ```
-     ______  _____  _____  ____
-    |  ____||_   _||_   _||  _ \
-    | |__     | |    | |  | | | |
-    |  __|    | |    | |  | | | |
-    | |____  _| |_  _| |_ | |_| |
-    |______||_____||_____||____/
+    ███████╗██╗██╗██████╗
+    ██╔════╝██║██║██╔══██╗
+    █████╗  ██║██║██║  ██║
+    ██╔══╝  ██║██║██║  ██║
+    ███████╗██║██║██████╔╝
+    ╚══════╝╚═╝╚═╝╚═════╝
 ```
 
 A Claude Code plugin that answers one question: **where is the value in your product?**
@@ -104,7 +104,7 @@ The genesis node (price recommendation) is where the value is. Two nodes run aut
 
 ## References
 
-Wardley (value chain evolution), Choudary (platform dynamics, AI-driven restructuring), Walker (context engineering as Hayek's knowledge problem), Karpathy (autoresearch: automated experimentation loop).
+Wardley (value chain evolution), Choudary (platform dynamics, AI-driven restructuring), Karpathy (autoresearch: automated experimentation loop).
 
 ## Install
 

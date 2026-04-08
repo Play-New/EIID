@@ -10,7 +10,6 @@ Strategy generates this file. It is the strategic context document of the produc
 ## Business
 **Client:** [who is paying]
 **Value expected:** [the outcome, in one sentence — not features]
-**Target feeling:** [the emotional state when the product works perfectly]
 
 ## EIID Mapping
 

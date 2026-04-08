@@ -5,7 +5,7 @@ allowed-tools: Read, Glob, Grep, Write, Edit, Bash, WebSearch, WebFetch
 
 # Build
 
-Read `reference/concepts.md` for EIID, graduation, autoresearch, and target feeling definitions.
+Read `reference/concepts.md` for EIID, graduation, and autoresearch definitions.
 
 ## Detect Mode
 
@@ -65,12 +65,12 @@ Autonomous until all tests pass.
 
 For each piece:
 1. Re-read CLAUDE.md before starting (context drifts on long builds).
-2. Build with full context: EIID mapping, target feeling, vision.
+2. Build with full context: EIID mapping, value expected, vision.
 3. Run the full test suite. Track which tests flip from failing to passing.
 4. On regression: revert, analyze, try differently.
 5. When iterations stop producing new approaches: log what was tried, skip, continue.
 
-For Interpretation/Delivery nodes with visual surfaces: make design decisions here, guided by the target feeling. Typography, color, layout, tokens — these emerge from what the node needs to communicate, not from a separate design phase.
+For Interpretation/Delivery nodes with visual surfaces: make design decisions here, guided by the value expected. What the node needs to communicate determines the visual choices.
 
 ### 4. Autoresearch Setup
 

@@ -12,10 +12,6 @@ E-commerce sellers managing products across multiple marketplaces.
 
 Always have the right price without spending hours checking competitors.
 
-## Target Feeling
-
-Confident control — the seller glances and knows their pricing is sharp.
-
 ---
 
 ## Nodes

@@ -49,7 +49,7 @@ For nodes with a clear metric and fast feedback: the automated optimization loop
 
 Works well on Enrichment and Inference nodes. Partially applicable to Interpretation (prompt clarity optimization). Not applicable to Delivery (feedback too slow, quality multi-dimensional).
 
-The strategy identifies which nodes are autoresearch candidates. Build sets up the loop. Review evaluates convergence.
+The strategy identifies which nodes are autoresearch candidates. Build sets up the loop. Review evaluates convergence and triggers optimization cycles when a node is below target.
 
 ## Graduation
 
@@ -59,10 +59,6 @@ Nodes evolve. When a metric consistently exceeds its target, simplify the implem
 - **Down** — patterns stabilize, what was experimental becomes routine
 
 Each node documents its graduation trigger. When the trigger fires, revisit the approach.
-
-## Target Feeling
-
-The emotional state when the product works perfectly. Not "satisfied" or "happy" — specific: calm control, warm relief, precise confidence. Defined during strategy, it guides decisions on Interpretation and Delivery nodes. Every touchpoint the user perceives — a screen, a message, an agent response, a CLI output — either contributes to the target feeling or undermines it.
 
 ## Context Engineering
 

@@ -32,11 +32,10 @@ This is not a fixed questionnaire. Adapt to what exists:
 
 ### 2. Extract the Value
 
-Three things must be clear before anything else:
+Two things must be clear before anything else:
 
 1. **Who is the client** — who pays, who uses, their daily context.
 2. **What value they expect** — the outcome in one sentence. Not features, not technology. What changes for them when this works.
-3. **Target feeling** — the emotional state when the product works perfectly. Specific: calm control, warm relief, precise confidence.
 
 The folder scan already answered some of these. Ask only what's still missing. Reference what you found: "I see order data in the database and a WhatsApp integration — who is this for and what problem does it solve?"
 
@@ -114,11 +113,11 @@ The mapping exists but something changed: business pivot, new users, new data so
 
 ### 1. Load Context
 
-Read CLAUDE.md, `.eiid/report.md`, `.eiid/report.md` (if they exist).
+Read CLAUDE.md and `.eiid/report.md` (if they exist).
 
 ### 2. Change Assessment
 
-Show the user the current strategy (key elements: client, value, target feeling, EIID mapping). Collect what changed. Skip questions already answered in their request.
+Show the user the current strategy (key elements: client, value expected, EIID mapping). Collect what changed. Skip questions already answered in their request.
 
 ### 3. Research
 
