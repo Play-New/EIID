@@ -153,6 +153,7 @@ Ingests job descriptions, sourcing emails, employer brand copy from ATS and auth
 | Metric | ingestion success rate (% docs parsed without manual intervention) |
 | Graduation | if a new ATS format breaks extraction below 90%, build a custom parser for it |
 | Loop | N/A — buy/integrate |
+| Feeds | — |
 
 ### Outcome linker — Enrichment
 
@@ -165,6 +166,7 @@ Joins each job posting to its hiring outcome: application volume, demographic di
 | Metric | linkage rate (% postings matched to outcomes), outcome latency (days from posting to outcome data) |
 | Graduation | when linkage rate exceeds 95% for a given ATS integration, freeze that connector |
 | Loop | autoresearch — change matching heuristics, measure linkage rate against labeled set |
+| Feeds | — |
 
 ### Bias pattern detector — Inference
 
@@ -177,6 +179,7 @@ Identifies language patterns correlated with exclusionary outcomes: gendered phr
 | Metric | detection precision (% flagged patterns that correlate with measurable outcome difference), recall (% of outcome-affecting patterns caught) |
 | Graduation | when a pattern becomes universally recognized (e.g., "rockstar" as gendered), move from model detection to a deterministic blocklist |
 | Loop | autoresearch — change detection thresholds, measure against labeled outcome dataset |
+| Feeds | — |
 
 ### Rewrite recommendation — Interpretation
 
@@ -189,6 +192,7 @@ Turns "this phrase correlates with 23% fewer women applicants" into a specific a
 | Signal | rewrite acceptance rate, actual outcome delta (diversity change) at 30/60/90 days |
 | Graduation | when rewrites for a pattern category have >90% acceptance and stable outcome improvement, auto-apply as defaults |
 | Loop | manual review — acceptance rate is fast, but actual outcome impact takes months |
+| Feeds | — |
 
 ### Editor overlay — Delivery
 
@@ -201,6 +205,7 @@ Real-time sidebar in the authoring tool. Shows a score, highlights flagged phras
 | Signal | time from flag to action, % suggestions dismissed without reading |
 | Graduation | if >50% of suggestions in a category are auto-accepted without reading, that category can move to auto-apply |
 | Loop | manual review — observe interaction patterns, adjust suggestion priority |
+| Feeds | accepted rewrites with edits → rewrite recommendation (the edit IS the training signal — what the recruiter changed reveals what the system got wrong), dismissed suggestions → bias pattern detector (false positive signal) |
 
 ---
 
@@ -251,6 +256,7 @@ Ingests published content from all channels: website CMS, email platform, social
 | Metric | coverage (% channels connected), freshness (hours since last sync) |
 | Graduation | if a new channel has no API, build a custom scraper; revisit when an official connector appears |
 | Loop | N/A — buy/integrate |
+| Feeds | — |
 
 ### Style guide encoder — Enrichment
 
@@ -263,6 +269,7 @@ Digitizes the brand's style guide, terminology, tone rules, and compliance requi
 | Metric | rule coverage (% of style guide sections encoded), rule conflict rate (% rules that contradict each other) |
 | Graduation | when conflicts drop to zero and new rules are added less than once per quarter, the encoding is stable |
 | Loop | manual review — encoding requires brand team validation |
+| Feeds | — |
 
 ### Compliance scorer — Inference
 
@@ -275,6 +282,7 @@ Analyzes each content piece against the encoded ruleset. Checks terminology, ton
 | Metric | scoring accuracy (agreement with expert human reviewers), false positive rate (% flags that experts dismiss) |
 | Graduation | when false positive rate exceeds 15%, simplify the ruleset. When accuracy exceeds 95%, reduce review sample frequency |
 | Loop | autoresearch — change scoring weights, measure against expert-labeled test set |
+| Feeds | — |
 
 ### Cross-channel consistency analyzer — Inference
 
@@ -287,6 +295,7 @@ Measures whether the brand sounds the same across channels. Detects drift: socia
 | Metric | consistency score (variance of tone/terminology across channels), drift detection latency (days to flag a diverging channel) |
 | Graduation | when a channel pair's consistency is stable above target for 6 months, reduce monitoring frequency for that pair |
 | Loop | autoresearch — change consistency measurement approach, measure against expert-labeled channel pairs. Medium feedback speed (weekly) |
+| Feeds | — |
 
 ### Writer guidance — Delivery
 
@@ -299,6 +308,7 @@ Real-time sidebar in the authoring tool. Highlights non-compliant phrases, sugge
 | Signal | time from flag to correction, % suggestions accepted, gate pass rate |
 | Graduation | if pass rate exceeds 95%, writers have internalized the rules — relax the gate to advisory mode |
 | Loop | manual review — observe writer behavior, adjust suggestion priority |
+| Feeds | corrections before system flags → compliance scorer (system is late, thresholds too lax), rejected suggestions → style guide encoder (rule may be wrong or context-dependent), writer rewrites that avoid flagged patterns → consistency analyzer (new compliant patterns to learn) |
 
 ### Governance dashboard — Delivery
 
@@ -311,6 +321,7 @@ Executive view: content quality trends across channels, compliance rates by team
 | Signal | usage frequency, time from drift alert to corrective action |
 | Graduation | if 80% of users check only 2 views, the others are noise — remove them |
 | Loop | N/A |
+| Feeds | drift alerts without corrective action → consistency analyzer (alert fatigue or false alarm), filter patterns → content collector (which channels executives actually care about) |
 
 ---
 
