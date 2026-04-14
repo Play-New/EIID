@@ -36,6 +36,8 @@ Four stages on the Wardley axis. Each carries strategic meaning for the node.
 - **Product** — well-understood, multiple approaches exist. Use existing solutions, adapt to your context.
 - **Commodity** — standardized, many providers. Buy it. Building commodity is waste.
 
+Evolution applies to every layer, including Delivery. A static dashboard is product. A conversational interface that composes itself from capabilities in real time — where the customer asks for something that doesn't exist and the system assembles it — is genesis. The difference matters: a product-stage interface is replaceable, a genesis-stage interface that accumulates a world model from every interaction is a compound moat.
+
 ## Metric vs Signal
 
 **Metric** — measurable automatically with fast feedback. Accuracy, precision, recall, latency, coverage, cost per unit. Enables autoresearch: change the implementation, measure, keep or discard. Typical of Enrichment and Inference nodes.
