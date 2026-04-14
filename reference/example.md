@@ -72,7 +72,7 @@ Transforms "competitor X dropped 15%" into "lower to 24.90, maintain ranking, ma
 | Signal | recommendation acceptance rate, revenue delta at 7 days post-adoption |
 | Graduation | when recommendations for a category follow the same pattern consistently, convert to automatic rules for that category |
 | Loop | manual review — optimize prompt for clarity (measurable), but revenue impact requires human judgment (monthly) |
-| Feeds | — |
+| Feeds | user modifies recommendation before acting → recommendation quality (the modification shows what was wrong or missing) |
 
 ### Alert dispatcher — Delivery
 
@@ -193,7 +193,7 @@ Turns "this phrase correlates with 23% fewer women applicants" into a specific a
 | Signal | rewrite acceptance rate, actual outcome delta (diversity change) at 30/60/90 days |
 | Graduation | when rewrites for a pattern category have >90% acceptance and stable outcome improvement, auto-apply as defaults |
 | Loop | manual review — acceptance rate is fast, but actual outcome impact takes months |
-| Feeds | — |
+| Feeds | user edits rewrite before accepting → rewrite quality (the edit shows what was wrong), user rejects rewrite entirely → rewrite was off-target for this context |
 
 ### Editor overlay — Delivery
 
