@@ -41,19 +41,28 @@ The folder scan already answered some of these. Ask only what's still missing. R
 
 ### 3. Research
 
-Research does not confirm the brief. It tests it. Search for what would make the brief wrong.
+Research does not confirm the brief. It tests it. Every search should produce evidence that directly feeds a field in the mapping. If a search doesn't change at least one node's evolution, metric, or graduation trigger, it was waste.
 
-**Validate the market.** The brief says the market exists. Search for evidence. If the client claims "PA needs visual communication," search for PA visual communication procurement, budgets, existing solutions in that specific market. Concrete: "pubblica amministrazione comunicazione visiva accessibile" not "visual translation AI tool."
+Run 5 searches in parallel, one per lens. Each lens feeds a specific part of the mapping. Interpolate variables from the brief into the queries — domain, technology, claimed asset, claimed market.
 
-**Find who else is close.** Not direct competitors — adjacent solutions. Who is solving a related problem? What do their users complain about? Where did they stop? Search around the brief, not inside it.
+**Lens 1: Commodity check → feeds Evolution.**
+For each technology or approach in the brief, search for how many providers, frameworks, or managed services exist. "RAG framework open source managed service comparison 2026" not "RAG overview." If there are 15+ providers, the node is commodity. If there's one paper and no product, it's genesis. The search must produce a number or a list, not a vibe.
 
-**Check the assumptions.** The brief claims something is unique, scarce, or new. Verify. If "no one has structured creative reasoning data," search for creative reasoning datasets, design decision corpora, tacit knowledge capture tools. Look for evidence the claim is wrong.
+**Lens 2: Adjacent products & gap → feeds Evolution + Challenge.**
+Search for tools in the adjacent space. Not direct competitors — products solving a related problem. What do they do, and critically, what do they NOT do? The gap between what adjacent products offer and what the brief proposes is where the real value might be. If no gap exists, the brief is building something that already exists. Interpolate: "[domain] AI tool product what they do limitation gap [year]."
 
-**Validate the asset.** If the brief claims a unique dataset, resource, or relationship: how large is it really? How diverse? Is it accessible? What would it take to structure it? Search for the specific asset, not the category.
+**Lens 3: Measurement patterns → feeds Metric/Signal + Loop.**
+Search for how similar products in the domain measure quality. What metrics exist? Is feedback fast (automated, enables autoresearch) or slow (human judgment, manual review)? What acceptance rates or quality thresholds are published? If the domain is too new for published benchmarks, search adjacent domains for analogous metrics. Interpolate: "[domain] quality metric measurement acceptance rate feedback [year]."
 
-**What changed in the last 6 months.** What was custom that is now a service? What new tools exist that the brief doesn't account for? This prevents building what's already commodity.
+**Lens 4: Graduation precedent → feeds Graduation.**
+Search for cases where a similar approach transitioned from manual to automated, or from complex to simple. What triggered the transition? At what threshold? The brief may claim a node needs an ML model, but if evidence shows that rules work above 95% accuracy, that changes the graduation trigger. Interpolate: "[approach] transition manual automated threshold when to switch [year]."
 
-The goal is not 3 generic searches. It is 3-5 targeted searches that could change the decomposition. Every search should be specific enough that the results teach you something the brief didn't say.
+**Lens 5: Asset & claim validation → feeds Challenge.**
+The brief makes specific claims — a unique dataset, a market that exists, an asset that can't be replicated. Search for the specific claim, not the category. If the brief says "300+ titles," search for the actual catalog size. If it says "no one has this data," search for who might. One disconfirming fact is worth more than five confirming opinions.
+
+After the first round, evaluate: which lenses produced evidence that feeds a mapping field? Which produced noise? Run a second round on the weak lenses only, with sharper queries informed by what the first round taught you. Stop when the results converge — additional searches return no new information.
+
+If `.playbook/report.md` records research failures from a previous run (which lenses failed for this domain), skip those lenses and try alternatives.
 
 ### 4. Decompose into Nodes
 
