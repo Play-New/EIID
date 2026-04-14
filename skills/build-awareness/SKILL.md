@@ -12,5 +12,6 @@ If CLAUDE.md doesn't exist, stop. No context to check against.
 2. **Node trace:** which node does this code serve? If none, and it's not supporting infrastructure (tests, types, config, shared utilities), flag it.
 3. **Value check:** if the code produces anything a user perceives — UI, agent responses, notifications, CLI output, error messages — does it serve the value expected in CLAUDE.md?
 4. **Context fidelity:** does this code change what CLAUDE.md says about the product? A new data source means the Enrichment layer needs updating. A new delivery channel means the Delivery layer needs updating. Flag when CLAUDE.md should be refreshed.
+5. **Feeds implementation:** if this code serves a node that declares Feeds in the mapping, does the implementation actually capture the backward signal? A Delivery node that sends alerts but doesn't track responses is not implementing its declared Feeds. Flag the gap.
 
 One line per observation. Only when relevant. Not blocking. Challenge, don't lecture.

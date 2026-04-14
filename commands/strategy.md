@@ -22,7 +22,7 @@ Read `reference/concepts.md` for canonical definitions. Read `reference/example.
 
 ### 1. Understand the Input
 
-Scan the current directory for documents: md, txt, csv, json, pdf, images, docx, xlsx. Skip node_modules, .git, dist, build, .next, .vercel. Read every document found.
+Scan the current directory for documents: md, txt, csv, json, pdf, images, docx, xlsx. Skip node_modules, .git, dist, build, .next, .vercel. Read every document found. If `.playbook/report.md` exists from a previous run, read it — it contains classification overrides, challenge outcomes, research failures, and review findings that should inform this decomposition.
 
 This is not a fixed questionnaire. Adapt to what exists:
 - **Raw brief or pitch deck?** Read it. Extract the value proposition, the client, the market. Note what it claims vs what it assumes.
@@ -59,13 +59,14 @@ The goal is not 3 generic searches. It is 3-5 targeted searches that could chang
 
 From the folder scan, user context, and research, identify the components of the product. Work backward from the user need through what's required down to data sources.
 
-For each node, determine five fields (see `reference/concepts.md`):
+For each node, determine six fields (see `reference/concepts.md`):
 
 - **Layer** — which layer it serves (enrichment / inference / interpretation / delivery)
-- **Evolution** — genesis, custom, product, or commodity. Use the research: how many providers exist? How standardized is the approach?
+- **Evolution** — genesis, custom, product, or commodity. Use the research: how many providers exist? How standardized is the approach? For Delivery nodes: a static dashboard is product, a conversational interface that composes itself from capabilities is genesis.
 - **Metric or signal** — what you measure to know if this node works. Metric for quantifiable things with fast feedback. Signal for things that require human observation.
 - **Graduation trigger** — when to change approach AND what to change to. "When accuracy exceeds 95% for 2 weeks, replace with deterministic rules." Both the condition and the direction.
 - **Loop** — autoresearch (metric is clean, feedback is fast, automated optimization is possible), manual review (signal requires human judgment), or N/A (commodity node, just monitor).
+- **Feeds** — what signal flows BACK from this node to other nodes, against the normal EIID direction. Every node that touches humans should declare this. What the user accepts, ignores, modifies, or asks for that doesn't exist is backward signal. A node with no backward signal is terminal — `—`.
 
 Every node must trace to the user need. A node that exists because "products like this usually have it" does not belong.
 
@@ -83,6 +84,8 @@ This is the most important step. For each node and for the decomposition as a wh
 - **Brief that's really a feature list.** "These are outputs. What is the input? Where does the data come from? What patterns do you detect? Start from enrichment."
 - **Unvalidated market.** "The brief lists 7 markets. Which one has the most urgent need AND where your asset gives the strongest signal? Pick one."
 - **Asset that doesn't exist yet.** "The brief says the corpus is unique. But it isn't structured. The moat is the structured knowledge, not the raw material."
+- **Terminal delivery.** "This Delivery node has no Feeds. The product pushes value out but captures nothing back. It doesn't learn from use."
+- **No compound loop.** "Every capability here is replicable. Where is the world model — the accumulated understanding that compounds with every interaction? What signal flows back from Delivery to make Enrichment and Inference smarter?"
 
 The challenge is not hostile. It sharpens the strategy. Acknowledge what's strong, then point to what's missing or misplaced.
 

@@ -5,7 +5,7 @@ allowed-tools: Read, Glob, Grep, Write, Edit, Bash, WebSearch, WebFetch
 
 # Build
 
-Read `reference/concepts.md` for the four layers, graduation, and autoresearch definitions.
+Read `reference/concepts.md` for the four layers, graduation, autoresearch, and Feeds definitions.
 
 ## Detect Mode
 

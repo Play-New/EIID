@@ -78,3 +78,14 @@ Each node documents its graduation trigger: both the condition (when) and the di
 Every output of this plugin is structured context for AI agents. CLAUDE.md is the strategic context document of the product. If an agent reads it, it knows: where the value is, what to build, what to measure, when to change approach.
 
 Context must stay faithful to reality (context fidelity). When the product evolves, the context updates. Stale context is worse than no context — it leads agents to optimize the wrong things.
+
+## Plugin Learning
+
+The plugin applies its own framework to itself. Every interaction with a user is signal:
+
+- **User overrides a classification** → the node classifier was wrong. Log the override and the reasoning to `.playbook/report.md`. Over time, these overrides reveal which archetypes are stable ("document ingester" is always commodity Enrichment) and which require judgment.
+- **A challenge changes the user's plan** → the challenge worked. Log which challenge pattern fired and what changed. Over time, the most effective challenges surface.
+- **Review finds stale context** → the CLAUDE.md generator or the strategy missed something. Log what drifted and why. Over time, the template and research improve.
+- **A research lens produces no useful signal** → the lens was wrong for this domain. Log which lens failed and what the domain was. Over time, research adapts to domain.
+
+These signals persist in `.playbook/report.md` within each project. The plugin reads prior reports when running strategy refresh or review, learning from its own history. The compound loop is: strategy → build → review → strategy, and each cycle through it makes the mapping more faithful and the challenges sharper.
