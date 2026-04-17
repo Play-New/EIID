@@ -145,6 +145,20 @@ else
   check "autoresearch in 5+ files ($count found)" 1
 fi
 
+count=$(grep -rl "does the interface learn\|Interface.*learn\|Interface.*sensor\|Interface.*signal" --include="*.md" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
+if [ "$count" -ge 4 ]; then
+  check "interface learning principle in 4+ files ($count found)" 0
+else
+  check "interface learning principle in 4+ files ($count found)" 1
+fi
+
+count=$(grep -rl "World Model" --include="*.md" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
+if [ "$count" -ge 4 ]; then
+  check "World Model concept in 4+ files ($count found)" 0
+else
+  check "World Model concept in 4+ files ($count found)" 1
+fi
+
 echo ""
 
 # --- Playbook mapping table format ---

@@ -72,6 +72,8 @@ For each node:
 
 For Interpretation/Delivery nodes with visual surfaces: make design decisions here, guided by the value expected. What the node needs to communicate determines the visual choices.
 
+For every node that touches humans — Delivery always, Enrichment and Interpretation when users interact — ask: does this surface capture signal? What the user accepts, ignores, modifies, or requests that doesn't exist is the raw material of the World Model. If the implementation pushes value out but observes nothing, the product does not learn from this surface. Build the signal capture alongside the delivery, not after.
+
 ### 4. Autoresearch Setup
 
 For nodes marked "autoresearch" in the playbook mapping, set up the loop per the Karpathy framework (see `reference/concepts.md`):
