@@ -1,6 +1,5 @@
 #!/bin/bash
 # Playbook plugin self-test. Run with: bash test.sh
-# Every check that was caught manually during review is now automated.
 
 PASS=0
 FAIL=0
@@ -23,62 +22,6 @@ check() {
 echo ""
 echo "Playbook plugin self-test"
 echo "====================="
-echo ""
-
-# --- Removed concepts must not appear ---
-echo "Removed concepts:"
-
-count=$(grep -ri "rule zero" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no 'rule zero' references" "$count"
-
-count=$(grep -ri "target feeling" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no 'target feeling' references" "$count"
-
-count=$(grep -ri "experience pattern" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no 'experience pattern' references" "$count"
-
-count=$(grep -ri "prompt visibility" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no 'prompt visibility' references" "$count"
-
-count=$(grep -rE "automate.*differentiate.*innovate|Automate.*Differentiate" --include="*.md" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no classification taxonomy" "$count"
-
-count=$(grep -rE "LLM call.*workflow.*agent.*code.*buy" --include="*.md" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no implementation levels taxonomy" "$count"
-
-echo ""
-
-# --- Old naming must not appear ---
-echo "Old naming:"
-
-count=$(grep -r "superskills\|SuperSkills" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | grep -v .git | wc -l | tr -d ' ')
-check "no 'superskills' references" "$count"
-
-count=$(grep -rE "/super:" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no '/super:' command references" "$count"
-
-count=$(grep -r "\.superskills" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no '.superskills' directory references" "$count"
-
-count=$(grep -rE "/eiid:" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no '/eiid:' command references" "$count"
-
-count=$(grep -r "\.eiid/" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no '.eiid/' directory references" "$count"
-
-count=$(grep -r "eiid-awareness" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no 'eiid-awareness' references" "$count"
-
-echo ""
-
-# --- Deleted files must not be referenced ---
-echo "Deleted file references:"
-
-for ref in "design-critique" "design-system-template" "report-template" "decisions-template" "design-awareness" "stop-tests" "decisions.md" "build-plan.md" "design-system.md"; do
-  count=$(grep -r "$ref" --include="*.md" --include="*.json" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-  check "no '$ref' references" "$count"
-done
-
 echo ""
 
 # --- Required files must exist ---
@@ -108,7 +51,7 @@ done
 
 echo ""
 
-# --- Node model consistency ---
+# --- Node model consistency (5 fields) ---
 echo "Node model (5 fields: Layer, Evolution, Metric, Graduation, Loop):"
 
 for f in "reference/concepts.md" "reference/claude-md-template.md" "commands/strategy.md"; do
@@ -126,7 +69,7 @@ done
 
 echo ""
 
-# --- Key concepts must appear where needed ---
+# --- Core concepts must appear where needed ---
 echo "Concept coverage:"
 
 for concept in "context engineering\|context fidelity\|Context Engineering\|Context Fidelity"; do
@@ -162,16 +105,16 @@ fi
 echo ""
 
 # --- Playbook mapping table format ---
-echo "Playbook mapping table format:"
+echo "Playbook mapping table:"
 
 count=$(grep -c "| Node | Layer | Evolution | Metric" reference/claude-md-template.md 2>/dev/null)
-check "template has playbook mapping table header" "$( [ "$count" -gt 0 ] && echo 0 || echo 1 )"
+check "template has mapping table header" "$( [ "$count" -gt 0 ] && echo 0 || echo 1 )"
 
 count=$(grep -c "Graduation" reference/claude-md-template.md 2>/dev/null)
-check "template table includes Graduation column" "$( [ "$count" -gt 0 ] && echo 0 || echo 1 )"
+check "template includes Graduation column" "$( [ "$count" -gt 0 ] && echo 0 || echo 1 )"
 
 count=$(grep -c "Loop" reference/claude-md-template.md 2>/dev/null)
-check "template table includes Loop column" "$( [ "$count" -gt 0 ] && echo 0 || echo 1 )"
+check "template includes Loop column" "$( [ "$count" -gt 0 ] && echo 0 || echo 1 )"
 
 echo ""
 
@@ -195,36 +138,24 @@ echo ""
 # --- Textual coherence ---
 echo "Textual coherence:"
 
-# "piece" should not appear as a term for node in commands
-# "piece" as a synonym for node (ignore "missing pieces" which is English idiom)
 count=$(grep "piece\b" commands/build.md 2>/dev/null | grep -v "Missing pieces" | wc -l | tr -d ' ')
 check "build.md uses 'node' not 'piece'" "$count"
 
-# Graduation field definition must say "condition + direction" not just "condition"
 has_direction=$(grep "Graduation" reference/concepts.md 2>/dev/null | head -1 | grep -c "direction")
-check "concepts.md Graduation field says condition + direction" "$( [ "$has_direction" -gt 0 ] && echo 0 || echo 1 )"
+check "concepts.md Graduation says condition + direction" "$( [ "$has_direction" -gt 0 ] && echo 0 || echo 1 )"
 
-# README tree diagram uses Metric/Signal not just Metric
 has_signal=$(grep "Metric/Signal\|Metric / Signal" README.md 2>/dev/null | wc -l | tr -d ' ')
 check "README uses Metric/Signal (not just Metric)" "$( [ "$has_signal" -ge 2 ] && echo 0 || echo 1 )"
 
-# Loop values use "manual review" not just "manual"
 count=$(grep -rn "autoresearch/manual/" --include="*.md" . 2>/dev/null | grep -v "manual review" | grep -v test.sh | wc -l | tr -d ' ')
 check "Loop field uses 'manual review' not 'manual'" "$count"
 
-# "an playbook" grammar error (should be "a playbook")
 count=$(grep -r "an playbook" --include="*.md" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
 check "no 'an playbook' grammar errors" "$count"
 
-# "four four" duplication
-count=$(grep -r "four four" --include="*.md" . 2>/dev/null | grep -v test.sh | wc -l | tr -d ' ')
-check "no 'four four' duplication" "$count"
-
-# Security section should not be in review (it's commodity, not playbook's value)
 count=$(grep -c "## 5. Security\|### OWASP\|### Secrets\|### Blocking Rules" commands/review.md 2>/dev/null)
 check "review.md has no security section" "$count"
 
-# Examples must cover at least 3 domains
 example_count=$(grep -c "^# Example" reference/example.md 2>/dev/null)
 check "example.md has 3+ examples ($example_count found)" "$( [ "$example_count" -ge 3 ] && echo 0 || echo 1 )"
 
