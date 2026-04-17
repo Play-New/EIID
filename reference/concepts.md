@@ -111,6 +111,4 @@ What gets logged to `.playbook/report.md`:
 - **Research failures** — which lens produced no useful signal for this domain. Pattern: if "graduation precedent" consistently fails for creative domains, skip it there.
 - **Context drift** — what CLAUDE.md said versus what review found. Pattern: which types of nodes drift fastest.
 
-The metric for plugin learning: **override rate**. If the user overrides fewer classifications over time within a project (strategy → review → strategy cycles), the plugin is getting better. If override rate stays flat, the logging is not producing useful signal.
-
-The plugin reads prior reports when running strategy refresh or review. The compound loop is: strategy → build → review → strategy.
+The plugin reads prior reports when running strategy refresh or review. The compound loop is: strategy → build → review → strategy. Whether the logging produces useful signal is observable over time: if strategy refresh makes fewer mistakes that review catches, the loop is working.

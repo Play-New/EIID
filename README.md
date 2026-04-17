@@ -55,7 +55,7 @@ Four failure modes:
 1. **Building commodity as custom.** The component exists as a service. Building it is waste.
 2. **No inference layer.** The product collects data and presents it but never detects patterns, predictions, or anomalies.
 3. **No way to know if it works.** The most valuable component has no metric, no signal, no way to tell if it is improving or degrading.
-4. **No world model.** The product pushes value out but accumulates nothing from use. Every interaction could deepen understanding; instead it evaporates.
+4. **No World Model.** The product pushes value out but accumulates nothing from use. Every interaction could deepen understanding; instead it evaporates.
 
 ## 2. What it looks like
 
@@ -100,11 +100,11 @@ The Interface is where Enrichment and Delivery coincide. It is not a layer. It i
 
 Every interaction through the Interface is simultaneously delivery (the product responds) and enrichment (the product learns). A recruiter editing a rewrite before accepting it is receiving value and generating the richest training signal in the system. A dashboard where users search for something not yet tracked is delivering what exists and revealing what is missing.
 
-Not "does it need a UI?" but **does the interface learn?** A static dashboard is product-stage — replaceable. A chatbot is also product-stage — Intercom, Drift, Zendesk prove it. What makes an interface genesis is not the form but the composition: an interface that assembles responses from capabilities in real time, where no two interactions follow the same path, accumulates a world model that a fixed-navigation interface cannot. When a customer asks for something the system can't compose, that gap is the roadmap. The judgment is whether filling it aligns with what the product should be.
+Not "does it need a UI?" but **does the interface learn?** A static dashboard is product-stage — replaceable. A chatbot is also product-stage — Intercom, Drift, Zendesk prove it. What makes an interface genesis is not the form but the composition: an interface that assembles responses from capabilities in real time, where no two interactions follow the same path, accumulates a World Model that a fixed-navigation interface cannot. When a customer asks for something the system can't compose, that gap is the roadmap. The judgment is whether filling it aligns with what the product should be.
 
-### The world model
+### The World Model
 
-The accumulated understanding of users built from every interaction that passes through the Interface. Every capability in isolation is replicable — card processing, document parsing, notification routing. The world model is not. It exists only because of the history of interactions that built it. Richer Interface → deeper world model → better responses → more use. The loop compounds.
+The accumulated understanding of users built from every interaction that passes through the Interface. Every capability in isolation is replicable — card processing, document parsing, notification routing. The World Model is not. It exists only because of the history of interactions that built it. Richer Interface → deeper World Model → better responses → more use. The loop compounds.
 
 ### Nodes
 
@@ -124,7 +124,7 @@ Challenges during decomposition:
 - Six features, no inference → where are the patterns?
 - Commodity built custom → this exists as a service
 - No genesis nodes → where is the new value?
-- No world model → every interaction could teach the product something; does the Interface capture it?
+- No World Model → every interaction could teach the product something; does the Interface capture it?
 - Clean metric, no experiments → autoresearch explores spaces too large for humans; is there an optimization nobody looked for?
 
 ## 4. The method
@@ -223,7 +223,7 @@ Genesis is not always in the same layer. Autoresearch helps where feedback is fa
 - **Choudary, S. P.** Platform dynamics and AI-driven industry restructuring. Where value accumulates when intelligence is a commodity input.
 - **Karpathy, A.** Autoresearch. One mutable file, one metric, fixed time budget, git as keep/discard.
 - **Cortés, D. & Lütke, T.** pi-autoresearch. Confidence scoring, backpressure checks, multi-metric tracking. Work nobody would attempt manually.
-- **Dorsey, J.** From hierarchy to intelligence. The company as an intelligence: capabilities, interfaces, world model. The compound loop where every interaction deepens understanding.
+- **Dorsey, J.** From hierarchy to intelligence. The company as an intelligence: capabilities, interfaces, World Model. The compound loop where every interaction deepens understanding.
 
 ## License
 
