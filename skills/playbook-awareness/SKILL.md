@@ -10,11 +10,11 @@ If CLAUDE.md doesn't exist, stop. No context to check against.
 
 1. Read CLAUDE.md for the playbook mapping table.
 2. **Node trace:** does this change serve a node in the mapping? Which layer? If none, flag: potential scope creep.
-3. **Evolution check:** does the node's evolution justify the investment? Building custom for a commodity node is waste. Buying for a genesis node means you're not creating value.
-4. **Missing layers:** does the mapping cover all four layers? If an entire layer is absent, flag it.
-5. **Graduation check:** has a graduation trigger fired? If a node's metric has consistently exceeded its target, suggest revisiting the approach.
-6. **Autoresearch opportunity:** if the change touches an Enrichment or Inference node with a clean metric and no autoresearch loop, flag the opportunity.
-7. **Context fidelity:** does the change mean CLAUDE.md needs updating? New nodes, changed evolution, fired graduation triggers?
-8. **Interface check:** if the change touches a human-facing node, does the Interface capture signal from the interaction? If a new delivery surface is proposed, what does the product learn from use? A surface that pushes value out but captures nothing back cannot contribute to the World Model.
+3. **Interface check (foundational):** if the change touches a human-facing node, does the Interface capture signal from the interaction? If a new delivery surface is proposed, what does the product learn from use? A surface that pushes value out but captures nothing back cannot contribute to the World Model. Value flows to the user, signal flows back — if either is missing, the design is incomplete.
+4. **Evolution check:** does the node's evolution justify the investment? Building custom for a commodity node is waste. Buying for a genesis node means you're not creating value.
+5. **Missing layers:** does the mapping cover all four layers? If an entire layer is absent, flag it.
+6. **Graduation check:** has a graduation trigger fired? If a node's metric has consistently exceeded its target, suggest revisiting the approach.
+7. **Autoresearch opportunity:** if the change touches an Enrichment or Inference node with a clean metric and no autoresearch loop, flag the opportunity.
+8. **Context fidelity:** does the change mean CLAUDE.md needs updating? New nodes, changed evolution, fired graduation triggers?
 
 One line per observation. Only when relevant. Not blocking. Brief.

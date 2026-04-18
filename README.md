@@ -20,7 +20,7 @@
     └───────────────────────────────────────────────┘
 ```
 
-Designs intelligence into products. Takes any input — a landing page, a SaaS, a pitch, a codebase — and shows where the intelligence should go, what to measure, and when to change approach. A Claude Code plugin.
+Designs products where user and machine compound. Every interaction deepens a World Model no competitor can replicate. Takes any input — a landing page, a SaaS, a pitch, a codebase — and shows where intelligence lives, what signal flows back from use, what to measure, and when to change approach. A Claude Code plugin.
 
 ### Install
 
@@ -48,14 +48,15 @@ You should see `playbook@playbook — Status: ✔ enabled`. Restart Claude Code 
 
 ## 1. The problem
 
-Writing code is cheap. The question "how do I build this?" has a commodity answer. The question that matters is: what shape should this product have, and does it get smarter from use?
+Writing code is cheap. The question "how do I build this?" has a commodity answer. The questions that matter are: what shape should this product have, and do user and product build understanding together with every interaction?
 
-Four failure modes:
+Five failure modes:
 
 1. **Building commodity as custom.** The component exists as a service. Building it is waste.
 2. **No inference layer.** The product collects data and presents it but never detects patterns, predictions, or anomalies.
 3. **No way to know if it works.** The most valuable component has no metric, no signal, no way to tell if it is improving or degrading.
 4. **No World Model.** The product pushes value out but accumulates nothing from use. Every interaction could deepen understanding; instead it evaporates.
+5. **Compliance discovered at launch.** For EU-facing products, AI Act tier and GDPR basis are design choices, not paperwork. Finding out the product is Annex III high-risk — or that the World Model accumulates without a lawful basis — after building is the most expensive failure mode.
 
 ## 2. What it looks like
 
@@ -82,7 +83,7 @@ Four layers. Value flows from raw data to user outcome and signal flows back.
 | **Enrichment** | Where data enters. Normalizes inputs from every channel the user already uses. |
 | **Inference** | Pattern detection, prediction, anomaly flagging. The compute is cheap; knowing what questions to ask is not. |
 | **Interpretation** | Turns raw inference into something a person can act on. Context, comparison, explanation, recommended action. |
-| **Delivery** | Returns the right insight through the right channel at the right moment. |
+| **Delivery** | Returns the right insight through the right channel at the right moment — and observes how the user responds, so the signal flows back. |
 
 ### The cycle
 
@@ -118,29 +119,32 @@ Playbook decomposes a product into **nodes**, each belonging to exactly one laye
 | **Graduation** | When to change approach (trigger) and what to change to (direction). Both required. |
 | **Loop** | Autoresearch (automated optimization), manual review (human judgment), N/A (commodity). |
 
-Challenges during decomposition:
+Challenges during decomposition (strategy.md carries the full list):
 
 - "We'll build a RAG system" → RAG is how, what is the what?
-- Six features, no inference → where are the patterns?
 - Commodity built custom → this exists as a service
 - No genesis nodes → where is the new value?
-- No World Model → every interaction could teach the product something; does the Interface capture it?
-- Clean metric, no experiments → autoresearch explores spaces too large for humans; is there an optimization nobody looked for?
+- No World Model → does the Interface capture what users accept, ignore, modify, request?
+- Missing learning loop → rich experience, but signal evaporates after each interaction
+- Incumbent closes the genesis → is the adjacent incumbent moving toward your claimed genesis in 6-12 months?
+- Prohibited practice hard stop → AI Act Art 5 (emotion recognition workplace, social scoring, biometric categorisation) = redesign or don't build, not a tier upgrade
+- Regulatory tier / accumulation without basis → Annex III high-risk? GDPR Art 6 basis for the World Model?
 
 ## 4. The method
 
-Three commands. Together they form a cycle.
+Three commands form a compound loop: **strategy → build → review → strategy**. Each turn leaves signal — what users overrode, which challenges changed the plan, what drifted between CLAUDE.md and the built product — that feeds the next run. The plugin accumulates its own World Model across projects (see `reference/concepts.md` Plugin World Model); over time, strategy refresh makes fewer mistakes that review would have caught.
 
 ### 4.1 Strategy (`/playbook:strategy`)
 
-Takes any input — brief, pitch, idea, codebase. Researches the problem space (searching for what would make the brief *wrong*, not for confirmation). Produces two outputs:
+Takes any input — brief, pitch, idea, codebase. Researches the problem space (searching for what would make the brief *wrong*, not for confirmation). Produces three outputs:
 
-- **Strategic assessment** for people: where the value is, where the risk is, what to do first, what not to do.
-- **CLAUDE.md** for agents: structured context — which nodes are genesis, which are commodity, what to measure, when to change approach.
+- **Strategic assessment** for people: where the value is, where the challenge is, where learning happens, regulatory posture, what to do first, what not to do.
+- **CLAUDE.md** for agents: structured context — which nodes are genesis, which are commodity, what the product accumulates from use, regulatory posture, what to measure, when to change approach.
+- **Regulatory Annex** for lawyers (when EU-facing or personal data is processed): lawyer-readable analysis citing GDPR and AI Act articles, grounded in specific research, with confidence levels and open questions. Template in `reference/regulatory-annex-template.md`.
 
 ### 4.2 Build (`/playbook:build`)
 
-Vision conversation first: what does the user experience when this product is perfect? Then tests that encode the vision before any product code. The test suite is the plan.
+Vision conversation first: what do user and product do together when this works? What does the user do, what does the product observe and learn, what emerges from their interaction? Then tests that encode both halves of the vision — user-side experience and product-side learning — before any product code. The test suite is the plan.
 
 Autoresearch optimizes nodes with clean metrics and fast feedback. It does not do human work faster — it explores optimization spaces too large and tedious for humans to attempt. Small 1% improvements compound over hundreds of iterations into results no human would find.
 
@@ -150,7 +154,7 @@ When the Interface captures user behavior, it generates signal at the speed of c
 
 ### 4.3 Review (`/playbook:review`)
 
-Measures the product against the mapping. For each node: metric above, at, or below target? Graduation trigger fired? Autoresearch converging or diverging? Interface capturing signal? Context still faithful to the actual product?
+Measures the product against the mapping. First the foundational check: is the Interface capturing signal, is the World Model compounding? Then the static checks: metric above, at, or below target? Graduation trigger fired? Autoresearch converging or diverging? Context still faithful to the actual product?
 
 When a node is below target and has an autoresearch loop, review runs an optimization cycle directly.
 
@@ -215,7 +219,7 @@ Genesis is in Inference. Two autoresearch loops at different speeds. The Interfa
 | Autoresearch nodes | 2 (both fast) | 2 (not the genesis) | 2 (different speeds) |
 | Interface signal density | 2 surfaces, 3 types | 1 surface, 2 types | 2 surfaces, 5 types |
 
-Genesis is not always in the same layer. Autoresearch helps where feedback is fast, but the most valuable node often has the slowest feedback. A product whose Interface captures no signal builds no World Model.
+Genesis is not always in the same layer. Autoresearch helps where feedback is fast, but the most valuable node often has the slowest feedback. Products whose Interface is dense with signal build World Models that compound — that is the durable moat. Products whose Interface captures nothing are replicable regardless of how sophisticated their nodes are.
 
 ## 6. References
 

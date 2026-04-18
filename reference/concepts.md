@@ -6,7 +6,7 @@ Canonical definitions. Every concept defined once. Commands and skills reference
 
 ## The Four Layers (EIID)
 
-Four layers that structure every intelligence-era product. Value flows from raw data to user outcome. Every component (node) traces to exactly one layer.
+Four layers that structure every intelligence-era product. Value flows forward from raw data to user outcome; signal flows back from every interaction to earlier layers. Both flows are required — a product that only delivers and never observes builds no World Model, no matter how sophisticated its inference. Every component (node) traces to exactly one layer.
 
 **Enrichment** — where data enters. Photos, voice notes, chat messages, forwarded emails, spreadsheets, APIs, scraped sources. People should not change how they work. Enrichment accepts data from every channel they already use and normalizes it for inference.
 
@@ -14,11 +14,11 @@ Four layers that structure every intelligence-era product. Value flows from raw 
 
 **Interpretation** — turns raw inference into something a person can act on. "Anomaly score 0.87" means nothing. "Orders dropped 30%, likely due to budget freeze, renewal in 45 days" is an insight. Context, comparison, explanation, recommended action.
 
-**Delivery** — returns results through the channels people already use. Triggered by conditions: threshold crossed, schedule, event, user request. The critical design choice is timing.
+**Delivery** — returns results through the channels people already use. Triggered by conditions: threshold crossed, schedule, event, user request. What makes Delivery part of an Interface — rather than a dead-end surface — is whether the channel also captures signal from how users respond (accept, ignore, modify, request-and-don't-get). The critical design choices are timing and what the surface observes.
 
 ## Node
 
-A component of the product that belongs to exactly one layer. The unit of decomposition, analysis, and measurement. Each node carries five fields:
+A component of the product that belongs to exactly one layer. The unit of decomposition, analysis, measurement, and signal capture — every node either delivers value, generates signal for the World Model, or both. Each node carries five fields:
 
 - **Layer** — which layer it serves
 - **Evolution** — where it sits on the Wardley axis (genesis, custom, product, commodity)
@@ -85,6 +85,8 @@ Every capability in isolation is replicable. The World Model is not. It exists o
 
 The strategic question is: does this product build a World Model? A product where every interaction deepens understanding compounds. A product that pushes value out and captures nothing back is replicable regardless of how sophisticated its inference is.
 
+Scope matters: World Models accumulate per-user (churn resistance), per-org (account stickiness), aggregate (network effects / cold-start advantage), or as a layered mix. The strategy must name the scope — a World Model without a declared scope is designing the wrong defensibility.
+
 ## Graduation
 
 Nodes evolve. When a metric consistently exceeds its target, simplify the implementation. When volume exceeds a threshold, make it more robust. Graduation goes both directions:
@@ -94,15 +96,31 @@ Nodes evolve. When a metric consistently exceeds its target, simplify the implem
 
 Each node documents its graduation trigger: both the condition (when) and the direction (what changes). "When accuracy exceeds 95% for 2 weeks, replace with deterministic rules" is a complete trigger. "When accuracy exceeds 95%" is not — it says when but not where to go.
 
+## Regulatory posture
+
+AI-native products built for the EU operate under GDPR (Regulation (EU) 2016/679) and the AI Act (Regulation (EU) 2024/1689, phased 2025-2027). Compliance is by-design: what you accumulate, at what scope, and what decisions the product makes are regulatory choices at strategy time, not launch time.
+
+**AI Act role.** Provider (develops and markets the AI system under own name — Art 3(3)) or deployer (uses an AI system under its authority — Art 3(4)), or both. Building a SaaS on Claude/GPT/Gemini and shipping it under your own brand makes you provider of the resulting AI system and downstream provider of the GPAI-integrated system (Art 25, Art 53(1)(b)). Role determines which obligations apply — provider obligations are far heavier.
+
+**AI Act tier.** Prohibited (Art 5, do not build), high-risk (Annex III: biometrics, critical infrastructure, education, employment/HR, essential private/public services, law enforcement, migration, justice — requires risk management, human oversight, transparency, accuracy docs, data governance, conformity assessment), limited-risk (Art 50 transparency for chatbots, deepfakes, emotion/biometric categorisation), minimal-risk (default). Misidentifying the tier is the most expensive mistake in the design space.
+
+**GDPR basis.** The World Model is personal data processing and needs a lawful basis per Art 6 (consent, contract, legitimate interest with documented three-part test, legal obligation, vital interest, public task). Signal capture at the Interface is separate processing and may need its own basis. Special categories (Art 9) require stricter basis. Per-user World Model scope combined with decisions that have legal or similarly significant effects triggers Art 22 (right to human intervention).
+
+**DPIA.** Required before large-scale profiling, special categories, systematic monitoring, innovative technology, or combinations thereof (Art 35 + EDPB/WP248 criteria) — which describes most high-risk AI Act products.
+
+Compliance is part of the design space. Strategy produces a dedicated Regulatory Annex (`reference/regulatory-annex-template.md`) that cites articles, documents reasoning, and grounds findings in specific research — readable by legal counsel, updated with the state of the law at the date of analysis.
+
 ## Context Engineering
 
-Every output of this plugin is structured context for AI agents. CLAUDE.md is the strategic context document of the product. If an agent reads it, it knows: where the value is, what to build, what to measure, when to change approach.
+Every output of this plugin is structured context for AI agents. CLAUDE.md is the strategic context document of the product. If an agent reads it, it knows: where the value is, what the product accumulates from use (the World Model), what to build, what to measure, when to change approach.
 
 Context must stay faithful to reality (context fidelity). When the product evolves, the context updates. Stale context is worse than no context — it leads agents to optimize the wrong things.
 
-## Plugin Learning
+## Plugin World Model
 
-The plugin logs its own performance. This is not autoresearch — there is no controlled loop, no confidence scoring, no keep/discard. It is structured journaling that makes the next run better informed.
+The plugin is a product too, and it follows its own principle: user and plugin co-construct. Every strategy run, every build, every review leaves signal — what the user overrode, what challenges changed their plan, which research lenses produced nothing useful for a given domain, where CLAUDE.md drifted from reality. The plugin accumulates this into its own World Model, feeding future runs on similar projects.
+
+This is not autoresearch — there is no controlled loop, no confidence scoring, no keep/discard. It is structured journaling that makes the next run better informed. But it embodies the same principle the plugin preaches: a tool that pushes value out and captures nothing back builds no World Model, and the playbook plugin is no exception.
 
 What gets logged to `.playbook/report.md`:
 

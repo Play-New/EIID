@@ -18,6 +18,14 @@ E-commerce sellers managing products across multiple marketplaces.
 
 Always have the right price without spending hours checking competitors.
 
+## World Model
+
+What the product accumulates from use: which recommendations sellers accept (tunes the interpretation layer to each seller's margin tolerance), which alerts get ignored (recalibrates anomaly thresholds per category), which searches return nothing (expands the scraper coverage map), which modifications sellers make before accepting (reveals where the recommendation logic is wrong). After 10,000 seller interactions the system has learned each seller's specific category logic — a competitor starting today does not have this state and cannot shortcut to it.
+
+## World Model scope
+
+Layered, primarily **per-seller**. Each seller's margin tolerance, category logic, and alert sensitivity are their own — switching to a competitor means losing that calibration (churn resistance). Some **aggregate** accumulation at the category level: pricing anomaly patterns and typical competitor behavior generalize across sellers, creating a cold-start advantage for new sellers joining the system.
+
 ---
 
 ## Nodes
@@ -133,6 +141,10 @@ Enterprise HR teams managing 500+ job postings per quarter.
 
 Every job posting attracts the widest qualified talent pool without manual bias review.
 
+## World Model
+
+What the product accumulates from use: which rewrites recruiters accept, which they edit before accepting (the richest signal in the system — it shows exactly what the recommendation got wrong), which they dismiss (reveals false positives in the bias detector), which actual hiring outcomes follow each language choice (30-90 day feedback loop that connects language to diversity). After a year of use on a given organization, the system has learned that organization's specific calibration — roles, seniority, culture, team preferences. The outcome-linker dataset is the unreplicable asset: a competitor starting today cannot obtain the historical language-to-outcome linkages that made calibration possible.
+
 ---
 
 ## Nodes
@@ -232,6 +244,10 @@ Global enterprise marketing teams producing 1000+ content pieces/month across 10
 ## Value Expected
 
 Every published piece sounds like the brand, without a human reviewer reading every word.
+
+## World Model
+
+What the product accumulates from use: which phrases writers correct before the flag fires (tells the compliance scorer it's late — the writer knows the rule better), which suggestions writers reject (reveals that the encoded rule is wrong for this context or channel), which new compliant patterns writers invent and the system learns to recognize (teaches the consistency analyzer), which drift alerts executives act on versus ignore (tunes the governance dashboard). After six months across channels and languages, the system has learned each channel's specific voice calibration — what sounds like the brand on LinkedIn versus product docs versus German support. A competitor cannot replicate this calibration without running the same interactions through the same brand team.
 
 ---
 
