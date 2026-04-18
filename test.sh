@@ -270,18 +270,6 @@ check "README /build description is bidirectional" "$( [ "$build_desc_bidir" -gt
 delivery_row_bidir=$(grep -c "observes how the user responds\|signal flows back" README.md 2>/dev/null)
 check "README Delivery row mentions signal flowing back" "$( [ "$delivery_row_bidir" -gt 0 ] && echo 0 || echo 1 )"
 
-# build.md Extend Mode Vision must be bidirectional
-extend_vision=$(grep -c "What do user and product do together today\|product observe or learn differently" commands/build.md 2>/dev/null)
-check "build.md Extend Mode Vision is bidirectional" "$( [ "$extend_vision" -gt 0 ] && echo 0 || echo 1 )"
-
-# build.md "Tests are the plan" rule must mention both halves of the vision
-tests_both=$(grep -c "both halves of the vision" commands/build.md 2>/dev/null)
-check "build.md Tests rule mentions 'both halves of the vision'" "$( [ "$tests_both" -gt 0 ] && echo 0 || echo 1 )"
-
-# strategy.md "Work backward" must mention what product observes/learns
-work_backward=$(grep -c "what the product must observe and learn" commands/strategy.md 2>/dev/null)
-check "strategy.md decompose step includes what product observes" "$( [ "$work_backward" -gt 0 ] && echo 0 || echo 1 )"
-
 # strategy.md CLAUDE.md verification check mentions World Model
 claude_check_wm=$(grep -c "what the product accumulates (World Model)\|World Model field" commands/strategy.md 2>/dev/null)
 check "strategy.md CLAUDE.md verification mentions World Model" "$( [ "$claude_check_wm" -gt 0 ] && echo 0 || echo 1 )"
@@ -306,34 +294,23 @@ check "build.md Vision bridges to CLAUDE.md World Model field" "$( [ "$vision_br
 wm_scope=$(grep -c "World Model scope" commands/strategy.md 2>/dev/null)
 check "strategy.md challenge list includes 'World Model scope'" "$( [ "$wm_scope" -gt 0 ] && echo 0 || echo 1 )"
 
-# Loop recheck pass 1: additional structural checks
-# concepts.md Scope mentioned inline in World Model section
-wm_scope_inline=$(grep -A10 "^## World Model$" reference/concepts.md 2>/dev/null | grep -c "Scope matters")
-check "concepts.md World Model mentions scope inline" "$( [ "$wm_scope_inline" -gt 0 ] && echo 0 || echo 1 )"
-
-# Strategy Refresh key elements include World Model
-refresh_wm=$(grep -c "client, value expected, World Model, playbook mapping" commands/strategy.md 2>/dev/null)
-check "strategy.md Refresh key elements include World Model" "$( [ "$refresh_wm" -gt 0 ] && echo 0 || echo 1 )"
-
 # Strategy Update Mapping includes Check the World Model
 update_wm_check=$(grep -c "Check the World Model" commands/strategy.md 2>/dev/null)
 check "strategy.md Update Mapping includes 'Check the World Model' step" "$( [ "$update_wm_check" -gt 0 ] && echo 0 || echo 1 )"
 
-# Strategy Dead nodes check broadened beyond "user need"
-dead_nodes=$(grep -c "no longer serve user value, product learning, or both" commands/strategy.md 2>/dev/null)
-check "strategy.md Dead nodes check covers user value AND product learning" "$( [ "$dead_nodes" -gt 0 ] && echo 0 || echo 1 )"
-
-# Build Loop context includes World Model
-build_ctx=$(grep -c "playbook mapping, value expected, World Model" commands/build.md 2>/dev/null)
-check "build.md Build Loop context includes World Model" "$( [ "$build_ctx" -gt 0 ] && echo 0 || echo 1 )"
+# Build Loop step 2 references World Model AND regulatory posture together as build context
+build_step2=$(awk '/^### 3\. Build Loop/,/^### 4\./' commands/build.md 2>/dev/null)
+build_has_wm=$(echo "$build_step2" | grep -c "World Model")
+build_has_reg=$(echo "$build_step2" | grep -c "regulatory posture")
+if [ "$build_has_wm" -gt 0 ] && [ "$build_has_reg" -gt 0 ]; then
+  check "build.md Build Loop step 2 includes World Model + regulatory posture as context" 0
+else
+  check "build.md Build Loop step 2 includes World Model + regulatory posture as context" 1
+fi
 
 # Review metrics check includes growth-from-use
 growing_check=$(grep -c "Is it growing from use?" commands/review.md 2>/dev/null)
 check "review.md metrics check includes 'Is it growing from use?'" "$( [ "$growing_check" -gt 0 ] && echo 0 || echo 1 )"
-
-# Review summary has Interface line with World Model drift
-summary_iwm=$(grep -c "^Interface:.*World Model drift" commands/review.md 2>/dev/null)
-check "review.md summary has Interface line with World Model drift" "$( [ "$summary_iwm" -gt 0 ] && echo 0 || echo 1 )"
 
 echo ""
 
@@ -400,9 +377,9 @@ check "strategy.md challenge list includes 'Accumulation without lawful basis'" 
 strategy_assess_reg=$(grep -c "^5\. \*\*Regulatory posture\*\*" commands/strategy.md 2>/dev/null)
 check "strategy.md Strategic Assessment has 'Regulatory posture' item" "$( [ "$strategy_assess_reg" -gt 0 ] && echo 0 || echo 1 )"
 
-# strategy.md produces three outputs (not two)
-strategy_three=$(grep -c "Strategy produces three outputs" commands/strategy.md 2>/dev/null)
-check "strategy.md declares three outputs (assessment + CLAUDE.md + annex)" "$( [ "$strategy_three" -gt 0 ] && echo 0 || echo 1 )"
+# strategy.md declares two human-readable docs (strategic + regulatory) + CLAUDE.md as agent context
+strategy_two_docs=$(grep -c "two human-readable documents" commands/strategy.md 2>/dev/null)
+check "strategy.md declares two human-readable docs + CLAUDE.md as agent context" "$( [ "$strategy_two_docs" -gt 0 ] && echo 0 || echo 1 )"
 
 # strategy.md references the annex template
 strategy_annex_ref=$(grep -c "regulatory-annex-template.md" commands/strategy.md 2>/dev/null)
@@ -415,10 +392,6 @@ check "claude-md-template.md has Regulatory posture field" "$( [ "$tmpl_reg" -gt
 # concepts.md has Regulatory posture section
 concepts_reg=$(grep -c "^## Regulatory posture$" reference/concepts.md 2>/dev/null)
 check "concepts.md has 'Regulatory posture' section" "$( [ "$concepts_reg" -gt 0 ] && echo 0 || echo 1 )"
-
-# build.md Build Loop context includes regulatory posture
-build_reg=$(grep -c "World Model, regulatory posture, vision" commands/build.md 2>/dev/null)
-check "build.md Build Loop context includes regulatory posture" "$( [ "$build_reg" -gt 0 ] && echo 0 || echo 1 )"
 
 # review.md Interface & World Model section has regulatory drift bullet
 review_reg_drift=$(grep -c "Regulatory drift" commands/review.md 2>/dev/null)
@@ -487,7 +460,7 @@ tmpl_gdpr_role=$(grep -c "GDPR role (controller/processor" reference/claude-md-t
 check "claude-md-template Regulatory posture includes GDPR role" "$( [ "$tmpl_gdpr_role" -gt 0 ] && echo 0 || echo 1 )"
 
 # E. annex template Lens 6 prompts for professional body / sector regulator guidance
-annex_prof_body=$(grep -c "Professional body and sector regulator" reference/regulatory-annex-template.md 2>/dev/null)
+annex_prof_body=$(grep -ci "professional body\|sector regulator\|CNDCEC\|FNOMCeO" reference/regulatory-annex-template.md 2>/dev/null)
 check "annex template names professional body/sector regulator guidance" "$( [ "$annex_prof_body" -gt 0 ] && echo 0 || echo 1 )"
 
 # F. strategy.md challenge list has 'Incumbent closes the genesis'

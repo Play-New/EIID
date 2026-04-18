@@ -109,7 +109,7 @@ The challenge is not hostile. It sharpens the strategy. Acknowledge what's stron
 
 ### 6. Write
 
-Strategy produces three outputs: one for the people deciding, one for the agents building, one for the lawyers reviewing.
+Strategy produces two human-readable documents — Strategic Assessment for the human deciding, Regulatory Annex for the lawyer reviewing — plus CLAUDE.md as technical context for downstream agents (`/playbook:build` and `/playbook:review`).
 
 **For the people: Strategic Assessment.** Present to the user before writing any file:
 
@@ -181,6 +181,6 @@ Log the refresh in `.playbook/report.md`.
 - Uncertain items get a question mark. The user refines later.
 - Mark inferences as inferences.
 - Research tests the brief, it does not confirm it. Search for what would make the strategy wrong.
-- Three outputs: strategic assessment (for people), CLAUDE.md (for agents), regulatory annex (for lawyers, when EU-facing or personal data is processed). All serve the same decomposition through different lenses.
+- Two human-readable documents (strategic assessment + regulatory annex when applicable) for two different audiences (decider + legal). CLAUDE.md is technical context for downstream agents, not a third report. All serve the same decomposition through different lenses.
 - CLAUDE.md is strategic context (stable). `.playbook/report.md` is operational state (volatile). Don't duplicate between them.
 - The user answers questions or confirms inferences. The decomposition, evolution classification, World Model articulation, and challenge — you bring those from research and analysis.
